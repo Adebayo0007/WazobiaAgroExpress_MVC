@@ -1,0 +1,116 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+
+.brand{
+    font-size: larger;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: aliceblue;
+}
+.bodyyy{
+    height: 80vh;
+    overflow-y: scroll;
+    scroll-behavior: auto !important;
+    padding: 1rem;
+}
+.bodyyy>div{
+    /* border: solid red 1px; */
+    border-radius: 15px;
+    height: 67vh;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    padding: 1rem 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.content>div{
+    /* border: solid red 1px; */
+    border-radius: 1rem;
+    height: 2.5rem;
+
+}
+.content>main{
+    display: flex;
+    overflow-x: scroll;
+    /* overflow-y: scroll; */
+    scroll-behavior: auto !important;
+    gap: .5rem;
+}
+span{
+    font-size: larger;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.first{
+    display: flex;
+    justify-content: space-between;
+    padding: 1px 1px;
+}
+.second{
+    display: flex;
+    justify-content: space-between;
+    padding: 1px 1px;
+    font-size: small;
+}
+.sec{
+    font-size: 1rem;
+
+}
+.third{
+    display: flex;
+    justify-content: space-between;
+    padding: 1px 1px;
+}
+.price{
+    color: rgb(216, 143, 35);
+}
+.date{
+    margin-top: 2px;
+    font-size: small;
+    font-weight: bold;
+}
+.title{
+    color: black;
+}
+
+
+.product-choice
+{
+    display: flex;
+    flex-direction: row;
+}
+.product-choice div{
+    /* border: solid red 1px; */
+    font-size: .9em;
+    width: 27vw;
+    height: 4vh;
+    align-items: center;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(133, 233, 75);
+    padding: .2rem 0rem;
+    border: none;
+    /* border-radius: 15px; */
+}
+.product-choice input
+{
+    background-color: rgb(133, 233, 75);
+}
+.product-choice input:hover{
+    color: white;
+    background-color: green;
+}
+.product-choice input{
+    border: none;
+    
+}
+.product-choice div:hover{
+    color: white;
+    background-color: green;
+}

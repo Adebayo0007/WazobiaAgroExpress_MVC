@@ -1,0 +1,54 @@
+@using Agro_Express.Dtos
+@using Agro_Express.Dtos.Product
+@model BaseResponse<IEnumerable<ProductDto>>
+@{
+    ViewData["Title"] = "Farm Products Around You";
+}
+<h1>@ViewData["Title"]</h1>
+   @if(TempData["success"] != null)
+             {
+                <h2>@TempData["success"]</h2>
+               }
+            @if(TempData["error"] != null)
+             {
+                <h2 style="color:red">@TempData["error"]</h2>
+               }
+
+               @if(Model.Data.Count() == 0)
+               {
+                  <h2 style="color:red">No product found</h2>
+               }
+
+                <form asp-controller="Product" asp-action="SearchProduct">
+                  <br><div class="search-body">
+        <div class="search-input"><input name="searchInput" class="search-search" type="text" placeholder="input product name or farmer username or email"> <button type="submit" id="completed-task" class="fabutton"><i class="fa-solid fa-magnifying-glass"></i></button>  </div><br>
+    </div>
+    </form>
+               @foreach (var product in Model.Data)
+               {
+                 var date = @product.AvailabilityDateFrom.ToString();
+                 string dateFrom = date.Substring(0,9);
+                    var date2 = @product.AvailabilityDateTo.ToString();
+                 string dateTo = date2.Substring(0,9); 
+               
+<div class="bodyyy">
+        <div class="content">
+            <main>
+                <img id="profilePicture" alt="product" width="300vw" height="190vh" object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@product.FirstDimentionPicture))">
+                <img id="profilePicture" alt="product" width="300vw" height="190vh" object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@product.SecondDimentionPicture))">
+                <img id="profilePicture" alt="product" width="300vw" height="190vh" object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@product.ThirdDimentionPicture))">
+                <img id="profilePicture" alt="product" width="300vw" height="190vh" object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@product.ForthDimentionPicture))">
+            </main><br>
+            <div class="first"> <span class="title">@product.ProductName</span><span class="price">₦@product.Price/@product.Measurement</span> </div>
+            <div class="second"> <span>Quantity</span><span class="sec">@product.Quantity<span class="sec">@product.Measurement (s)</span> </span> </div>
+            <div class="second"> <span>Location</span><span class="sec">@product.ProductState/@product.ProductLocalGovernment</span> </div>
+            <div class="third"> <span>Availability</span><span class="date">@dateFrom - @dateTo</span> </div>
+        </div><br>
+       
+    </div>
+    
+               }
+
+ 
+    
+   

@@ -1,0 +1,179 @@
+using System.Security.Claims;
+using Agro_Express.Dtos;
+using Agro_Express.Dtos.RequestedProduct;
+using Agro_Express.Models;
+using Agro_Express.Repositories.Interfaces;
+using Agro_Express.Services.Interfaces;
+
+namespace Agro_Express.Services.Implementations
+{
+    public class RequestedProductService : IRequestedProductService
+    {
+        //  private readonly IProductRepository _productRepository;
+        //   private readonly IFarmerRepository _farmerRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+         private readonly IRequestedProductRepository _requestedProductRepository;
+            private readonly IProductRepository _productRepository;
+         private readonly IUserRepository _userRepository;
+          private readonly IFarmerRepository _farmerRepository;
+
+        public  RequestedProductService(IRequestedProductRepository requestedProductRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository,IFarmerRepository farmerRepository, IProductRepository productRepository)
+        {
+          _requestedProductRepository = requestedProductRepository;
+          _httpContextAccessor = httpContextAccessor;
+          _userRepository = userRepository;
+          _farmerRepository = farmerRepository;
+          _productRepository = productRepository;
+        }
+        public async Task<BaseResponse<RequestedProductDto>> CreateRequstedProductAsync(string productId)
+        {
+           var product = _productRepository.GetProductById(productId);
+           var farmer = _farmerRepository.GetByEmailAsync(product.FarmerEmail);
+           var userEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
+           var user = _userRepository.GetByEmailAsync(userEmail);
+           var requestedProduct = new  RequestedProduct{
+             FarmerId = farmer.Id,
+             BuyerEmail = user.Email,
+             FarmerName = farmer.User.UserName,
+             FarmerNumber = farmer.User.PhoneNumber,
+             BuyerPhoneNumber = user.PhoneNumber,
+             BuyerLocalGovernment = user.Address.LocalGovernment,
+             ProductName = product.ProductName,
+             OrderStatus = true,
+             IsDelivered = false,
+             IsAccepted = false
+
+           };
+           await _requestedProductRepository.CreateAsync(requestedProduct);
+           return new BaseResponse<RequestedProductDto>{
+            IsSucess = true,
+            Message = "Order Created successfully 😎"
+           };
+        }
+
+        public async Task DeleteRequestedProduct(string productId)
+        {
+            var product = await _requestedProductRepository.GetProductByProductIdAsync(productId);
+            await _requestedProductRepository.DeleteRequestedProduct(product);
+        }
+
+        public async Task<BaseResponse<IEnumerable<RequestedProductDto>>> MyRequests(string farmerId)
+        {
+             //farmerId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var products = await _requestedProductRepository.GetRequestedProductsByFarmerIdAsync(farmerId);
+            var requestDto = products.Select(item  => new RequestedProductDto{
+                Id = item.Id,
+                FarmerId = item.FarmerId,
+                BuyerId = item.FarmerId,
+                BuyerEmail = item.BuyerEmail,
+                BuyerPhoneNumber = item.BuyerPhoneNumber,
+                BuyerLocalGovernment = item.BuyerLocalGovernment,
+                ProductName = item.ProductName,
+                OrderStatus = item.OrderStatus,
+                IsAccepted = item.IsAccepted,
+                IsDelivered = item.IsDelivered,
+                FarmerName = item.FarmerName,
+                FarmerNumber = item.FarmerNumber
+
+            }).ToList();
+            if(requestDto.Count() == 0)
+            {
+                    return new BaseResponse<IEnumerable<RequestedProductDto>>{
+                    IsSucess = false,
+                    Message ="No request yet 🙄",
+                    Data = requestDto
+                };
+            }
+
+            return new BaseResponse<IEnumerable<RequestedProductDto>>{
+                IsSucess = true,
+                Message ="These are your requets 😎",
+                Data = requestDto
+            };
+        }
+
+        public async Task<BaseResponse<OrderedAndPending>> OrderedAndPendingProduct(string buyerEmail)
+        {
+            var orderedProduct = await _requestedProductRepository.GetOrderedProduct(buyerEmail);
+             var ordered = orderedProduct.Select(item => new RequestedProductDto{
+                Id = item.Id,
+                FarmerId = item.FarmerId,
+                BuyerId = item.FarmerId,
+                BuyerEmail = item.BuyerEmail,
+                BuyerPhoneNumber = item.BuyerPhoneNumber,
+                BuyerLocalGovernment = item.BuyerLocalGovernment,
+                ProductName = item.ProductName,
+                OrderStatus = item.OrderStatus,
+                IsAccepted = item.IsAccepted,
+                IsDelivered = item.IsDelivered,
+                FarmerName = item.FarmerName,
+                FarmerNumber = item.FarmerNumber
+            });
+
+            var pendingProduct = await _requestedProductRepository.GetPendingProduct(buyerEmail);
+
+            var pending = pendingProduct.Select(item => new RequestedProductDto{
+                Id = item.Id,
+                FarmerId = item.FarmerId,
+                BuyerId = item.FarmerId,
+                BuyerEmail = item.BuyerEmail,
+                BuyerPhoneNumber = item.BuyerPhoneNumber,
+                BuyerLocalGovernment = item.BuyerLocalGovernment,
+                ProductName = item.ProductName,
+                OrderStatus = item.OrderStatus,
+                IsAccepted = item.IsAccepted,
+                IsDelivered = item.IsDelivered,
+                FarmerName = item.FarmerName,
+                FarmerNumber = item.FarmerNumber
+            });
+            var orderedAndPending = new OrderedAndPending{
+                OrderedProduct = ordered,
+                PendingProduct = pending
+            };
+            return new BaseResponse<OrderedAndPending>{
+                IsSucess = true,
+                Message = "Product ordered succesfully",
+                Data = orderedAndPending
+            };
+        }
+
+        public async Task<BaseResponse<RequestedProductDto>> ProductAccepted(string productId)
+        {
+            var requestedProduct =  await _requestedProductRepository.GetProductByProductIdAsync(productId);
+            requestedProduct.IsAccepted = true;
+            _requestedProductRepository.UpdateRequestedProduct(requestedProduct);
+            var requestDto = new RequestedProductDto{
+                Id = requestedProduct.Id,
+                FarmerId = requestedProduct.FarmerId,
+                BuyerId = requestedProduct.FarmerId,
+                BuyerEmail = requestedProduct.BuyerEmail,
+                BuyerPhoneNumber = requestedProduct.BuyerPhoneNumber,
+                BuyerLocalGovernment = requestedProduct.BuyerLocalGovernment,
+                ProductName = requestedProduct.ProductName,
+                OrderStatus = requestedProduct.OrderStatus,
+                IsAccepted = requestedProduct.IsAccepted,
+                IsDelivered = requestedProduct.IsDelivered,
+                FarmerName = requestedProduct.FarmerName,
+                FarmerNumber = requestedProduct.FarmerNumber
+            };
+            return new BaseResponse<RequestedProductDto>{
+                IsSucess = true,
+                Message = "Request accepted successfully",
+                Data = requestDto
+            };
+        }
+
+        public async Task  ProductDelivered(string productId)
+        {
+           var requestedProduct =  await _requestedProductRepository.GetProductByProductIdAsync(productId);
+           var id =  _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var farmer = _farmerRepository.GetByIdAsync(requestedProduct.FarmerId);
+        if(farmer.UserId != id)
+        {
+           farmer.Ranking++;
+           _farmerRepository.Update(farmer);
+        }
+            await _requestedProductRepository.DeleteRequestedProduct(requestedProduct);
+        }
+    }
+}

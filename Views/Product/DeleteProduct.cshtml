@@ -1,0 +1,16 @@
+@using Agro_Express.Dtos.Product
+@using Agro_Express.Dtos
+@model BaseResponse<ProductDto>
+    <form asp-action="DeleteProduct" method = "post">
+         <div class="form-head"><span class="reg-form">Are you sure?</span></div>
+         <input asp-for = "@Model.Data.Id" hidden/>
+        <h2>Product name: @Model.Data.ProductName</h2>
+        <h2>Product price: @Model.Data.Price</h2>
+         <h2>Product Measurement: @Model.Data.Measurement</h2>
+          <h2>Product Quantity: @Model.Data.Quantity</h2>
+           <h2>Available from: @Model.Data.AvailabilityDateFrom</h2>
+            <h2>Available to: @Model.Data.AvailabilityDateTo</h2>
+     <div>
+        <div class="form-bottom"> <input value="Yes" class="submit-form" type="submit" asp-route-productsId="@Model.Data.Id" > </div>
+    </div>
+    </form>

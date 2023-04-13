@@ -1,0 +1,60 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+#sig-up-option{
+    /* border: solid red 1px; */
+    margin:  4rem 4rem;
+    padding: 1rem 1rem;
+    height: 70vh;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+#sig-up-option>div{
+    /* border: solid red 1px; */
+    border-radius: 15px;
+    flex: 40%;
+    padding: 3.5rem 2rem;
+    background-color: aquamarine;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+#sign-option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+#sign-text{
+    font-size: larger;
+    font-weight: bolder;
+    color: black !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.partial-sign{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+    
+}
+.partial-sign2{
+    margin-top: .5vh;
+    border: solid green 1px;
+    border-radius: 3rem;
+    height: 2rem;
+    background-color: green;
+    /* width: 15vw; */
+    align-items: center;
+    text-align: center;
+    /* padding-bottom: 1.5vh !important; */
+    padding: .5rem 2.4rem;
+    color: aliceblue;
+    font-size: large;
+    font-weight: bolder;
+}

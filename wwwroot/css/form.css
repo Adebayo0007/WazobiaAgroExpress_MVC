@@ -1,0 +1,96 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+.form-container>div{
+    /* border: solid red 1px; */
+}
+.form-head,.form-bottom{
+    height: 13vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+}
+.form-body{
+    height: 70vh;
+    width: 100vw;
+    padding: 1rem 1.5rem;
+    align-items: center;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+}
+
+.form-body>div{
+   width: 80vw;
+   padding: .5rem 2rem;
+}
+.reg-form{
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: aliceblue;
+    text-align: center;
+}
+.camp{
+    display: flex;
+}
+.camp>span{
+    border: solid rgb(73, 66, 66) .5px;
+}
+.input-wrapper{
+    background-color: rgb(145, 179, 107);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: black;
+    font-size: x-large;
+    border-radius: 15px;
+  }
+.form-icon{
+    /* border:  solid blue 1px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.5vh;
+    width: 7vw;
+    font-size: 1rem;
+    text-align: center;
+    border-right: none !important;
+    /* margin-top: 2rem;
+    margin-left: 2rem; */
+}
+.input{
+    height: 3vh;
+    width: 50vw;
+    border:0;
+    outline:0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.input:valid{
+    color: black;
+}
+.input:invalid{
+    color: red;
+}
+.input:focus{
+    outline: none !important;
+}
+.input::placeholder{
+    font-style: italic;
+}
+.submit-form{
+    border-radius: 10px;
+    width: 50vw;
+    height: 7vh;
+    font-weight: bolder;
+    font-size: 20px;
+}
+.submit-form:hover{
+    /* color: white; */
+    background-color: greenyellow;
+}

@@ -1,0 +1,68 @@
+@using Agro_Express.Dtos.RequestedProduct
+@using Agro_Express.Dtos
+@model BaseResponse<OrderedAndPending>
+    <div class="form-head"><span class="reg-form">Ordered Product Details</span></div>
+    
+     @if( Model.Data.OrderedProduct.Count() != 0)
+    {
+          @foreach (var item in Model.Data.OrderedProduct)
+        {
+            <div class="app-user">
+        <div style="height:18rem !important" class="user-body">
+            <div class="user-detail">
+                <div><span class="user-font">Product: </span> <span class="user-font">@item.ProductName</span></div>
+                 <div><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
+                 <div><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
+                  <div><span class="user-font">Farmer name: </span> <span class="user-font">@item.FarmerName</span></div>
+                 <div><span class="user-font">Farmer no: </span> <span class="user-font">@item.FarmerNumber</span></div>
+
+                       <div style=" margin-bottom: 1rem; margin-left: 1.5rem !important; margin-right: 1.6rem !important;" class="partial-sign">
+                        <a class="partial-sign2" style="padding:0.2rem 2.4rem !important;color: white !important; font-weight: bolder;text-align: center;" class="nav-link text-dark" asp-area="" asp-controller="RequestedProduct" asp-action="DeleteRequest" asp-route-requestId="@item.Id">Delete</a>
+                         </div>
+
+    
+
+               
+            </div>
+        </div>
+    </div><hr>
+        }
+    }
+    else
+    {
+       <h5 style="color:red">No Order yet</h5>
+    }
+
+    <div class="form-head"><span class="reg-form">Orders accepted by Farmer</span></div>
+
+    @if( Model.Data.PendingProduct.Count() != 0)
+    {
+          @foreach (var item in Model.Data.PendingProduct)
+        {
+            <div class="app-user">
+        <div style="height:17rem !important" class="user-body">
+            <div class="user-detail">
+                <div><span class="user-font">Product: </span> <span class="user-font">@item.ProductName</span></div>
+                 <div><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
+                 <div><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
+                  <div><span class="user-font">Farmer name: </span> <span class="user-font">@item.FarmerName</span></div>
+                 <div><span class="user-font">Farmer no: </span> <span class="user-font">@item.FarmerNumber</span></div>
+    
+                       <div style=" margin-bottom: 1rem; margin-left: 1.5rem !important; margin-right: 1.6rem !important;" class="partial-sign">
+                        <a class="partial-sign2" style="padding:0.2rem 2.4rem !important;color: white !important; font-weight: bolder;text-align: center;" class="nav-link text-dark" asp-area="" asp-controller="RequestedProduct" asp-action="DeliveredRequest" asp-route-requestId="@item.Id">Delivered</a>
+                         </div>
+
+    
+
+               
+            </div>
+        </div>
+    </div><hr>
+        }
+    }
+    else
+    {
+       <h5 style="color:red">And No Pending Order yet</h5>
+    }
+   
+ 

@@ -1,0 +1,30 @@
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "My Profile";
+}
+<h1>@ViewData["Title"]</h1>
+@if(User.FindFirst(ClaimTypes.Anonymous) != null)
+{
+    <h5>Hello! @User.FindFirst(ClaimTypes.Anonymous).Value</h5>
+}
+  @if(TempData["success"] != null)
+             {
+                <h2>@TempData["success"]</h2>
+               }
+            @if(TempData["error"] != null)
+             {
+                <h2 style="color:red">@TempData["error"]</h2>
+               }
+
+ <div class="bodyy">
+        <a class="product" asp-action="AvailableProducts" asp-controller="Product">
+            <div class="text">Available Products</div>
+            <div><img src="~/Data/div.jpeg" alt="product" width="150vw" height="130vh"></div>
+        </a>
+        <div class="div">
+            <a asp-action="OrderedProductAndPendingProduct" asp-controller="RequestedProduct" class="cart"><i class="fa-solid fa-cart-shopping"></i> <span>My Orders</span></a>
+            <a class="cart" asp-controller="Buyer" asp-action="BuyerProfile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+        </div>
+       
+    </div>
+    </div>

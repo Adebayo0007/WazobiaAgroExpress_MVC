@@ -1,0 +1,20 @@
+@using Agro_Express.Dtos
+@using Agro_Express.Dtos.User
+@model BaseResponse<UserDto>
+    @if(TempData["error"] != null)
+    {
+        <h4>@TempData["error"]</h4>
+    }
+   <form asp-action="DeleteUser" method = "post">
+         <div class="form-head"><span class="reg-form">Are you sure?</span></div>
+         <input asp-for = "@Model.Data.Id" hidden/>
+        <h2>User name: @Model.Data.UserName</h2>
+        <h2>Name: @Model.Data.Name</h2>
+         <h2>Number: @Model.Data.PhoneNumber</h2>
+          <h2>Gender: @Model.Data.Gender</h2>
+           <h2>State: @Model.Data.State</h2>
+            <h2>LGA: @Model.Data.LocalGovernment</h2>
+     <div>
+        <div class="form-bottom"> <input value="Yes" class="submit-form" type="submit" asp-route-usersId="@Model.Data.Id" > </div>
+    </div>
+    </form>

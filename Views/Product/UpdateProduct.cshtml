@@ -1,0 +1,19 @@
+@using Agro_Express.Enum
+@using Agro_Express.Dtos
+@using Agro_Express.Dtos.Product
+@model BaseResponse<ProductDto>
+<form asp-action="UpdateProduct" asp-controller="Product" method="post">
+        @if(TempData["error"] != null)
+                {
+                <h2 style="color:red">@TempData["error"]</h2>
+                }
+<div>
+     <div id="product-form">
+        <input asp-for = "@Model.Data.Id" hidden/>
+        <p id="product-form-input"> Product Information<br><br>The name of my product is <input asp-for="@Model.Data.ProductName" name = "ProductName" id="product-form-input-input" type="text" placeholder="input Product name" required/>, the price is ₦<input asp-for="@Model.Data.Price" name = "Price" id="product-form-input-input" type="number" placeholder=" e.g 200"  min="1" required/> per <select asp-for="@Model.Data.Measurement" name = "Measurement" asp-items="Html.GetEnumSelectList<Measurement>()" id="product-form-input-input" placeholder="Measurement" ></select>, the available quantity at hand now in related to the inputed Measurement (e.g if you input 200 here and you haved inputed kg in the previous input,that means you have 200kg available) is <input asp-for="@Model.Data.Quantity"  name = "Quantity" id="product-form-input-input" type="number"  min="1" placeholder="e.g 300" required/> and it will be available from  <input asp-for="@Model.Data.AvailabilityDateFrom" name = "AvailabilityDateFrom" id="product-form-input-input" type="date"  required/> to  <input asp-for="@Model.Data.AvailabilityDateTo"  name = "AvailabilityDateTo" id="product-form-input-input" type="date" required/></p>
+      </div>
+    <div>
+        <div class="form-bottom"> <input class="submit-form" type="submit" asp-route-productsId="@Model.Data.Id"> </div>
+    </div>
+</div>
+</form>

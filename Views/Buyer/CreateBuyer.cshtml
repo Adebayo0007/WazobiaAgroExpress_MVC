@@ -1,0 +1,53 @@
+@using Agro_Express.Dtos.Buyer
+@using Agro_Express.Enum
+@model CreateBuyerRequestModel
+
+
+
+
+    <form enctype="multipart/form-data" asp-action="CreateBuyer" method="post">
+   <div class="form-container">
+    <div class="form-head"><span class="reg-form">Registration Form</span></div>
+       @if(TempData["error"] != null )
+                    {
+                        <h5 id="overlay"><i style="color: red; text-align: center;">@TempData["error"]</i></h5>
+                    }
+    
+    <div class="form-body">
+       
+             <div class="input-wrapper">
+                    <label asp-for ="ProfilePicture" style="width: 100%;"></label>           
+                     <input type="file"
+                       id="profilePicture"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       name="ProfilePicture"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" required/>
+                </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-file-signature fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "FirstName" type="text" placeholder="First name" required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-file-signature fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "LastName" type="text" placeholder="Last name" required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-user fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "UserName"  maxlength="15" type="text" placeholder="User name" required/></span> </div><br>
+
+         <div class="camp"> <span class="form-icon"><i class="fa-solid fa-location-dot fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "FullAddress" type="text" placeholder="Full address" required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-sharp fa-solid fa-location-pin fa-beat"></i></span> <span class="form-input">  <select class= "input" name = "LocalGovernment" asp-items="Html.GetEnumSelectList<LocalGovernment>()"></select></span> </div><br>
+
+         <div class="camp"> <span class="form-icon"><i class="fa-solid fa-flag-usa fa-beat"></i></span> <span class="form-input">  <select class= "input" name = "State" asp-items="Html.GetEnumSelectList<State>()"></select></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-venus-mars fa-beat"></i></span> <span class="form-input">  <select class= "input" name = "Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-envelope fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "Email" type="email" placeholder="Email" required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-lock fa-beat"></i></span> <span class="form-input">  <input class= "input"  name = "Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" type="password" placeholder="Password(6 character with number and capital letter)" required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-sharp fa-solid fa-phone-volume fa-beat"></i></span> <span class="form-input">  <input class= "input" name = "PhoneNumber" type="text" placeholder="Phone number" required/></span> </div><br>
+       
+       
+    </div>
+    <div class="form-bottom"> <input class="submit-form" type="submit"> </div>
+    </div>
+    </form>

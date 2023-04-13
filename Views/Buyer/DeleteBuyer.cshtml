@@ -1,0 +1,36 @@
+@using Agro_Express.Enum
+@using Agro_Express.Dtos.Buyer
+@using Agro_Express.Dtos
+@model BaseResponse<BuyerDto>
+
+    <form enctype="multipart/form-data" asp-action="DeleteBuyer" method="post">
+      @if(TempData["success"] != null)
+             {
+                <h2>@TempData["success"]</h2>
+               }
+            @if(TempData["error"] != null)
+             {
+                <h2 style="color:red">@TempData["error"]</h2>
+               }
+   <div class="form-container">
+    <div class="form-head"><span class="reg-form">Are you sure</span></div>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-file-signature fa-beat"></i></span> <span class="form-input">  <input class= "input" asp-for="@Model.Data.Name" name = "Name" type="text" placeholder="Name" disabled required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-user fa-beat"></i></span> <span class="form-input">  <input class= "input" asp-for="@Model.Data.UserName" name = "UserName" type="text" placeholder="User name" disabled required/></span> </div><br>
+
+         <div class="camp"> <span class="form-icon"><i class="fa-solid fa-location-dot fa-beat"></i></span> <span class="form-input">  <input class= "input" asp-for="@Model.Data.FullAddress" name = "FullAddress" type="text" placeholder="Full address" disabled required/></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-sharp fa-solid fa-location-pin fa-beat"></i></span> <span class="form-input">  <select class= "input" asp-for="@Model.Data.LocalGovernment" name = "LocalGovernment" asp-items="Html.GetEnumSelectList<LocalGovernment>()" disabled></select></span> </div><br>
+
+         <div class="camp"> <span class="form-icon"><i class="fa-solid fa-flag-usa fa-beat"></i></span> <span class="form-input">  <select class= "input" asp-for="@Model.Data.State" name = "State" asp-items="Html.GetEnumSelectList<State>()" disabled></select></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-solid fa-venus-mars fa-beat"></i></span> <span class="form-input">  <select class= "input" asp-for="@Model.Data.Gender" name = "Gender" asp-items="Html.GetEnumSelectList<Gender>()" disabled></select></span> </div><br>
+
+        <div class="camp"> <span class="form-icon"><i class="fa-sharp fa-solid fa-phone-volume fa-beat"></i></span> <span class="form-input">  <input class= "input" asp-for="@Model.Data.PhoneNumber" name = "PhoneNumber" type="text" placeholder="Phone number" required disabled/></span> </div><br>
+       
+       
+    </div>
+    <div class="form-bottom"> <input value="Yes" class="submit-form" type="submit" asp-action="DeleteBuyer" asp-controller="Buyer" asp-route-buyerId=@Model.Data.Id> </div>
+    </div>
+    </form>

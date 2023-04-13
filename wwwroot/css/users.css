@@ -1,0 +1,33 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+.app-user{
+    /* border:  solid red 1px; */
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55vw;
+    margin: 2rem 20vw;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+}
+.user-body{
+    display: flex;
+    flex-direction: column;
+    height: 68vh;
+    padding: .5rem;
+
+}
+.user-picture{
+    display: flex;
+    justify-content: center;
+}
+.user-font{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* color: aliceblue; */
+    
+}

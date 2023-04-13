@@ -1,0 +1,67 @@
+@using Agro_Express.Dtos.Product
+@using Agro_Express.Enum
+@model CreateProductRequestModel
+
+<form enctype="multipart/form-data" asp-action="CreateProduct" method="post">
+   <div class="form-container">
+    <div class="form-head"><span class="reg-form">Your Farm Product</span></div>
+      @if(TempData["error"] != null )
+                    {
+                        <h5 id="overlay"><i style="color: red; text-align: center;">@TempData["error"]</i></h5>
+                    }
+    
+    <div class="form-body">
+       
+             <div class="input-wrapper">
+                    <label asp-for ="FirstDimentionPicture" style="width: 100%;"></label>           
+                     <input type="file"
+                       id="profilePicture"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       name="ProfilePicture"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" required/>
+                </div><br>
+
+                 <div class="input-wrapper">
+                    <label asp-for ="SecondDimentionPicture" style="width: 100%;"></label>           
+                     <input type="file"
+                       id="profilePicture"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       name="ProfilePicture"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" required/>
+                </div><br>
+
+                 <div class="input-wrapper">
+                    <label asp-for ="ThirdDimentionPicture" style="width: 100%;"></label>           
+                     <input type="file"
+                       id="profilePicture"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       name="ProfilePicture"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" required/>
+                </div><br>
+
+                 <div class="input-wrapper">
+                    <label asp-for ="ForthDimentionPicture" style="width: 100%;"></label>           
+                     <input type="file"
+                       id="profilePicture"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       name="ProfilePicture"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" required/>
+                </div><br>
+
+         <div id="product-form">
+        <p id="product-form-input"> Product Information<br><br>The name of my product is <input name = "ProductName" id="product-form-input-input" type="text" placeholder="Product name" required/>, the price is ₦<input name = "Price" id="product-form-input-input" type="number" placeholder=" e.g 200"  min="1" required/> per <select name = "Measurement" asp-items="Html.GetEnumSelectList<Measurement>()" id="product-form-input-input" placeholder="Measurement" ></select>, the available quantity at hand now in related to the inputed Measurement (e.g if you input 200 here and you haved inputed kg in the previous input,that means you have 200kg available) is <input name = "Quantity" id="product-form-input-input" type="number"  min="1" placeholder="e.g 300" required/> and it will be available from  <input name = "AvailabilityDateFrom" id="product-form-input-input" type="date"  required/> to  <input name = "AvailabilityDateTo" id="product-form-input-input" type="date" required/></p>
+      </div>
+       
+       
+    </div>
+    <div class="form-bottom"> <input class="submit-form" type="submit"> </div>
+    </div>
+    </form>

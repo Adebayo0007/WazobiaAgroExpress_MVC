@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Agro-Express.props" />
+</Project>

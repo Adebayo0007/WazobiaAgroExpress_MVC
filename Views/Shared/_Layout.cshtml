@@ -1,0 +1,157 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>@ViewData["Title"] - Agro_Express</title>
+     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true">
+     <link rel="stylesheet" href="~/css/signuppage.css" asp-append-version="true">
+     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true">
+     <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true">
+     <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/productForm.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/product.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/search.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Agro_Express.styles.css" asp-append-version="true" />
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;0,900;1,400;1,600;1,900&family=Poppins:ital,wght@0,300;0,500;0,600;0,800;1,300;1,700&family=Rufina:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div style="background-color: green;" class="container-fluid">
+                <a  class="navbar-brand" asp-area=""><img class="hr" src="~/Data/agrologo.png" width="50vw" height="40vh" alt=""><span class="ago">Wazobia Express</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a  style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        @if(User.FindFirst(ClaimTypes.Role) == null )
+                        {
+                            <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUpPage">Sign up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogIn">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                             if(User.FindFirst(ClaimTypes.Role).Value == "Admin")
+                            {
+                                <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteAdmin">Detele Account</a>
+                            </li>
+                            }
+
+                             if(User.FindFirst(ClaimTypes.Role).Value == "Farmer")
+                            {
+                                <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="Farmer" asp-action="DeleteFarmer">Detele Account</a>
+                            </li>
+                            }
+
+                             if(User.FindFirst(ClaimTypes.Role).Value == "Buyer")
+                            {
+                                <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="Buyer" asp-action="DeleteBuyer">Detele Account</a>
+                            </li>
+                            }
+                            <li class="nav-item">
+                                <a style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogOut">Log out</a>
+                            </li>
+                           
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+      <div class="container">
+        <main  role="main" class="pb-3">
+            <div class="inner">
+            <div class = "conn"> 
+                <div class="logoo">  <img src="~/Data/agrologo.png" width="150vw" height="110vh" alt=""></div>
+                 @if(User.FindFirst(ClaimTypes.Role) != null )
+                        {
+                            if(User.FindFirst(ClaimTypes.Role).Value == "Admin")
+                            {
+                                     <div class="bar">
+                    <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand">Go Home</span></a></div>
+                   <div class="cart"><i class="fa-solid fa-magnifying-glass"></i> &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                  <div class="cart"><a class="like" asp-action="AdminIndex" asp-controller="Admin"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
+                  <div class="cart"><a class="like" asp-action="AdminProfile" asp-controller="Admin"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
+                   </div>
+                            }
+                              if(User.FindFirst(ClaimTypes.Role).Value == "Buyer")
+                            {
+                                     <div class="bar">
+                     <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand"> Go Home</span></a></div>
+                   <div class="cart"> <i class="fa-solid fa-magnifying-glass"></i>  &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                  <div class="cart"><a class="like" asp-action="BuyerIndex" asp-controller="Buyer"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
+                   <div class="cart"><a class="like" asp-action="BuyerProfile" asp-controller="Buyer"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
+                   </div>
+                            }
+                              if(User.FindFirst(ClaimTypes.Role).Value == "Farmer")
+                            {
+                                     <div class="bar">
+                    <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand">Go Home</span></a></div>
+                   <div class="cart"> <i class="fa-solid fa-magnifying-glass"></i>  &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                  <div class="cart"><a class="like" asp-action="FarmerIndex" asp-controller="Farmer"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
+                   <div class="cart"><a class="like" asp-action="FarmerProfile" asp-controller="Farmer"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
+                   </div>
+                            }
+                 
+                        }
+                        else{
+                         <div class="partial-sign">
+
+                        <a class="partial-sign2" style="color: white !important; font-weight: bolder;" class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUpPage">Sign up</a>
+                         </div>
+                        }
+                
+            </div>
+            <div  class = "body"> @RenderBody()  </div>
+             </div>
+           
+        </main>
+    </div>
+
+
+
+        <div class="container">
+            @{
+                var x = DateTime.Now.Year;
+            }
+            &copy; @x - Agro_Express. @*<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+        </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
