@@ -2,6 +2,7 @@ using Agro_Express.Dtos;
 using Agro_Express.Dtos.AllFarmers;
 using Agro_Express.Dtos.Farmer;
 using Agro_Express.Dtos.User;
+using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
@@ -39,6 +40,7 @@ namespace Agro_Express.Services.Implementations
                   Role = "Farmer",
                   IsActive = true,
                   IsRegistered = false,
+                  Haspaid = false,
                   DateCreated = DateTime.Now
 
             };
@@ -49,6 +51,22 @@ namespace Agro_Express.Services.Implementations
                 User =  userr
             };
             await _farmerRepository.CreateAsync(farmer);
+
+               string gender = null;
+              if(userr.Gender ==  Enum.Gender.Male)
+               {
+                 gender="Mr";
+               }
+               else if(userr.Gender==  Enum.Gender.Female)
+               {
+                 gender="Mrs";
+               }
+               else
+               {
+                 gender = "Mr/Mrs";
+               }
+            
+            EmailConfiguration.EmailSending(userr.Email,userr.Name,"Registration Confirmation",$"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU");
 
              var farmerDto = new FarmerDto{
                   UserName = createFarmerModel.UserName,
@@ -295,15 +313,16 @@ namespace Agro_Express.Services.Implementations
                 IsSucess = false
             };
             }
-            var buyer = _farmerRepository.GetByEmailAsync(updateFarmerModel.Email);
-            if(buyer == null)
+            var farmer = _farmerRepository.GetByEmailAsync(updateFarmerModel.Email);
+            if(farmer == null)
             {
                   return new BaseResponse<FarmerDto>{
                 Message = "farmer not updated,internal error 🙄",
                 IsSucess = false
             };
             }
-              _farmerRepository.Update(buyer);
+              _farmerRepository.Update(farmer);
+
               var farmerDto = new FarmerDto{
                 UserName = updateFarmerModel.UserName,
                 ProfilePicture = updateFarmerModel.ProfilePicture ,

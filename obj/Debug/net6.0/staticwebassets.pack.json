@@ -101,6 +101,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\js\\transaction.js",
+      "PackagePath": "staticwebassets\\js\\transaction.js"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },

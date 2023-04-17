@@ -115,7 +115,7 @@ namespace Agro_Express.Controllers
         }
          
         [HttpPost , ActionName("DeleteProduct")]
-         public async Task<IActionResult> DeleteFarmerConfirmed(string productsId)
+         public async Task<IActionResult> DeleteProductConfirmed(string productsId)
         {
             if(productsId == null)
             {

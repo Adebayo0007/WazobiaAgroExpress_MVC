@@ -3,6 +3,7 @@ using System;
 using Agro_Express.ApplicationContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agro_Express.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230415215329_th")]
+    partial class th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,9 +199,6 @@ namespace Agro_Express.Migrations
                     b.Property<string>("FarmerNumber")
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("Haspaid")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("tinyint(1)");
 
@@ -278,14 +277,14 @@ namespace Agro_Express.Migrations
                         new
                         {
                             Id = "37846734-732e-4149-8cec-6f43d1eb3f60",
-                            DateCreated = new DateTime(2023, 4, 16, 0, 20, 16, 585, DateTimeKind.Local).AddTicks(9957),
+                            DateCreated = new DateTime(2023, 4, 15, 22, 53, 28, 508, DateTimeKind.Local).AddTicks(1530),
                             Email = "tijaniadebayoabdllahi@gmail.com",
                             Gender = 1,
                             Haspaid = true,
                             IsActive = true,
                             IsRegistered = true,
                             Name = "Adebayo Addullah",
-                            Password = "$2b$10$2FACaT03XVHZrB5bUjapougV1jwdzeo/UkzqBAkX/GDqxCgD/J1XS",
+                            Password = "$2b$10$lrOjCL/DVkDsGLN76/.2JuU/KDgUly0MeYD/9nMS3lEEqYVas2OaK",
                             PhoneNumber = "08087054632",
                             Role = "Admin",
                             UserName = "Modrator"

@@ -8,20 +8,45 @@ namespace Agro_Express.Controllers
     public class RequestedProductController : Controller
     {
          private readonly IRequestedProductService _requstedProductSercice;
-        public RequestedProductController(IRequestedProductService requstedProductSercice)
+           private readonly IProductService _productSercice;
+             private readonly IUserService _userSercice;
+        public RequestedProductController(IRequestedProductService requstedProductSercice, IProductService productSercice, IUserService userSercice)
         {
             _requstedProductSercice = requstedProductSercice;
+            _productSercice = productSercice;
+            _userSercice = userSercice;
         }
-        public async Task<IActionResult> CreateRequestedProduct(string productId)
+
+        public async Task<IActionResult> CreateRequest(string productId)
         {
-          var product =  await  _requstedProductSercice.CreateRequstedProductAsync(productId);
-          if(product.IsSucess != true)
-          {
-             TempData["error"] = "internal error";
-             return BadRequest();
-          }
-           TempData["order"] = product.Message;
+            if(productId != null)
+            {
+                var request = await _productSercice.GetProductById(productId);
+                return View(request);
+            }
             return RedirectToAction("AvailableProducts", "Product");
+         }
+
+         [HttpPost]
+        public async Task<IActionResult> CreateRequestedProduct(string requestId)
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email).Value;
+           var user = await _userSercice.GetByEmailAsync(userEmail);
+           if(user.Data.Haspaid == true)
+           {
+
+                var product =  await  _requstedProductSercice.CreateRequstedProductAsync(requestId);
+                if(product.IsSucess != true)
+                {
+                    TempData["error"] = "internal error";
+                    return BadRequest();
+                }
+                TempData["order"] = product.Message;
+                return RedirectToAction("AvailableProducts", "Product");
+
+           }
+            TempData["id"] = requestId;
+            return RedirectToAction(nameof(Payment));
          }
 
           public async Task<IActionResult> OrderedProductAndPendingProduct(string buyerEmail)
@@ -65,7 +90,9 @@ namespace Agro_Express.Controllers
             
 
          }
-              [Authorize(Roles = "Farmer")]
+
+
+            [Authorize(Roles = "Farmer")]
            public async Task<IActionResult> AcceptRequest(string requestId)
          {
             if(requestId != null)
@@ -76,10 +103,7 @@ namespace Agro_Express.Controllers
             }
             TempData["error"] = "internal error 🙄";
               return RedirectToAction(nameof(MyRequests));
-            
-
          }
-
 
          [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> MyRequests(string farmerId)
@@ -94,6 +118,21 @@ namespace Agro_Express.Controllers
             TempData["success"] = requests.Message;
            return View(requests);
         }
+
+        [HttpGet]
+        public IActionResult Payment(string userEmail)
+        {
+              _userSercice.UpdatingToHasPaid(userEmail);
+               return View();
+        }
+
+        // [HttpPost]
+        // [ActionName("Payment")]
+        // public IActionResult PaymentConfirmed(string userEmail)
+        // {
+        //     _userSercice.UpdatingToHasPaid(userEmail);
+        //    return View();
+        // }
 
     }
 }

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.RequestedProduct;
+using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
@@ -41,10 +42,45 @@ namespace Agro_Express.Services.Implementations
              ProductName = product.ProductName,
              OrderStatus = true,
              IsDelivered = false,
-             IsAccepted = false
+             IsAccepted = false,
+             Haspaid = user.Haspaid
 
            };
            await _requestedProductRepository.CreateAsync(requestedProduct);
+              string gender = null;
+              string buyerGender = null;
+              string pronoun = null;
+               if(farmer.User.Gender ==  Enum.Gender.Male)
+               {
+                 gender="Mr";
+               }
+               else if(farmer.User.Gender==  Enum.Gender.Female)
+               {
+                 gender="Mrs";
+               }
+               else
+               {
+                 gender = "Mr/Mrs";
+               }
+
+                if(user.Gender == Enum.Gender.Male)
+               {
+                 buyerGender="Mr";
+                 pronoun = "him";
+               }
+               else if(user.Gender== Enum.Gender.Female)
+               {
+                 buyerGender="Mrs";
+                  pronoun = "her";
+               }
+               else
+               {
+                 buyerGender = "Mr/Mrs";
+                 pronoun = "him/her";
+               }
+            
+            EmailConfiguration.EmailSending(farmer.User.Email,farmer.User.Name,"Product Request",$"Hello {gender} {farmer.User.Name}!,An order has been made by {buyerGender} {user.Name} today {DateTime.Now.Date.ToString("dd/MM/yyyy")} requesting for {product.ProductName} on your portal,please kindly login to your portal to accept the offer.And also you can contact {pronoun} on {user.PhoneNumber},and don't forget to inform your client to click on the \'Delivered\' button on their portal after been accepted by you on your portal and delivered to {pronoun} successfully.Thank You");
+            
            return new BaseResponse<RequestedProductDto>{
             IsSucess = true,
             Message = "Order Created successfully 😎"
@@ -55,6 +91,7 @@ namespace Agro_Express.Services.Implementations
         {
             var product = await _requestedProductRepository.GetProductByProductIdAsync(productId);
             await _requestedProductRepository.DeleteRequestedProduct(product);
+             EmailConfiguration.EmailSending(product.BuyerEmail,product.BuyerEmail,"Product Deleted",$"Hello!,the {product.ProductName} you ordered from Wazobia Agro Express have been deleted successfully,if you are still in need of the product or any other product,you can always go to the application and make your order!.For any complain or clearification contact 08087054632 or reply to this message.thank you");
         }
 
         public async Task<BaseResponse<IEnumerable<RequestedProductDto>>> MyRequests(string farmerId)
@@ -142,6 +179,9 @@ namespace Agro_Express.Services.Implementations
             var requestedProduct =  await _requestedProductRepository.GetProductByProductIdAsync(productId);
             requestedProduct.IsAccepted = true;
             _requestedProductRepository.UpdateRequestedProduct(requestedProduct);
+
+               EmailConfiguration.EmailSending(requestedProduct.BuyerEmail,requestedProduct.BuyerEmail,"Product Accepted",$"Hello!,the {requestedProduct.ProductName} you ordered from Wazobia Agro Express have been accepted by the farmer,the farmer will contact you in short time,stay tune!.For any complain or clearification contact 08087054632 or reply to this message");
+               
             var requestDto = new RequestedProductDto{
                 Id = requestedProduct.Id,
                 FarmerId = requestedProduct.FarmerId,
@@ -172,6 +212,7 @@ namespace Agro_Express.Services.Implementations
         {
            farmer.Ranking++;
            _farmerRepository.Update(farmer);
+            EmailConfiguration.EmailSending(requestedProduct.BuyerEmail,requestedProduct.BuyerEmail,"Successful Marketing",$"Wazobia Agro Express is saying Thank you for using our Application as market place, we look forward to see you next time on our apllication 😎.Thank you");
         }
             await _requestedProductRepository.DeleteRequestedProduct(requestedProduct);
         }

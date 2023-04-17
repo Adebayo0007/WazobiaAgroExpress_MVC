@@ -1,0 +1,15 @@
+@using Agro_Express.Dtos
+@using Agro_Express.Dtos.Product
+@model BaseResponse<ProductDto>
+<form asp-action="CreateRequestedProduct" asp-controller="RequestedProduct" method="post">
+    <div class="form-head"><span class="reg-form">Request Confirmation</span></div>
+      
+                  <span>Are you sure you want to buy <span>@Model.Data.ProductName</span> at the rate of <span>@Model.Data.Price</span> per <span>@Model.Data.Measurement</span>,and also the product is located at <span>@Model.Data.ProductLocalGovernment</span></span>
+                 @* <div><span class="user-font">Farmer no: </span> <span class="user-font">@item.</span></div> *@
+
+                       <div style=" margin-bottom: 1rem; margin-left: 1.5rem !important; margin-right: 1.6rem !important;" class="partial-sign">
+                        <button class="partial-sign2" style="padding:0.2rem 2.4rem !important;color: white !important; font-weight: bolder;text-align: center; border:none;" class="nav-link text-dark" asp-area="" asp-controller="RequestedProduct" asp-action="CreateRequestedProduct" asp-route-requestId="@Model.Data.Id"> Proceed </button>
+                         </div>
+
+       
+</form>

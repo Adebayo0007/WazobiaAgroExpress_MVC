@@ -25,6 +25,7 @@ namespace Agro_Express.Dtos.User
         public string Email{get; set;}
         public string Password{get; set;}
         public string Role{get; set;}
+         public bool Haspaid{get; set;}
         public bool IsActive{get; set;}
         [DisplayName("Registration Date")]
         public DateTime DateCreated{get; set;}

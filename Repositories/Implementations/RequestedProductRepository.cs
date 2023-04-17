@@ -54,7 +54,7 @@ namespace Agro_Express.Repositories.Implementations
 
         public async Task<IEnumerable<RequestedProduct>> GetRequestedProductsByFarmerIdAsync(string farmerId)
         {
-           return await _applicationDbContext.RequestedProducts.Where(r => r.Farmer.UserId == farmerId && r.OrderStatus == true && r.IsAccepted == false && r.IsDelivered == false).ToListAsync();
+           return await _applicationDbContext.RequestedProducts.Where(r => r.Farmer.UserId == farmerId && r.OrderStatus == true && r.IsAccepted == false && r.IsDelivered == false && r.Haspaid == true).ToListAsync();
         }
 
         public RequestedProduct GetRequstedProductById(string requstedProductId)

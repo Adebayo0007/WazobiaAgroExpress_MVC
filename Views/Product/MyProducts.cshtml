@@ -24,6 +24,8 @@
                  string dateFrom = date.Substring(0,9);
                     var date2 = @product.AvailabilityDateTo.ToString();
                  string dateTo = date2.Substring(0,9);
+                  var x = (@product.AvailabilityDateTo.Day - DateTime.Now.Date.Day).ToString();
+                  var y = x.Split(".");
                  <input asp-for = "@product.Id" hidden/>
                 
                
@@ -36,9 +38,11 @@
                 <img id="profilePicture" alt="product" width="300vw" height="190vh" object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@product.ForthDimentionPicture))">
             </main><br>
             <div class="first"> <span class="title">@product.ProductName</span><span class="price">₦@product.Price/@product.Measurement</span> </div>
-            <div class="second"> <span>Quantity</span><span class="sec">@product.Quantity<span class="sec">@product.Measurement (s)</span> </span> </div>
+            <div class="second"> <span>Quantity</span><span class="sec">@product.Quantity<span class="sec"> @product.Measurement (s)</span> </span> </div>
             <div class="second"> <span>Location</span><span class="sec">@product.ProductState/@product.ProductLocalGovernment</span> </div>
             <div class="third"> <span>Availability</span><span class="date">@dateFrom - @dateTo</span> </div>
+        
+             <div class="third"> <span>Running days ahead</span><span class="date">@y[0]</span> </div>
 
             <div class="profile-opt">
                                                                     <div class="profile-update"><a asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@product.Id"><span class="profile-update">Edit</span></a></div>

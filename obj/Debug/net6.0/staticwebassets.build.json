@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9jbHVgE2Nyrcl7C1k3jrKQzVYnlMVUi7jEEwYm6vKpw=",
+  "Hash": "mFITgcIrXvanakUJizdzMj3yAAt2GAdSCPAJkbUtdXY=",
   "Source": "Agro-Express",
   "BasePath": "_content/Agro-Express",
   "Mode": "Default",
@@ -457,6 +457,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\js\\transaction.js",
+      "SourceId": "Agro-Express",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\",
+      "BasePath": "_content/Agro-Express",
+      "RelativePath": "js/transaction.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\transaction.js"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",

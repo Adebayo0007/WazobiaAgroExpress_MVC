@@ -21,5 +21,6 @@ namespace Agro_Express.Dtos.RequestedProduct
         public bool OrderStatus{get; set;}
          public bool IsAccepted{get; set;}
         public bool IsDelivered{get; set;}
+        public bool Haspaid{get; set;}
     }
 }

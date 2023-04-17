@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.User;
+using Agro_Express.Email;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 
@@ -8,9 +10,11 @@ namespace Agro_Express.Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+          private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
             
         }
  
@@ -88,6 +92,7 @@ namespace Agro_Express.Services.Implementations
                   userDto.IsActive = user.IsActive;
                   userDto.DateCreated = user.DateCreated;
                   userDto.DateModified = user.DateModified;
+                  userDto.Haspaid = user.Haspaid;
             }
             return new BaseResponse<UserDto>
             {
@@ -220,6 +225,7 @@ namespace Agro_Express.Services.Implementations
             user.Password = updateUserModel.Password ?? user.Password;
             user.DateModified = DateTime.Now;
             _userRepository.Update(user);
+             EmailConfiguration.EmailSending(user.Email,user.Name,"Profile Updated",$"Hello {user.Name}!,Your Profile on Wazobia Agro Express have been updated successfully.For any complain or clearification contact 08087054632 or reply to this message");
             return new BaseResponse<UserDto>
             {
                 Message = "User Updated successfully",
@@ -313,11 +319,37 @@ namespace Agro_Express.Services.Implementations
            var user =  _userRepository.GetByEmailAsync(userEmail);
            user.IsRegistered = true;
            _userRepository.Update(user);
+
+            string gender = null;
+              if(user.Gender ==  Enum.Gender.Male)
+               {
+                 gender="Mr";
+               }
+               else if(user.Gender==  Enum.Gender.Female)
+               {
+                 gender="Mrs";
+               }
+               else
+               {
+                 gender = "Mr/Mrs";
+               }
+            
+            EmailConfiguration.EmailSending(user.Email,user.Name,"Successful verification",$"Congratulations🎁! {gender} {user.Name},my Name is Mr Adebayo (The moderator of Wazobia Agro Express),I am happy to tell you that your Wazobia Agro Express Account have been verified today on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.You can now login with the submitted details successfully.You can also contact the moderator for any confirmation or help on 08087054632.YOU are welcome to Wazobia Agro Express {gender} {user.Name}👍");
+
             return new BaseResponse<UserDto>
             {
-                Message = "User Updated successfully",
+                Message = "User verified successfully 😎",
                 IsSucess = true
             };
+        }
+
+        public Task UpdatingToHasPaid(string email)
+        {
+           email = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
+          var user = _userRepository.GetByEmailAsync(email);
+          user.Haspaid = true;
+          _userRepository.Update(user);
+           return null;
         }
     }
 }

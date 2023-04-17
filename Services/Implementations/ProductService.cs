@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.Product;
+using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
@@ -10,9 +11,9 @@ namespace Agro_Express.Services.Implementations
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-          private readonly IFarmerRepository _farmerRepository;
+        private readonly IFarmerRepository _farmerRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-         private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public ProductService(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IFarmerRepository farmerRepository, IUserRepository userRepository)
         {
@@ -26,7 +27,7 @@ namespace Agro_Express.Services.Implementations
              if(productModel.AvailabilityDateFrom.Date > DateTime.Now.Date.AddDays(3))
             {
                  var date = DateTime.Now.Date.AddDays(3).ToString("MM/dd/yyyy");
-                return new BaseResponse<ProductDto>{
+                 return new BaseResponse<ProductDto>{
                     Message = $"\'Product Availability\' can start from now till  {date} ⚠ ",
                     IsSucess = false
                 };
@@ -354,6 +355,8 @@ namespace Agro_Express.Services.Implementations
             product.AvailabilityDateTo = productModel.AvailabilityDateTo != product.AvailabilityDateTo ? productModel.AvailabilityDateTo : product.AvailabilityDateTo;
             product.DateModified = DateTime.Now;
             _productRepository.UpdateProduct(product);
+
+             EmailConfiguration.EmailSending(product.FarmerEmail,product.FarmerUserName,"Product Updated",$"Hello!,Your {product.ProductName} Have been updated successfully on your portal,check your portal for confirmation.For any complain or clearification contact 08087054632 or reply to this message");
 
              var productDto = new ProductDto{
                  Id = product.Id,

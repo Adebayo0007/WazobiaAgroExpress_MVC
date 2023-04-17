@@ -15,6 +15,7 @@ namespace Agro_Express.Services.Interfaces
         Task DeleteAsync(string userId);
         BaseResponse<UserDto> VerifyUser(string userEmail);
         Task<bool> ExistByEmailAsync(string userEmail);
+        Task UpdatingToHasPaid(string email);
 
         
     }

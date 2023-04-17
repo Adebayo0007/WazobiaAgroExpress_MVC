@@ -1,6 +1,7 @@
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.Admin;
 using Agro_Express.Dtos.User;
+using Agro_Express.Email;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 
@@ -152,6 +153,7 @@ namespace Agro_Express.Services.Implementations
                Password = (updateAdminModel.Password) != null?BCrypt.Net.BCrypt.HashPassword(updateAdminModel.Password): null,
             };
             var user =  _userService.UpdateAsync(updateAdmin, id);
+
             if(user.IsSucess == false)
             {
                     return new BaseResponse<AdminDto>{
@@ -170,6 +172,7 @@ namespace Agro_Express.Services.Implementations
 
             }
               _adminRepository.Update(admin);
+
               var adminDto = new AdminDto{
                 UserName = updateAdminModel.UserName,
                 Name = updateAdminModel.Name,

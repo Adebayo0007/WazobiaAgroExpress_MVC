@@ -1,3 +1,4 @@
+@using System.Security.Claims
 @using Agro_Express.Dtos
 @using Agro_Express.Dtos.Product
 @model BaseResponse<IEnumerable<ProductDto>>
@@ -77,16 +78,17 @@
 
         <div class="product-choice">
             <form asp-action="ThumbUp" asp-controller="Product">
-            <div><input type="submit"  asp-action="ThumbUp" asp-controller="Product" asp-route-productId= "@product.Id" value="👍 "/><span style="font-size: smaller;"> : @product.ThumbUp</span></div>
+            <div><input type="submit"  asp-action="ThumbUp" asp-controller="Product" asp-route-productId= "@product.Id" value="👍 "/><span  style="font-size: smaller;"> : @product.ThumbUp</span></div>
             </form>
 
              <form asp-action="ThumbDown" asp-controller="Product">
             <div><input type="submit"  asp-action="ThumbDown" asp-controller="Product" asp-route-productId= "@product.Id" value="👎 "/><span style="font-size: smaller;"> : @product.ThumbDown</span></div>
-            </form>
+            </form>      
 
-            <form asp-action="CreateRequestedProduct" asp-controller="RequestedProduct">
-                <div><input type="submit" value="Buy" asp-action="CreateRequestedProduct" asp-controller="RequestedProduct" asp-route-productId= "@product.Id"/></div>
+            <form asp-action="CreateRequest" asp-controller="RequestedProduct">
+                <div><input type="submit" value="Buy" asp-action="CreateRequest" asp-controller="RequestedProduct" asp-route-productId= "@product.Id"/></div>
             </form>
+            
           </div>
        </div>
         </div> 
