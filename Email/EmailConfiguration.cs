@@ -6,10 +6,10 @@ namespace Agro_Express.Email
 {
     public class EmailConfiguration
     {
-        public static void EmailSending(string reciepientEmail, string reciepientName, string subject, string body)
+        public void EmailSending(string reciepientEmail, string reciepientName, string subject, string body)
         {
             
-              Configuration.Default.ApiKey.Add("api-key", "api-key");
+              Configuration.Default.ApiKey.Add("api-key", "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");
 
                 var apiInstance = new TransactionalEmailsApi();
                 string SenderName = "Wazobia Agro Express";
@@ -42,7 +42,7 @@ namespace Agro_Express.Email
                 SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
                 string AttachmentUrl = null;
                  string stringInBase64 = "aGVsbG8gdGhpcyBpcyB0ZXN0";
-                byte[] Content = System.Convert.FromBase64String(stringInBase64);
+                 byte[] Content = System.Convert.FromBase64String(stringInBase64);
                  string AttachmentName = "test.txt";
                 SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
                 List<SendSmtpEmailAttachment> Attachment = new List<SendSmtpEmailAttachment>();
@@ -72,13 +72,10 @@ namespace Agro_Express.Email
                 {
                     var sendSmtpEmail = new SendSmtpEmail(Email, To, Bcc, Cc, HtmlContent, TextContent, Subject, ReplyTo, Attachment, Headers, TemplateId, Params, messageVersiopns, Tags);
                     CreateSmtpEmail result = apiInstance.SendTransacEmail(sendSmtpEmail);
-                    // Debug.WriteLine(result.ToJson());
-                    // Console.WriteLine(result.ToJson());
-                    // Console.ReadLine();
+
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
                     // Debug.WriteLine(ex.Message);
                     // Console.WriteLine(ex.Message);
                     // Console.ReadLine();

@@ -64,8 +64,9 @@ namespace Agro_Express.Services.Implementations
                {
                  gender = "Mr/Mrs";
                }
-            
-            EmailConfiguration.EmailSending(userr.Email,userr.Name,"Registration Confirmation",$"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU");
+
+             var emailConfiguration = new EmailConfiguration();
+            emailConfiguration.EmailSending(userr.Email,userr.Name,"Registration Confirmation",$"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU");
 
              var buyerDto = new BuyerDto{
                   UserName = createBuyerModel.UserName,

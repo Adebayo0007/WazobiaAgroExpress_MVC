@@ -356,7 +356,8 @@ namespace Agro_Express.Services.Implementations
             product.DateModified = DateTime.Now;
             _productRepository.UpdateProduct(product);
 
-             EmailConfiguration.EmailSending(product.FarmerEmail,product.FarmerUserName,"Product Updated",$"Hello!,Your {product.ProductName} Have been updated successfully on your portal,check your portal for confirmation.For any complain or clearification contact 08087054632 or reply to this message");
+               var emailConfiguration = new EmailConfiguration();
+             emailConfiguration.EmailSending(product.FarmerEmail,product.FarmerUserName,"Product Updated",$"Hello!,Your {product.ProductName} Have been updated successfully on your portal,check your portal for confirmation.For any complain or clearification contact 08087054632 or reply to this message");
 
              var productDto = new ProductDto{
                  Id = product.Id,
