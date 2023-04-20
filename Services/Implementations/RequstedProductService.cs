@@ -231,21 +231,21 @@ namespace Agro_Express.Services.Implementations
            var requestedProduct =  await _requestedProductRepository.GetProductByProductIdAsync(productId);
            var id =  _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var farmer = _farmerRepository.GetByIdAsync(requestedProduct.FarmerId);
-        if(farmer.UserId != id)
-        {
-           farmer.Ranking++;
-           _farmerRepository.Update(farmer);
-           
-               var email = new EmailRequestModel{
-                 ReceiverEmail = requestedProduct.BuyerEmail,
-                 ReceiverName = requestedProduct.BuyerEmail,
-                 Subject = "Successful Marketing",
-                 Message = $"Wazobia Agro Express is saying Thank you for using our Application as market place, we look forward to see you next time on our apllication 😎.Thank you"
-               };
-               await _emailSender.SendEmail(email);
-               
-           
-        }
+            if(farmer.UserId != id)
+            {
+              farmer.Ranking++;
+              _farmerRepository.Update(farmer);
+              
+                  var email = new EmailRequestModel{
+                    ReceiverEmail = requestedProduct.BuyerEmail,
+                    ReceiverName = requestedProduct.BuyerEmail,
+                    Subject = "Successful Marketing",
+                    Message = $"Wazobia Agro Express is saying Thank you for using our Application as market place, we look forward to see you next time on our apllication 😎.Thank you"
+                  };
+                  await _emailSender.SendEmail(email);
+                  
+              
+            }
             await _requestedProductRepository.DeleteRequestedProduct(requestedProduct);
         }
     }

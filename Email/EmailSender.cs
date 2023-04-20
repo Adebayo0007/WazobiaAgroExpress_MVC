@@ -9,7 +9,7 @@ namespace Agro_Express.Email
     {
         public async Task<bool> SendEmail(EmailDto.EmailRequestModel email)
         {
-            Configuration.Default.ApiKey.Add("api-key", "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");
+            Configuration.Default.ApiKey.Add("api-key", "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");
 
                 var apiInstance = new TransactionalEmailsApi();
                 string SenderName = "Wazobia Agro Express";
@@ -68,11 +68,18 @@ namespace Agro_Express.Email
                 SendSmtpEmailMessageVersions messageVersion = new SendSmtpEmailMessageVersions(To1, _parmas, Bcc, Cc, ReplyTo1, Subject);
                 List<SendSmtpEmailMessageVersions> messageVersiopns = new List<SendSmtpEmailMessageVersions>();
                 messageVersiopns.Add(messageVersion);
-              
+                try{
+
                  var sendSmtpEmail = new SendSmtpEmail(Email, To, Bcc, Cc, HtmlContent, TextContent, Subject, ReplyTo, Attachment, Headers, TemplateId, Params, messageVersiopns, Tags);
                  CreateSmtpEmail result = apiInstance.SendTransacEmail(sendSmtpEmail);
                  Configuration.Default.ApiKey.Clear();
                  return true;  
+                }
+                catch(Exception ex)
+                {
+                    return false;
+                }
+              
         }
     }
 }

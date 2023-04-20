@@ -18439,6 +18439,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\User\\ForgottenPassword.cshtml",
+      "TargetPath": "Views\\User\\ForgottenPassword.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Admin\\AdminProfile.cshtml",
       "TargetPath": "Views\\Admin\\AdminProfile.cshtml",
       "FileKind": "mvc"

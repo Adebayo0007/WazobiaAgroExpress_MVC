@@ -170,5 +170,22 @@ namespace Agro_Express.Controllers
             if(userEmail != null)_userService.VerifyUser(userEmail);
             return RedirectToAction(nameof(PendingRegistration));
         }
+
+        [HttpGet]
+         public IActionResult ForgottenPassword()
+        {
+            return View();
+        }
+          
+        [HttpPost]
+         public async Task<IActionResult> ForgottenPassword(string userEmail)
+        {
+            var response = await _userService.ForgottenPassword(userEmail);
+            if(response == false)
+            {
+                return View();
+            }
+             return RedirectToAction(nameof(LogIn));
+        }
     }
 }

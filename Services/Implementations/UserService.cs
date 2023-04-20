@@ -109,6 +109,66 @@ namespace Agro_Express.Services.Implementations
             var email =await _userRepository.ExistByEmailAsync(logInRequestMode.Email);
          
                var user = _userRepository.GetByEmailAsync(logInRequestMode.Email);
+               var passwordCheck = logInRequestMode.Password.Split("0");
+               if(passwordCheck[0] == "$2b$1")
+               {
+                    if(user.Password == logInRequestMode.Password && user.Email == logInRequestMode.Email)
+                    {
+                          if(user.IsRegistered == false)
+                                {
+                                    return new BaseResponse<UserDto>
+                                    {
+                                        Message = "Your Registeration is yet to be verified 🙄",
+                                        IsSucess = false
+                                    };
+                                }
+
+                            if(user.IsActive == false)
+                            {
+                                return new BaseResponse<UserDto>
+                                {
+                                    Message = "You are not an active user 🙄",
+                                    IsSucess = false
+                                };
+                            }
+                            UserDto userDto1 = new UserDto();
+
+                        if(user is not null)
+                        {
+                            userDto1.Id = user.Id;
+                            userDto1.UserName = user.UserName;
+                            userDto1. ProfilePicture =  user.ProfilePicture;
+                            userDto1.Name =  user.Name;
+                            userDto1.PhoneNumber =  user.PhoneNumber;
+                            userDto1.FullAddress =  user.Address.FullAddress ;
+                            userDto1.LocalGovernment =  user.Address.LocalGovernment;
+                            userDto1.State =  user.Address.State;
+                            userDto1.Gender = user.Gender;
+                            userDto1.Email = user.Email;
+                            //   userDto.Password = user.Password;
+                            userDto1.Role = user.Role;
+                            userDto1.IsActive = user.IsActive;
+                            userDto1.DateCreated = user.DateCreated;
+                            userDto1.DateModified = user.DateModified;
+                        }
+
+                        return new BaseResponse<UserDto>
+                        {
+                            Message = "Login successfully 😎",
+                            IsSucess = true,
+                            Data = userDto1
+                        };
+                    }
+                     else
+                        {
+                            return new BaseResponse<UserDto>
+                            {
+                                Message = "Invalid email/password 🙄",
+                                IsSucess = false
+                            };
+                        }
+               
+               }
 
                 var password = BCrypt.Net.BCrypt.Verify(logInRequestMode.Password, user.Password);
                   if(user.IsRegistered == false)
@@ -367,6 +427,23 @@ namespace Agro_Express.Services.Implementations
           user.Haspaid = true;
           _userRepository.Update(user);
            return null;
+        }
+
+        public async Task<bool> ForgottenPassword(string email)
+        {
+            var user = _userRepository.GetByEmailAsync(email);
+             var emailRequestModel = new EmailRequestModel{
+                 ReceiverEmail = email,
+                 ReceiverName = email,
+                 Subject = "Password Reset",
+                 Message = $"Copy your password reset details and use it to login,then you can reset the password after logging in  {user.Password}  "
+               };
+                 var mail = await _emailSender.SendEmail(emailRequestModel);
+                 if(mail == true)
+                 {
+                    return true;
+                 }
+                 return false;
         }
     }
 }

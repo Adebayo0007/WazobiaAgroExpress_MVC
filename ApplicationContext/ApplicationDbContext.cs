@@ -7,14 +7,14 @@ namespace Agro_Express.ApplicationContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base (options)
         {
-            
+
         }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Buyer> Buyers { get; set; }
         public DbSet<Farmer> Farmers { get; set; }
         public DbSet<Product> Products { get; set; }
-         public DbSet<RequestedProduct> RequestedProducts { get; set; }
+        public DbSet<RequestedProduct> RequestedProducts { get; set; }
         public DbSet<User> Users { get; set; }
 
            protected override void OnModelCreating (ModelBuilder modelBuilder)

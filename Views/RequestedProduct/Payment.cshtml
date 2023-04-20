@@ -9,8 +9,8 @@
         </div>
          <div class="form-head"><span class="reg-form">Payment Request</span></div>
         <div>
-            <h3 style="text-align: center;">If you are seeing this,that means this is the first time you are making a request</h3>
-            <h3>To be sure that you are intrested in our products,you need to pay ₦300 (using @User.FindFirst(ClaimTypes.Email).Value) for farmers to recieve your orders and this is done just once.</h3>
+            <h3 style="text-align: center;"><b>If you are seeing this,that means this is the first time you are making a request</b></h3>
+            <h3><br></i>To be sure that you are intrested in our products,you need to pay ₦300 (using @User.FindFirst(ClaimTypes.Email).Value) for farmers to recieve your orders and this is done just once throughout your experience with Wazobia Agro Express,then go back and make your order .</i></h3>
         </div>
         <div class="form-bottom">
           <button asp-route-userEmail="@User.FindFirst(ClaimTypes.Email).Value" style="border: 0%;" class="submit-form" type="submit" onclick="payWithPaystack()"> Pay </button>
