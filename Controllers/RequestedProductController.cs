@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PayStack.Net;
 
 namespace Agro_Express.Controllers
 {
@@ -34,15 +35,15 @@ namespace Agro_Express.Controllers
            var user = await _userSercice.GetByEmailAsync(userEmail);
            if(user.Data.Haspaid == true)
            {
-
-                var product =  await  _requstedProductSercice.CreateRequstedProductAsync(requestId);
-                if(product.IsSucess != true)
-                {
-                    TempData["error"] = "internal error";
-                    return BadRequest();
-                }
-                TempData["order"] = product.Message;
-                return RedirectToAction("AvailableProducts", "Product");
+                    var product =  await  _requstedProductSercice.CreateRequstedProductAsync(requestId);
+                    if(product.IsSucess != true)
+                    {
+                        TempData["error"] = "internal error";
+                        return BadRequest();
+                    }
+                    TempData["order"] = product.Message;
+                    return RedirectToAction("AvailableProducts", "Product");
+                
 
            }
             TempData["id"] = requestId;
@@ -120,18 +121,31 @@ namespace Agro_Express.Controllers
         }
 
         [HttpGet]
-        public IActionResult Payment(string userEmail)
+        public IActionResult Payment()
         {
-              _userSercice.UpdatingToHasPaid(userEmail);
                return View();
         }
 
-        // [HttpPost]
-        // [ActionName("Payment")]
-        // public IActionResult PaymentConfirmed(string userEmail)
+         [HttpGet]
+        public IActionResult UpdateToHasPaid(string userEmail)
+        {
+              _userSercice.UpdatingToHasPaid(userEmail);
+                 return RedirectToAction("AvailableProducts", "Product");
+        }
+
+
+      
+        // public async Task<IActionResult> Pay()
         // {
-        //     _userSercice.UpdatingToHasPaid(userEmail);
-        //    return View();
+        //    string secreteKey = "sk_test_1dacd4891d686e4c9f616a96a1e868138cb9d067";
+        //    var payStackTransactionAPI = new PayStackApi(secreteKey);
+        //    var response =  payStackTransactionAPI.Transactions.Initialize("johnwilson5864@gmail.com",50000);
+        //    if(response.Status == true)
+        //    {
+        //       return RedirectToAction("AvailableProducts", "Product");
+        //    }
+        //     return RedirectToAction("Home", "Index");
+
         // }
 
     }

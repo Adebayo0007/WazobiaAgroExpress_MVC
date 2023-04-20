@@ -1,6 +1,3 @@
-
-    
-
 const paymentForm = document.getElementById('paymentForm');
 paymentForm.addEventListener("submit", payWithPaystack, false);
 function payWithPaystack(e) {
@@ -18,7 +15,15 @@ function payWithPaystack(e) {
     callback: function(response){
       let message = 'Payment complete! Reference: ' + response.reference;
       alert(message);
-      window.location = 'https://localhost:7229/Product/AvailableProducts';
+      window.location = 'https://localhost:7229/RequestedProduct/UpdateToHasPaid';
+
+      // $.ajax({
+      //   url: 'https://localhost:7229/verify_transaction?reference='+ response.reference,
+      //   method: 'get',
+      //   success: function (response){
+      //     console.log(response)
+      //   }
+      // });
     }
     
   });

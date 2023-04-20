@@ -6,6 +6,7 @@ using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using static Agro_Express.Email.EmailDto;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -14,11 +15,13 @@ namespace Agro_Express.Services.Implementations
           private readonly IBuyerRepository _buyerRepository;
           private readonly IUserRepository _userRepository;
           private readonly IUserService _userService;
-        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService)
+           private readonly IEmailSender _emailSender;
+        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService, IEmailSender emailSender)
         {
             _buyerRepository = buyerRepository;
             _userRepository = userRepository;
             _userService = userService;
+            _emailSender = emailSender;
         }
         public async Task<BaseResponse<BuyerDto>> CreateAsync(CreateBuyerRequestModel createBuyerModel)
         {
@@ -64,9 +67,15 @@ namespace Agro_Express.Services.Implementations
                {
                  gender = "Mr/Mrs";
                }
-
-             var emailConfiguration = new EmailConfiguration();
-            emailConfiguration.EmailSending(userr.Email,userr.Name,"Registration Confirmation",$"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU");
+               var email = new EmailRequestModel{
+                 ReceiverEmail = userr.Email,
+                 ReceiverName = userr.Name,
+                 Subject = "Registration Confirmation",
+                 Message = $"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU"
+               };
+               
+             var mail =  await _emailSender.SendEmail(email);
+            // emailConfiguration.EmailSending(userr.Email,userr.Name,"Registration Confirmation",$"Thanks for signing up with Wazobia Agro Express {gender} {userr.Name} on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.Your Registration need to be verified within today {DateTime.Now.Date.ToString("dd/MM/yyyy")} and {DateTime.Now.Date.AddDays(3).ToString("dd/MM/yyyy")} by the moderator before you can be authenticated to use the application for proper documentation and also you will recieve a mail immediately after verification.THANK YOU");
 
              var buyerDto = new BuyerDto{
                   UserName = createBuyerModel.UserName,

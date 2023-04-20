@@ -5,6 +5,7 @@ using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using static Agro_Express.Email.EmailDto;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -14,13 +15,15 @@ namespace Agro_Express.Services.Implementations
         private readonly IFarmerRepository _farmerRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
+          private readonly IEmailSender _emailSender;
 
-        public ProductService(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IFarmerRepository farmerRepository, IUserRepository userRepository)
+        public ProductService(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IFarmerRepository farmerRepository, IUserRepository userRepository, IEmailSender emailSender)
         {
             _productRepository = productRepository;
             _httpContextAccessor = httpContextAccessor;
             _farmerRepository = farmerRepository;
             _userRepository = userRepository;
+            _emailSender = emailSender;
         }
         public async Task<BaseResponse<ProductDto>> CreateProductAsync(CreateProductRequestModel productModel)
         {
@@ -356,8 +359,14 @@ namespace Agro_Express.Services.Implementations
             product.DateModified = DateTime.Now;
             _productRepository.UpdateProduct(product);
 
-               var emailConfiguration = new EmailConfiguration();
-             emailConfiguration.EmailSending(product.FarmerEmail,product.FarmerUserName,"Product Updated",$"Hello!,Your {product.ProductName} Have been updated successfully on your portal,check your portal for confirmation.For any complain or clearification contact 08087054632 or reply to this message");
+             var email = new EmailRequestModel{
+                 ReceiverEmail = product.FarmerEmail,
+                 ReceiverName = product.FarmerUserName,
+                 Subject = "Product Updated",
+                 Message = $"Hello!,Your {product.ProductName} Have been updated successfully on your portal,check your portal for confirmation.For any complain or clearification contact 08087054632 or reply to this message"
+               };
+               await _emailSender.SendEmail(email);
+
 
              var productDto = new ProductDto{
                  Id = product.Id,

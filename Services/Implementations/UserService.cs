@@ -4,6 +4,7 @@ using Agro_Express.Dtos.User;
 using Agro_Express.Email;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using static Agro_Express.Email.EmailDto;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -11,10 +12,12 @@ namespace Agro_Express.Services.Implementations
     {
         private readonly IUserRepository _userRepository;
           private readonly IHttpContextAccessor _httpContextAccessor;
-        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
+          private readonly IEmailSender _emailSender;
+        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender)
         {
             _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
+            _emailSender = emailSender;
             
         }
  
@@ -225,8 +228,15 @@ namespace Agro_Express.Services.Implementations
             user.Password = updateUserModel.Password ?? user.Password;
             user.DateModified = DateTime.Now;
             _userRepository.Update(user);
-            var emailConfiguration = new EmailConfiguration();
-             emailConfiguration.EmailSending(user.Email,user.Name,"Profile Updated",$"Hello {user.Name}!,Your Profile on Wazobia Agro Express have been updated successfully.For any complain or clearification contact 08087054632 or reply to this message");
+
+                var email = new EmailRequestModel{
+                 ReceiverEmail = user.Email,
+                 ReceiverName = user.Name,
+                 Subject = "Profile Updated",
+                 Message = $"Hello {user.Name}!,Your Profile on Wazobia Agro Express have been updated successfully.For any complain or clearification contact 08087054632 or reply to this message"
+               };
+                 _emailSender.SendEmail(email);
+            
             return new BaseResponse<UserDto>
             {
                 Message = "User Updated successfully",
@@ -334,8 +344,14 @@ namespace Agro_Express.Services.Implementations
                {
                  gender = "Mr/Mrs";
                }
-             var emailConfiguration = new EmailConfiguration();
-            emailConfiguration.EmailSending(user.Email,user.Name,"Successful verification",$"Congratulations🎁! {gender} {user.Name},my Name is Mr Adebayo (The moderator of Wazobia Agro Express),I am happy to tell you that your Wazobia Agro Express Account have been verified today on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.You can now login with the submitted details successfully.You can also contact the moderator for any confirmation or help on 08087054632.YOU are welcome to Wazobia Agro Express {gender} {user.Name}👍");
+
+                var email = new EmailRequestModel{
+                 ReceiverEmail = user.Email,
+                 ReceiverName = user.Name,
+                 Subject = "Successful verification",
+                 Message = $"Congratulations🎁! {gender} {user.Name},my Name is Mr Adebayo (The moderator of Wazobia Agro Express),I am happy to tell you that your Wazobia Agro Express Account have been verified today on {DateTime.Now.Date.ToString("dd/MM/yyyy")}.You can now login with the submitted details successfully.You can also contact the moderator for any confirmation or help on 08087054632.YOU are welcome to Wazobia Agro Express {gender} {user.Name}👍"
+               };
+                 _emailSender.SendEmail(email);
 
             return new BaseResponse<UserDto>
             {

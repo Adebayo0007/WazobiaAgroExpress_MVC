@@ -1,4 +1,5 @@
 using Agro_Express.ApplicationContext;
+using Agro_Express.Email;
 using Agro_Express.Repositories.Implementations;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Implementations;
@@ -12,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
  builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseMySql(
   builder.Configuration.GetConnectionString("AgroExpressConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("AgroExpressConnectionString"))
   ));
+
+  
   
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -33,6 +36,8 @@ var builder = WebApplication.CreateBuilder(args);
 
      builder.Services.AddScoped<IRequestedProductRepository , RequestedProductRepository>();
     builder.Services.AddScoped<IRequestedProductService , RequestedProductService>();
+
+      builder.Services.AddScoped<IEmailSender , EmailSender>();
      
 
      builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
