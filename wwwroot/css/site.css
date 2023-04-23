@@ -169,5 +169,11 @@ body {
   border: none;
 }
 
+.toast{
+  background-color: green;
+  font-size: small;
+  font-weight: bolder;
+}
+
 
 

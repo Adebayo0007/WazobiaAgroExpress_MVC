@@ -34,7 +34,8 @@ namespace Agro_Express.ApplicationContext
                        Email = "tijaniadebayoabdllahi@gmail.com",
                        DateCreated = DateTime.Now,
                        IsRegistered = true,
-                       Haspaid = true
+                       Haspaid = true,
+                       Due = true
                     
                 }
               );

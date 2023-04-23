@@ -5,25 +5,17 @@
     ViewData["Title"] = "Farm Products Around You";
 }
 <h1>@ViewData["Title"]</h1>
-   @if(TempData["success"] != null)
-             {
-                <h2>@TempData["success"]</h2>
-               }
-            @if(TempData["error"] != null)
-             {
-                <h2 style="color:red">@TempData["error"]</h2>
-               }
-
-               @if(Model.Data.Count() == 0)
-               {
-                  <h2 style="color:red">No product found</h2>
-               }
 
                 <form asp-controller="Product" asp-action="SearchProduct">
                   <br><div class="search-body">
         <div class="search-input"><input name="searchInput" class="search-search" type="text" placeholder="input product name or farmer username or email"> <button type="submit" id="completed-task" class="fabutton"><i class="fa-solid fa-magnifying-glass"></i></button>  </div><br>
     </div>
     </form>
+    
+               @if(Model.Data.Count() == 0)
+               {
+                  <h2 style="color:red">No product found</h2>
+               }
                @foreach (var product in Model.Data)
                {
                  var date = @product.AvailabilityDateFrom.ToString();

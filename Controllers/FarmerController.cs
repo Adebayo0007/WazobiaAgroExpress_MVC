@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Agro_Express.Dtos.Farmer;
 using Agro_Express.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agro_Express.Controllers
@@ -15,17 +16,17 @@ namespace Agro_Express.Controllers
             _userService = userService;
             
         }
+        [Authorize(Roles = "Farmer")]
          public IActionResult FarmerIndex()
         {
             return View();
         }
 
-        //   [Authorize(Roles = "Manager,CEO")]
         public IActionResult CreateFarmer()
         {
             return View();
         }
-        // [Authorize]
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateFarmer(CreateFarmerRequestModel farmerModel)
@@ -61,7 +62,8 @@ namespace Agro_Express.Controllers
                   return View();
             
         }  
-
+         
+         [Authorize(Roles = "Farmer")]
          public async Task<IActionResult> FarmerProfile(string farmerEmail)
         {
             farmerEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -74,7 +76,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = farmer.Message;
             return View(farmer);
         }  
-
+         
+         [Authorize(Roles = "Farmer")]
         [HttpGet]
          public async Task<IActionResult> UpdateFarmer(string farmerEmail)
         {
@@ -88,6 +91,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = farmer.Message;
             return View(farmer);
         }
+        
+        [Authorize]
         [HttpPost]
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateFarmer(UpdateFarmerRequestModel requestModel)
@@ -104,7 +109,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = farmer.Message;
             return RedirectToAction(nameof(FarmerProfile));
         }
-
+          
+          [Authorize(Roles = "Farmer, Admin")]
           public async Task<IActionResult> DeleteFarmer(string farmerEmail)
         {       
             if(farmerEmail == null)farmerEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -117,7 +123,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = farmer.Message;
             return View(farmer);      
         }
-         
+         [Authorize]
         [HttpPost , ActionName("DeleteFarmer")]
         [ValidateAntiForgeryToken]
          public IActionResult DeleteFarmerConfirmed(string farmerId)
@@ -131,7 +137,8 @@ namespace Agro_Express.Controllers
             }
             return RedirectToAction("LogIn", "User");
         }
-
+         
+         [Authorize(Roles = "Admin")]
          public async Task<IActionResult> Farmers()
         {
              var farmers = await _farmerService.GetAllActiveAndNonActiveAsync();
@@ -143,7 +150,8 @@ namespace Agro_Express.Controllers
             return View(farmers);
 
         }
-
+        
+          [Authorize(Roles = "Admin")]
           [HttpPost]
          public async Task<IActionResult> SearchFarmer(string searchInput)
         {
@@ -160,10 +168,25 @@ namespace Agro_Express.Controllers
              TempData["success"] = farmers.Message;
             return View(farmers);
         }
+         
+         [HttpGet]
+        public IActionResult PayMonthlyDue()
+        {
+               return View();
+        }
 
+         [HttpGet]
+        public IActionResult UpdateToHasPaid(string userEmail)
+        {
+              _farmerService.UpdateToHasPaidDue(userEmail);
+                 return RedirectToAction("LogIn", "User");
+        }
+
+         [Authorize(Roles = "Farmer")]
          public IActionResult MyOffers()
         {
             return View();
         }
+
     }
 }

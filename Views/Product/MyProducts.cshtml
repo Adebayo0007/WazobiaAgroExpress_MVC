@@ -5,14 +5,6 @@
     ViewData["Title"] = "My Products";
 }
 <h1>@ViewData["Title"]</h1>
-  @if(TempData["success"] != null)
-             {
-                <h2>@TempData["success"]</h2>
-               }
-            @if(TempData["error"] != null)
-             {
-                <h2 style="color:red">@TempData["error"]</h2>
-               }
 
                @if(Model.Data.Count() == 0)
                {

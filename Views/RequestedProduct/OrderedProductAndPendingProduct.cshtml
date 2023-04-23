@@ -37,16 +37,17 @@
         {
             <div class="app-user">
         <div style="height:17rem !important" class="user-body">
-            <div class="user-detail">
-                <div><span class="user-font">Product: </span> <span class="user-font">@item.ProductName</span></div>
-                 <div><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
-                 <div><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
-                  <div><span class="user-font">Farmer name: </span> <span class="user-font">@item.FarmerName</span></div>
-                 <div><span class="user-font">Farmer no: </span> <span class="user-font">@item.FarmerNumber</span></div>
-    
-                       <div style=" margin-bottom: 1rem; margin-left: 1.5rem !important; margin-right: 1.6rem !important;" class="partial-sign">
-                        <a class="partial-sign2" style="padding:0.2rem 2.4rem !important;color: white !important; font-weight: bolder;text-align: center;" class="nav-link text-dark" asp-area="" asp-controller="RequestedProduct" asp-action="DeliveredRequest" asp-route-requestId="@item.Id">Delivered</a>
-                         </div>       
+            <div  class="user-detail">
+                <div style="padding: 0 2.5px !important"><span class="user-font">Product: </span> <span class="user-font">@item.ProductName</span></div>
+                 <div style="padding: 0 2.5px !important"><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
+                 <div style="padding: 0 2.5px !important"><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
+                  <div style="padding: 0 2.5px !important"><span class="user-font">Farmer name: </span> <span class="user-font">@item.FarmerName</span></div>
+                 <div style="padding: 0 2.5px !important"><span class="user-font">Farmer no: </span> <span class="user-font">@item.FarmerNumber</span></div>
+
+                     <div class="profile-opt">
+                        <div class="profile-update"><a style="text-decoration: none; asp-controller="RequestedProduct" asp-action="DeliveredRequest" asp-route-requestId="@item.Id"><span style="font-size: .6rem;font-style:bold; text-align:center;" class="profile-update">Delivered</span></a></div>
+                        <div class="back-to-profile"><a style="text-decoration: none;" asp-controller="RequestedProduct" asp-action="NotDeliveredRequest" asp-route-requestId="@item.Id"><span style="font-size: .6rem; font-style:bold; text-align:center;" class="profile-update">Not Delivered</span></a></div>
+                    </div>
                     </div>
                 </div>
             </div><hr>

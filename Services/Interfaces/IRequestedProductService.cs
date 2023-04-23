@@ -11,6 +11,7 @@ namespace Agro_Express.Services.Interfaces
         Task ProductDelivered(string productId);
         Task<BaseResponse<RequestedProductDto>> ProductAccepted(string productId);
          Task<BaseResponse<IEnumerable<RequestedProductDto>>> MyRequests(string farmerId);
+          Task NotDelivered(string productId);
     }
 
 }

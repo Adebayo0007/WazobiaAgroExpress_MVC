@@ -75,7 +75,8 @@ namespace Agro_Express.Controllers
             TempData["success"] = products.Message;
            return View(products);
         }
-
+          
+          [Authorize(Roles = "Farmer")]
           [HttpGet]
          public async Task<IActionResult> UpdateProduct(string productId)
         {
@@ -88,6 +89,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = product.Message;
             return View(product);
         }
+
+        [Authorize]
         [HttpPost]
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateProduct(UpdateProductRequestModel requestModel,string productsId)
@@ -101,7 +104,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = product.Message;
             return RedirectToAction(nameof(MyProducts));
         }
-
+            
+            [Authorize(Roles = "Farmer")]
           public async Task<IActionResult> DeleteProduct(string productId)
         {       
            var product = await _productSercice.GetProductById(productId);
@@ -113,7 +117,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = product.Message;
             return View(product);
         }
-         
+         [Authorize]
         [HttpPost , ActionName("DeleteProduct")]
          public async Task<IActionResult> DeleteProductConfirmed(string productsId)
         {
@@ -162,10 +166,6 @@ namespace Agro_Express.Controllers
               TempData["success"] = "Thumb down 👎";
             }
               return RedirectToAction(nameof(AvailableProducts));
-        }
-
-
-
-       
+        }  
     }
 }

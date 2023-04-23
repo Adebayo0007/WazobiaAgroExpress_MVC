@@ -1,7 +1,6 @@
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.AllFarmers;
 using Agro_Express.Dtos.Farmer;
-using Agro_Express.Dtos.User;
 
 namespace Agro_Express.Services.Interfaces
 {
@@ -14,7 +13,9 @@ namespace Agro_Express.Services.Interfaces
         Task<BaseResponse<ActiveAndNonActiveFarmer>> GetAllActiveAndNonActiveAsync();
          Task<BaseResponse<IEnumerable<FarmerDto>>> SearchFarmerByEmailOrUserName(string searchInput);
         Task<BaseResponse<FarmerDto>> UpdateAsync(UpdateFarmerRequestModel updateFarmerModel, string id);
+        Task UpdateToHasPaidDue(string userEmail);
         Task DeleteAsync(string farmerId);
+        Task FarmerMonthlyDueUpdate();
         
     }
 }

@@ -2,14 +2,6 @@
 @using Agro_Express.Dtos
 @model BaseResponse<IEnumerable<RequestedProductDto>> 
     <div class="form-head"><span class="reg-form">Requested Products</span></div>
-    @if(TempData["success"] != null)
-    {
-        <h5>@TempData["success"] </h5>
-    }
-       @if(TempData["error"] != null)
-    {
-        <h5 style="color:red;">@TempData["error"] </h5>
-    }
     @if(Model == null)
     {
         <h5>No Request yet 🙄</h5>
@@ -25,8 +17,6 @@
                  <div><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
                  <div><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
                   <div><span class="user-font">Number: </span> <span class="user-font">@item.BuyerPhoneNumber</span></div>
-                 @* <div><span class="user-font">Farmer no: </span> <span class="user-font">@item.</span></div> *@
-
                        <div style=" margin-bottom: 1rem; margin-left: 1.5rem !important; margin-right: 1.6rem !important;" class="partial-sign">
                         <a class="partial-sign2" style="padding:0.2rem 2.4rem !important;color: white !important; font-weight: bolder;text-align: center;" class="nav-link text-dark" asp-area="" asp-controller="RequestedProduct" asp-action="AcceptRequest" asp-route-requestId="@item.Id"> Accept </a>
                          </div>

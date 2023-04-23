@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mFITgcIrXvanakUJizdzMj3yAAt2GAdSCPAJkbUtdXY=",
+  "Hash": "oGM/y74B6DmvX5DV2eLNQTAlLCSWJgLd8Z8JpdriFm8=",
   "Source": "Agro-Express",
   "BasePath": "_content/Agro-Express",
   "Mode": "Default",
@@ -134,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\login.css"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\css\\mail.css",
+      "SourceId": "Agro-Express",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\",
+      "BasePath": "_content/Agro-Express",
+      "RelativePath": "css/mail.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mail.css"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\css\\product.css",

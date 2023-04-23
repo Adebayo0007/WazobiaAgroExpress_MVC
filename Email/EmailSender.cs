@@ -9,11 +9,20 @@ namespace Agro_Express.Email
     {
         public async Task<bool> SendEmail(EmailDto.EmailRequestModel email)
         {
-            Configuration.Default.ApiKey.Add("api-key", "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");
+            string x;
+            Configuration.Default.ApiKey.Add("api-key", "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");
+            if(email.SenderEmail == null) 
+            {
+               email.SenderEmail = "tijaniadebayoabdllahi@gmail.com";
+               x = "Wazobia Agro Express";
+            }
+            else{
+                x = email.SenderEmail;
+            }
 
                 var apiInstance = new TransactionalEmailsApi();
                 string SenderName = "Wazobia Agro Express";
-                string SenderEmail = "tijaniadebayoabdllahi@gmail.com";
+                string SenderEmail = email.SenderEmail;
                 SendSmtpEmailSender Email = new SendSmtpEmailSender(SenderName, SenderEmail);
                 string ToEmail = email.ReceiverEmail;
                 string ToName = email.ReceiverName;
@@ -30,15 +39,15 @@ namespace Agro_Express.Email
 
                 //CC Sender also recieve the email
                 string CcName = "Wazobia agro Wxpress";
-                string CcEmail = "tijaniadebayoabdllahi@gmail.com.com";
+                string CcEmail = email.SenderEmail;
                 SendSmtpEmailCc CcData = new SendSmtpEmailCc(CcEmail, CcName);
                 List<SendSmtpEmailCc> Cc = new List<SendSmtpEmailCc>();
                 Cc.Add(CcData);
-                string HtmlContent = "<html><body><h1>From Wazobia Agro Express</h1><br><h3> {{params.parameter}}</h3></body></html>";
+                string HtmlContent = $"<html><body><h1>From {x}</h1><br><h3> {email.Message}</h3></body></html>";
                 string TextContent = null;
                 string Subject = "{{params.subject}}";
                 string ReplyToName = "Wazobia Agro Express";
-                string ReplyToEmail = "tijaniadebayoabdllahi@gmail.com";
+                string ReplyToEmail = email.SenderEmail;
                 SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
                 string AttachmentUrl = null;
                  string stringInBase64 = "aGVsbG8gdGhpcyBpcyB0ZXN0";

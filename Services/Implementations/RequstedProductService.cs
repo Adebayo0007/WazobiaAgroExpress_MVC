@@ -46,6 +46,8 @@ namespace Agro_Express.Services.Implementations
              OrderStatus = true,
              IsDelivered = false,
              IsAccepted = false,
+             NotDelivered = false,
+             FarmerEmail = farmer.User.Email,
              Haspaid = user.Haspaid
 
            };
@@ -113,7 +115,6 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<IEnumerable<RequestedProductDto>>> MyRequests(string farmerId)
         {
-             //farmerId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var products = await _requestedProductRepository.GetRequestedProductsByFarmerIdAsync(farmerId);
             var requestDto = products.Select(item  => new RequestedProductDto{
                 Id = item.Id,
@@ -146,6 +147,51 @@ namespace Agro_Express.Services.Implementations
             };
         }
 
+        public async Task NotDelivered(string productId)
+        {
+            var product = await _requestedProductRepository.GetProductByProductIdAsync(productId);
+            var farmer = _userRepository.GetByEmailAsync(product.FarmerEmail);
+            
+            if(product.NotDelivered == false)
+            {
+              var email = new EmailRequestModel{
+                SenderEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value,
+                ReceiverEmail = "tijaniadebayoabdllahi@gmail.com",
+                Subject = "User Complain",
+                ReceiverName = "Admin",
+                Message = $"I requested {product.ProductName} from  Mr/Mrs {farmer.Name} having this following information ( Number: {product.FarmerNumber} Email: {farmer.Email} User name: {farmer.UserName}),but the product is not delivered"
+
+              };
+               var response = await _emailSender.SendEmail(email);
+                  product.NotDelivered = true;
+                  _requestedProductRepository.UpdateRequestedProduct(product);
+              
+               if(response == true)
+               {
+                      var email1 = new EmailRequestModel{
+                    ReceiverEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value,
+                    Subject = "Complain Recieved",
+                    ReceiverName = "Customer",
+                    Message = $"Your complain has been recieved by Agro Express,we are SORRY for the inconveniences,we will connect withe farmer and get back to you as soon as possible.We are sorry once again"
+
+                  };
+                      await _emailSender.SendEmail(email1);
+                  
+               }
+            }
+            else{
+                  await _requestedProductRepository.DeleteRequestedProduct(product);
+                  var email2 = new EmailRequestModel{
+                  ReceiverEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value,
+                  Subject = "Agro Express say SORRY",
+                  ReceiverName = "Customer",
+                  Message = $"Agro Express say Sorry regarding the product that is not delivered to you,and we asure you that the farmer will be quried for that,Thank You for having your trust in us"
+
+                };
+               var response1 = await _emailSender.SendEmail(email2);
+            }
+        }
+
         public async Task<BaseResponse<OrderedAndPending>> OrderedAndPendingProduct(string buyerEmail)
         {
             var orderedProduct = await _requestedProductRepository.GetOrderedProduct(buyerEmail);
@@ -161,7 +207,8 @@ namespace Agro_Express.Services.Implementations
                 IsAccepted = item.IsAccepted,
                 IsDelivered = item.IsDelivered,
                 FarmerName = item.FarmerName,
-                FarmerNumber = item.FarmerNumber
+                FarmerNumber = item.FarmerNumber,
+                NotDelivered = item.NotDelivered
             });
 
             var pendingProduct = await _requestedProductRepository.GetPendingProduct(buyerEmail);
@@ -178,7 +225,8 @@ namespace Agro_Express.Services.Implementations
                 IsAccepted = item.IsAccepted,
                 IsDelivered = item.IsDelivered,
                 FarmerName = item.FarmerName,
-                FarmerNumber = item.FarmerNumber
+                FarmerNumber = item.FarmerNumber,
+                NotDelivered = item.NotDelivered
             });
             var orderedAndPending = new OrderedAndPending{
                 OrderedProduct = ordered,

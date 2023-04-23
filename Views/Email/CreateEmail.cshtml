@@ -1,0 +1,16 @@
+@using System.Security.Claims
+  <div class="wrapper">
+    <form asp-action="CreateEmail" class="form" method="post">
+            @if(TempData["error"] != null)
+             {
+                <h2 style="color:red">@TempData["error"]</h2>
+               }
+     <input style="color:black !important" type="text" name="SenderEmail" class="name formEntry" placeholder="Name" value="@User.FindFirst(ClaimTypes.Email).Value" readonly/>
+       <input style="color:black !important" type="text" name="ReceiverName" class="name formEntry" placeholder="Reciever Name" />
+      <input type="text" name="ReceiverEmail" class="email formEntry" placeholder="Reciever Email"/>
+      <input type="text" name="Subject" class="email formEntry" placeholder="Subject"/>
+      <textarea name="Message" class="message formEntry" placeholder="Message"></textarea>
+      <button class="submit formEntry" onclick="thanks()">Submit</button>
+    </form>
+  </div>
+  

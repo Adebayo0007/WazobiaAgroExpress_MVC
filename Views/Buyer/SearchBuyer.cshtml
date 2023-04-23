@@ -2,20 +2,16 @@
 @using Agro_Express.Dtos
 @model BaseResponse<IEnumerable<BuyerDto>>
 
-     @if(Model.Data.Count() == 0 )
-    {
-        <h4>No buyer Found 🙄</h4>
-    } 
-       @if(@TempData["error"] != null)
-    {
-        <h4>@TempData["error"]</h4>
-    } 
-
       <form asp-controller="Buyer" asp-action="SearchBuyer">
                   <br> <div class="search-body">
         <div class="search-input"><input name="searchInput" class="search-search" type="text" placeholder="username or email"> <button type="submit" id="completed-task" class="fabutton"><i class="fa-solid fa-magnifying-glass"></i></button>  </div><br>
     </div>
     </form>
+      @if(Model.Data.Count() == 0 )
+    {
+        <h4 style="color: red;">No buyer Found 🙄</h4>
+    } 
+
 
     <h4>Searched Buyer (@Model.Data.Count())</h4>
 

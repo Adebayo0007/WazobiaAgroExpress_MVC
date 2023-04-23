@@ -15,15 +15,15 @@ function payWithPaystack(e) {
     callback: function(response){
       let message = 'Payment complete! Reference: ' + response.reference;
       alert(message);
-      window.location = 'https://localhost:7229/RequestedProduct/UpdateToHasPaid';
+          if(document.getElementById("amount").value == "200")
+          {
+            var x = document.getElementById("email-address").value;
+            window.location = `https://localhost:7229/Farmer/UpdateToHasPaid?userEmail=${x}`;
+          }
+          else{
 
-      // $.ajax({
-      //   url: 'https://localhost:7229/verify_transaction?reference='+ response.reference,
-      //   method: 'get',
-      //   success: function (response){
-      //     console.log(response)
-      //   }
-      // });
+              window.location = 'https://localhost:7229/RequestedProduct/UpdateToHasPaid';
+          }
     }
     
   });

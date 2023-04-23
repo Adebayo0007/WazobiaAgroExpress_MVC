@@ -1,11 +1,6 @@
 @using Agro_Express.Dtos.User
 @using Agro_Express.Dtos
 @model BaseResponse<IEnumerable<UserDto>>
-    @if(Model.Data.Count() == 0)
-    {
-        <h4>@TempData["error"]</h4>
-    } 
-    <h4>@TempData["error"]</h4>
     <form asp-controller="User" asp-action="SearchUser">
                   <br><div class="search-body">
         <div class="search-input"><input name="searchInput" class="search-search" type="text" placeholder="input product name or farmer username or email"> <button type="submit" id="completed-task" class="fabutton"><i class="fa-solid fa-magnifying-glass"></i></button> </div> <br>

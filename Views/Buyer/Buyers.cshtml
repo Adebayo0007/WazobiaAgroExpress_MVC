@@ -4,11 +4,7 @@
 
      @if(Model.Data.ActiveBuyers.Count() == 0 || Model.Data.NonActiveBuyers.Count() == 0)
     {
-        <h4>@TempData["error"]</h4>
-    } 
-       @if(@TempData["error"] != null)
-    {
-        <h4>@TempData["error"]</h4>
+        <h4 style="color: red;">No buyer yet</h4>
     } 
 
       <form asp-controller="Buyer" asp-action="SearchBuyer">

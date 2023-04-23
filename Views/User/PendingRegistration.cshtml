@@ -3,9 +3,8 @@
 @model BaseResponse<IEnumerable<UserDto>>
     @if(Model.Data.Count() == 0)
     {
-        <h4>@TempData["error"]</h4>
+        <h4 style="color: red;">No Pending Registration</h4>
     } 
-    <h4>@TempData["error"]</h4>
     <h4>All Pending Requests (@Model.Data.Count())</h4>
 
      @foreach (var item in Model.Data)

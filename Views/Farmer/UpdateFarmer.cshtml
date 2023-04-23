@@ -3,10 +3,6 @@
 @using Agro_Express.Dtos
 @model BaseResponse<FarmerDto>
  <form enctype="multipart/form-data" asp-action="UpdateFarmer" method="post">
-   @if(TempData["success"] != null)
-             {
-                <h2>@TempData["success"]</h2>
-               }
             @if(TempData["error"] != null)
              {
                 <h2 style="color:red">@TempData["error"]</h2>

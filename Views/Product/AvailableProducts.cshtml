@@ -6,18 +6,6 @@
     ViewData["Title"] = "Farm Products Around You";
 }          
 <h1>@ViewData["Title"]</h1>
-   @if(TempData["success"] != null)
-             {
-                <h2>@TempData["success"]</h2>
-               }
-            @if(TempData["error"] != null)
-             {
-                <h3 style="color:red">@TempData["error"]</h3>
-               }
-                 @if(TempData["order"] != null)
-             {
-                <h2 style="color:green;">@TempData["order"] </h2>
-               }
               
 
                @if(Model.Data.Count() == 0)

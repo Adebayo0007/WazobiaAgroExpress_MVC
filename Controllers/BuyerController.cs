@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Agro_Express.Dtos.Buyer;
 using Agro_Express.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agro_Express.Controllers
@@ -15,7 +16,7 @@ namespace Agro_Express.Controllers
             _userService = userService;
             
         }
-
+         [Authorize(Roles = "Buyer")]
          public IActionResult BuyerIndex()
         {
             return View();
@@ -63,7 +64,8 @@ namespace Agro_Express.Controllers
 
             
         }  
-
+          
+           [Authorize(Roles = "Buyer")]
           public async Task<IActionResult> BuyerProfile(string buyerEmail)
         {
             buyerEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -76,7 +78,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return View(buyer);
         } 
-
+        
+         [Authorize(Roles = "Buyer")]
         [HttpGet]
          public async Task<IActionResult> UpdateBuyer(string buyerEmail)
         {
@@ -90,6 +93,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return View(buyer);
         }
+
+         [Authorize]
           [HttpPost]
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateBuyer(UpdateBuyerRequestModel requestModel)
@@ -117,7 +122,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return RedirectToAction(nameof(BuyerProfile));
         }
-
+           
+            [Authorize(Roles = "Buyer, Admin")]
             public async Task<IActionResult> DeleteBuyer(string buyerEmail)
         {       
             if(buyerEmail == null)buyerEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -131,6 +137,7 @@ namespace Agro_Express.Controllers
             return View(buyer);      
         }
          
+        [Authorize]
         [HttpPost , ActionName("DeleteBuyer")]
         [ValidateAntiForgeryToken]
          public IActionResult DeleteBuyerConfirmed(string buyerId)
@@ -144,7 +151,8 @@ namespace Agro_Express.Controllers
             }
             return RedirectToAction("LogIn", "User");
         }
-
+         
+          [Authorize(Roles = "Admin")]
           public async Task<IActionResult> Buyers()
         {
              var buyers = await _buyerService.GetAllActiveAndNonActiveAsync();
@@ -157,6 +165,8 @@ namespace Agro_Express.Controllers
 
         }
 
+
+           [Authorize(Roles = "Admin")]
           [HttpPost]
          public async Task<IActionResult> SearchBuyer(string searchInput)
         {

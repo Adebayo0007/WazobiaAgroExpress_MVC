@@ -26,6 +26,16 @@ namespace Agro_Express.Repositories.Implementations
              await _applicationDbContext.SaveChangesAsync();
         }
 
+        public async Task FarmerMonthlyDueUpdate()
+        {
+              var farmers = await _applicationDbContext.Farmers.Include(a => a.User).Where(a => a.User.IsActive == true && a.User.Role == "Farmer").ToListAsync();
+              foreach(var farmer in farmers)
+              {
+                farmer.User.IsActive = false;
+              }
+              _applicationDbContext.UpdateRange(farmers);
+        }
+
         public async Task<IEnumerable<Farmer>> GetAllAsync()
         {
              return await _applicationDbContext.Farmers.Include(a => a.User).ThenInclude(a => a.Address).Where(a => a.User.IsActive == true && a.User.Role == "Farmer").ToListAsync();

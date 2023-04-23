@@ -2,14 +2,6 @@
 @using Agro_Express.Dtos
 @model BaseResponse<FarmerDto>
 
-  @if(TempData["success"] != null)
-             {
-                <h2>@TempData["success"]</h2>
-               }
-            @if(TempData["error"] != null)
-             {
-                <h2 style="color:red">@TempData["error"]</h2>
-               }
 <div class="page-content page-container" id="page-content">
     <div class="padding">
         <div class="row container d-flex justify-content-center">
@@ -67,17 +59,6 @@
                                                                         <h6 class="text-muted f-w-400">@Model.Data.State</h6>
                                                                     </div>
                                                                 </div><br>
-                                                                @* <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <p class="m-b-10 f-w-600">Recent</p>
-                                                                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <p class="m-b-10 f-w-600">Most Viewed</p>
-                                                                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
-                                                                    </div>
-                                                                </div> *@
                                                                 <div class="profile-opt">
                                                                     <div class="profile-update"><a asp-controller="Farmer" asp-action="UpdateFarmer"><span class="profile-update">Edit</span></a></div>
                                                                      <div class="back-to-profile"><a asp-controller="Farmer" asp-action="FarmerIndex"><span class="profile-update">Board</span></a></div>

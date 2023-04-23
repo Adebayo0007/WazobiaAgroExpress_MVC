@@ -8,10 +8,6 @@
                     {
                         <h5 id="overlay"><i style="color: red;">@TempData["error"]</i></h5>
                     }
-                    @if(TempData["success"] != null )
-                    {
-                        <h5 id="overlay"><i style="color: rgb(0, 255, 170)en;">@TempData["success"]</i></h5>
-                    }
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="login__field">
 					<i class="login__icon fas fa-user"></i>

@@ -16,12 +16,14 @@ namespace Agro_Express.Services.Implementations
           private readonly IUserRepository _userRepository;
           private readonly IUserService _userService;
              private readonly IEmailSender _emailSender;
-        public FarmerService(IFarmerRepository farmerRepository,IUserRepository userRepository, IUserService userService,  IEmailSender emailSender)
+               private readonly IHttpContextAccessor _httpContextAccessor;
+        public FarmerService(IFarmerRepository farmerRepository,IUserRepository userRepository, IUserService userService,  IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _farmerRepository = farmerRepository;
             _userRepository = userRepository;
             _userService = userService;
             _emailSender = emailSender;
+            _httpContextAccessor = httpContextAccessor;
             
         }
         public async Task<BaseResponse<FarmerDto>> CreateAsync(CreateFarmerRequestModel createFarmerModel)
@@ -44,6 +46,7 @@ namespace Agro_Express.Services.Implementations
                   IsActive = true,
                   IsRegistered = false,
                   Haspaid = false,
+                  Due = true,
                   DateCreated = DateTime.Now
 
             };
@@ -387,6 +390,25 @@ namespace Agro_Express.Services.Implementations
                 IsSucess = true,
                 Data = farmer
             };
+        }
+
+        public async Task FarmerMonthlyDueUpdate()
+        {
+            if(DateTime.Now.Date.AddDays(-1).Month == DateTime.Now.Date.Month)
+            {
+               await _farmerRepository.FarmerMonthlyDueUpdate();
+            }
+        }
+
+        public Task UpdateToHasPaidDue(string userEmail)
+        {
+          
+          // userEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
+          var user = _userRepository.GetByEmailAsync(userEmail);
+          user.Due = true;
+          _userRepository.Update(user);
+           return null;
+        
         }
     }
 }

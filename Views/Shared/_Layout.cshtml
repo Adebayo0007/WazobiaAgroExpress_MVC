@@ -14,8 +14,10 @@
     <link rel="stylesheet" href="~/css/form.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/productForm.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/product.css" asp-append-version="true">
+     <link rel="stylesheet" href="~/css/mail.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/users.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/search.css" asp-append-version="true">
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Agro_Express.styles.css" asp-append-version="true" />
@@ -92,6 +94,8 @@
     </header>
       <div class="container">
         <main  role="main" class="pb-3">
+             <span><partial name ="_Notification"/> </span> 
+             
             <div class="inner">
             <div class = "conn"> 
                 <div class="logoo">  <img src="~/Data/agrologo.png" width="150vw" height="110vh" alt=""></div>
@@ -101,7 +105,7 @@
                             {
                                      <div class="bar">
                     <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand">Go Home</span></a></div>
-                   <div class="cart"><i class="fa-solid fa-magnifying-glass"></i> &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                <div class="cart"><a class="like" asp-action="CreateEmail" asp-controller="Email"><i class="fa-sharp fa-solid fa-envelope"></i>&nbsp;&nbsp;<span class="rand">Send mail</span></a></div>
                   <div class="cart"><a class="like" asp-action="AdminIndex" asp-controller="Admin"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
                   <div class="cart"><a class="like" asp-action="AdminProfile" asp-controller="Admin"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
                    </div>
@@ -110,7 +114,7 @@
                             {
                                      <div class="bar">
                      <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand"> Go Home</span></a></div>
-                   <div class="cart"> <i class="fa-solid fa-magnifying-glass"></i>  &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                  <div class="cart"><a class="like" asp-action="CreateEmail" asp-controller="Email"><i class="fa-sharp fa-solid fa-envelope"></i>&nbsp;&nbsp;<span class="rand">Send mail</span></a></div>
                   <div class="cart"><a class="like" asp-action="BuyerIndex" asp-controller="Buyer"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
                    <div class="cart"><a class="like" asp-action="BuyerProfile" asp-controller="Buyer"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
                    </div>
@@ -119,7 +123,7 @@
                             {
                                      <div class="bar">
                     <div class="cart"><a class="like" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house"></i> &nbsp;&nbsp;<span class="rand">Go Home</span></a></div>
-                   <div class="cart"> <i class="fa-solid fa-magnifying-glass"></i>  &nbsp;&nbsp;<span class="rand">My Orders</span></div>
+                    <div class="cart"><a class="like" asp-action="CreateEmail" asp-controller="Email"><i class="fa-sharp fa-solid fa-envelope"></i>&nbsp;&nbsp;<span class="rand">Send mail</span></a></div>
                   <div class="cart"><a class="like" asp-action="FarmerIndex" asp-controller="Farmer"><i class="fa-solid fa-truck-monster"></i>&nbsp;&nbsp;<span class="rand">Dashboard</span></a></div>
                    <div class="cart"><a class="like" asp-action="FarmerProfile" asp-controller="Farmer"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;<span class="rand">My Profile</span></a></div>
                    </div>
@@ -147,7 +151,7 @@
             @{
                 var x = DateTime.Now.Year;
             }
-            &copy; @x - Agro_Express. @*<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            &copy; @x - Agro_Express. 
         </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -155,6 +159,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
      <script src="https://js.paystack.co/v1/inline.js"></script> 
       <script src="~/js/transaction.js" asp-append-version="true"></script>
+      <script src="app.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     
 </body>

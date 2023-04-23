@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PayStack.Net;
 
 namespace Agro_Express.Controllers
 {
@@ -11,6 +10,7 @@ namespace Agro_Express.Controllers
          private readonly IRequestedProductService _requstedProductSercice;
            private readonly IProductService _productSercice;
              private readonly IUserService _userSercice;
+             
         public RequestedProductController(IRequestedProductService requstedProductSercice, IProductService productSercice, IUserService userSercice)
         {
             _requstedProductSercice = requstedProductSercice;
@@ -41,12 +41,11 @@ namespace Agro_Express.Controllers
                         TempData["error"] = "internal error";
                         return BadRequest();
                     }
-                    TempData["order"] = product.Message;
+                    TempData["success"] = product.Message;
                     return RedirectToAction("AvailableProducts", "Product");
                 
 
            }
-            TempData["id"] = requestId;
             return RedirectToAction(nameof(Payment));
          }
 
@@ -89,8 +88,15 @@ namespace Agro_Express.Controllers
             TempData["error"] = "internal error 🙄";
               return RedirectToAction(nameof(OrderedProductAndPendingProduct));
             
-
          }
+
+          public async Task<IActionResult> NotDeliveredRequest(string requestId)
+        {
+            await _requstedProductSercice.NotDelivered(requestId);
+            TempData["error"] = "Agro Express say SORRY";
+             return RedirectToAction(nameof(OrderedProductAndPendingProduct));
+
+        }
 
 
             [Authorize(Roles = "Farmer")]
@@ -132,21 +138,5 @@ namespace Agro_Express.Controllers
               _userSercice.UpdatingToHasPaid(userEmail);
                  return RedirectToAction("AvailableProducts", "Product");
         }
-
-
-      
-        // public async Task<IActionResult> Pay()
-        // {
-        //    string secreteKey = "sk_test_1dacd4891d686e4c9f616a96a1e868138cb9d067";
-        //    var payStackTransactionAPI = new PayStackApi(secreteKey);
-        //    var response =  payStackTransactionAPI.Transactions.Initialize("johnwilson5864@gmail.com",50000);
-        //    if(response.Status == true)
-        //    {
-        //       return RedirectToAction("AvailableProducts", "Product");
-        //    }
-        //     return RedirectToAction("Home", "Index");
-
-        // }
-
     }
 }

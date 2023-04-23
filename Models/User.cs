@@ -17,6 +17,7 @@ public class User
    public bool IsActive{get; set;}
     public bool IsRegistered{get; set;}
      public bool Haspaid{get; set;}
+      public bool Due{get; set;}
    public DateTime DateCreated{get; set;}
     public DateTime? DateModified{get; set;}
    public Admin Admin{get; set;}

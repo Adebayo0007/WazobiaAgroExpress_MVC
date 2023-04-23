@@ -2,20 +2,16 @@
 @using Agro_Express.Dtos
 @model BaseResponse<IEnumerable<FarmerDto>>
 
-     @if(Model.Data.Count() == 0 )
-    {
-        <h4>No farmer Found 🙄</h4>
-    } 
-       @if(@TempData["error"] != null)
-    {
-        <h4>@TempData["error"]</h4>
-    } 
-
       <form asp-controller="Farmer" asp-action="SearchFarmer">
                   <br> <div class="search-body">
         <div class="search-input"><input name="searchInput" class="search-search" type="text" placeholder="username or email"> <button type="submit" id="completed-task" class="fabutton"><i class="fa-solid fa-magnifying-glass"></i></button>  </div><br>
     </div>
     </form>
+      @if(Model.Data.Count() == 0 )
+    {
+        <h4>No farmer Found 🙄</h4>
+    } 
+
 
     <h4>Searched Farmer (@Model.Data.Count())</h4>
 

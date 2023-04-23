@@ -109,28 +109,40 @@ namespace Agro_Express.Services.Implementations
             var email =await _userRepository.ExistByEmailAsync(logInRequestMode.Email);
          
                var user = _userRepository.GetByEmailAsync(logInRequestMode.Email);
+                 if(user.IsRegistered == false)
+                {
+                      return new BaseResponse<UserDto>
+                    {
+                        Message = "Your Registeration is yet to be verified 🙄",
+                        IsSucess = false
+                    };
+                }
+
+                   if(user.IsActive == false)
+                {
+                      return new BaseResponse<UserDto>
+                    {
+                        Message = "You are not an active user 🙄",
+                        IsSucess = false
+                    };
+                }
+
+                if(user.Due == false)
+                {
+                      return new BaseResponse<UserDto>
+                    {
+                        Message = "Due",
+                        IsSucess = false
+                    };
+                }
+
+
+               //for user using temporary password
                var passwordCheck = logInRequestMode.Password.Split("0");
                if(passwordCheck[0] == "$2b$1")
                {
                     if(user.Password == logInRequestMode.Password && user.Email == logInRequestMode.Email)
                     {
-                          if(user.IsRegistered == false)
-                                {
-                                    return new BaseResponse<UserDto>
-                                    {
-                                        Message = "Your Registeration is yet to be verified 🙄",
-                                        IsSucess = false
-                                    };
-                                }
-
-                            if(user.IsActive == false)
-                            {
-                                return new BaseResponse<UserDto>
-                                {
-                                    Message = "You are not an active user 🙄",
-                                    IsSucess = false
-                                };
-                            }
                             UserDto userDto1 = new UserDto();
 
                         if(user is not null)
@@ -170,15 +182,9 @@ namespace Agro_Express.Services.Implementations
                
                }
 
+
+                 //for user using their password
                 var password = BCrypt.Net.BCrypt.Verify(logInRequestMode.Password, user.Password);
-                  if(user.IsRegistered == false)
-                {
-                      return new BaseResponse<UserDto>
-                    {
-                        Message = "Your Registeration is yet to be verified 🙄",
-                        IsSucess = false
-                    };
-                }
 
                 if(email == false || password == false)
                 {
@@ -189,14 +195,7 @@ namespace Agro_Express.Services.Implementations
                     };
                 }
 
-                if(user.IsActive == false)
-                {
-                      return new BaseResponse<UserDto>
-                    {
-                        Message = "You are not an active user 🙄",
-                        IsSucess = false
-                    };
-                }
+             
                    UserDto userDto = new UserDto();
 
              if(user is not null)
@@ -223,8 +222,7 @@ namespace Agro_Express.Services.Implementations
                 Message = "Login successfully 😎",
                 IsSucess = true,
                 Data = userDto
-            };
-            
+            }; 
 
         }
 
@@ -436,7 +434,7 @@ namespace Agro_Express.Services.Implementations
                  ReceiverEmail = email,
                  ReceiverName = email,
                  Subject = "Password Reset",
-                 Message = $"Copy your password reset details and use it to login,then you can reset the password after logging in  {user.Password}  "
+                 Message = $"Copy your temporary password details and use it to login,then you can reset the password after logging in; {user.Password}  "
                };
                  var mail = await _emailSender.SendEmail(emailRequestModel);
                  if(mail == true)

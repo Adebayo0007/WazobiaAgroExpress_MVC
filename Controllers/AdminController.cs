@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Agro_Express.Dtos.Admin;
 using Agro_Express.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agro_Express.Controllers
@@ -13,11 +14,13 @@ namespace Agro_Express.Controllers
             _adminService = adminService;
             
         }
-
+          [Authorize(Roles = "Admin")]
         public IActionResult AdminIndex()
         {
             return View();
         }
+
+         [Authorize(Roles = "Admin")]
          public async Task<IActionResult> AdminProfile(string adminEmail)
         {
             adminEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -30,7 +33,7 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return View(admin);
         }
-         
+          [Authorize(Roles = "Admin")]
          [HttpGet]
          public async Task<IActionResult> UpdateAdmin(string adminEmail)
         {
@@ -44,6 +47,8 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return View(admin);
         }
+
+          [Authorize]
           [HttpPost]
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateAdmin(UpdateAdminRequestModel requestModel)
@@ -62,7 +67,9 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return RedirectToAction(nameof(AdminProfile));
         }
+         
 
+          [Authorize(Roles = "Admin")]
          public async Task<IActionResult> DeleteAdmin(string adminEmail)
         {       
             if(adminEmail == null)adminEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -75,7 +82,7 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return View(admin);      
         }
-         
+          [Authorize]
         [HttpPost , ActionName("DeleteAdmin")]
         [ValidateAntiForgeryToken]
          public IActionResult DeleteAdminConfirmed(string adminId)
@@ -85,7 +92,8 @@ namespace Agro_Express.Controllers
             TempData["success"] = "Admin Deleted successfully";
             return RedirectToAction("LogIn", "User");
         }
-
+         
+          [Authorize(Roles = "Admin")]
         public IActionResult MyOffers()
         {
             return View();

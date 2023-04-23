@@ -3,6 +3,7 @@ using Agro_Express.Dtos.User;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agro_Express.Controllers
@@ -30,15 +31,22 @@ namespace Agro_Express.Controllers
                 return NotFound();
             }
             var user = await _userService.Login(loginModel);
+             if (user.IsSucess == false && user.Message == "Due")
+            {
+                        TempData["error"] = "kindly pay up your due";
+                        return RedirectToAction("PayMonthlyDue", "Farmer");
+             }
+
             if (user.IsSucess == false)
             {
                 TempData["error"] = user.Message;
                 return View();
             }
+              
 
-            var roles = new List<string>();
+             var roles = new List<string>();
              var claims = new List<Claim>();
-               if(user.Data.Role == "Admin")
+            if(user.Data.Role == "Admin")
              {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Data.Id));
@@ -64,16 +72,17 @@ namespace Agro_Express.Controllers
             var principal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
+
             if (user.Data.Role == "Admin")
             {
                 TempData["success"] = user.Message;
                 return RedirectToAction("AdminIndex", "Admin");
             }
-            if (user.Data.Role == "Farmer")
-            {
-                TempData["success"] = user.Message;
-                return RedirectToAction("FarmerIndex", "Farmer");
 
+            if (user.Data.Role == "Farmer" && user.Data.Due == true)
+            {
+                    TempData["success"] = user.Message;
+                    return RedirectToAction("FarmerIndex", "Farmer");
             }
             if (user.Data.Role == "Buyer")
             {
@@ -81,6 +90,7 @@ namespace Agro_Express.Controllers
                 return RedirectToAction("BuyerIndex", "Buyer");
 
             }
+           
             return RedirectToAction("Index", "Home");
 
         }
@@ -99,6 +109,7 @@ namespace Agro_Express.Controllers
             return View();
         }
 
+         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ApplicationUsers()
         {
             var users = await _userService.GetAllAsync();
@@ -110,7 +121,8 @@ namespace Agro_Express.Controllers
             return View(users);
 
         }
-
+        
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string userId)
         {       
            var user = await _userService.GetByIdAsync(userId);
@@ -122,7 +134,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = user.Message;
             return View(user);
         }
-         
+         [Authorize]
         [HttpPost , ActionName("DeleteUser")]
          public async Task<IActionResult> DeleteUserConfirmed(string usersId)
         {
@@ -134,7 +146,7 @@ namespace Agro_Express.Controllers
             TempData["success"] = "User Deleted successfully 😎";
             return RedirectToAction(nameof(ApplicationUsers));
         }
-
+           [Authorize(Roles = "Admin")]
            [HttpPost]
          public async Task<IActionResult> SearchUser(string searchInput)
         {
@@ -151,7 +163,8 @@ namespace Agro_Express.Controllers
              TempData["success"] = users.Message;
             return View(users);
         }
-
+          
+          [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PendingRegistration()
         {
             var pendingRequests = await _userService.PendingRegistration();
@@ -164,7 +177,7 @@ namespace Agro_Express.Controllers
             return View(pendingRequests);
         }
         
-
+        [Authorize(Roles = "Admin")]
         public IActionResult VerifyUser(string userEmail)
         {
             if(userEmail != null)_userService.VerifyUser(userEmail);

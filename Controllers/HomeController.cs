@@ -9,16 +9,19 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IProductService _productSercice;
+    private readonly IFarmerService _farmerSercice;
 
-    public HomeController(ILogger<HomeController> logger, IProductService productSercice)
+    public HomeController(ILogger<HomeController> logger, IProductService productSercice, IFarmerService farmerSercice)
     {
         _logger = logger;
         _productSercice = productSercice;
+        _farmerSercice = farmerSercice;
     }
 
     public async Task<IActionResult> Index()
     {
          await _productSercice.DeleteExpiredProducts();
+         await _farmerSercice.FarmerMonthlyDueUpdate();
         var products = await _productSercice.GetAllFarmProductAsync();
          if(products.IsSucess == false)
             {

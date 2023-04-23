@@ -1,7 +1,5 @@
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.Product;
-using Agro_Express.Enum;
-using Agro_Express.Models;
 
 namespace Agro_Express.Services.Interfaces
 {

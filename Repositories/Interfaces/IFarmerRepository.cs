@@ -6,5 +6,6 @@ namespace Agro_Express.Repositories.Interfaces
     {
         Task<IEnumerable<Farmer>> SearchFarmerByEmailOrUsername(string searchInput); 
         Task<Farmer> GetFarmer(string userId); 
+        Task FarmerMonthlyDueUpdate();
     }
 }

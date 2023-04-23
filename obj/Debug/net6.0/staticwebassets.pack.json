@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\css\\login.css"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\css\\mail.css",
+      "PackagePath": "staticwebassets\\css\\mail.css"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Agro-Express\\wwwroot\\css\\product.css",
       "PackagePath": "staticwebassets\\css\\product.css"
     },
