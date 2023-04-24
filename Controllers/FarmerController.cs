@@ -16,6 +16,12 @@ namespace Agro_Express.Controllers
             _userService = userService;
             
         }
+
+          public IActionResult FarmerPolicy()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Farmer")]
          public IActionResult FarmerIndex()
         {

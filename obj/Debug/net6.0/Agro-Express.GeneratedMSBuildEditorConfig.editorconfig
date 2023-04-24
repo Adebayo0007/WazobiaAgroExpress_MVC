@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/Desktop/Agro-Express/Views/Buyer/BuyerPolicy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJQb2xpY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/Desktop/Agro-Express/Views/Buyer/BuyerProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,6 +84,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lckluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/Desktop/Agro-Express/Views/Farmer/FarmerPolicy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lclBvbGljeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/Desktop/Agro-Express/Views/Farmer/FarmerProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lclByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -108,8 +116,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[C:/Users/user/Desktop/Agro-Express/Views/Home/Policy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQb2xpY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/Desktop/Agro-Express/Views/Product/AvailableProducts.cshtml]

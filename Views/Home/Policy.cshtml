@@ -1,0 +1,123 @@
+﻿@using System.Security.Claims;
+@{
+    ViewData["Title"] = "My Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+  @if(User.FindFirst(ClaimTypes.Role) != null )
+  {
+     if(User.FindFirst(ClaimTypes.Role).Value == "Farmer")
+     {
+         <h3>Farmer Policy are listed below</h3>
+         <ol type="I">
+            <li>As a Farmer you needs to be visiting your portal always to mornitor your farm products</li>
+             <li>As a Farmer you needs to be uploading your product from time to time.</li>
+             <li>The availability of a farm product must not be more than seven(7) days.</li>
+              <li>And the starting date of product availability must be between the uploading date and two days ahead</li>
+                <li>Farmer need to fill all neccessarry fields for the product to br uploaded successfully</li>
+                  <li>Once the availability date laps,the product will be deleted from the farmer's portal,so if the product is still availability and the date is running out,the farmer can still edit his or her product anytime,and the running out days can be seen at a glance</li>
+                   <li>If a product is not available anymore,and the availability date is still on,the farmer can always go to the portal to delete the product,because if the product is not deleted it will be seen as available product from you that needs to be delivered.</li>
+                   <li>if your product quantity is not as much as what is uploaded s time goes,you need to update that on your fortal</li>
+                     <li>When an order is made for your product by a customer,you will recieve a quick notice from <b>Wazobia agro Express</b> to visit your portal to accept the request. </li>
+                       <li>Farmers requests can be seen on 'Dashboad' -> 'My Offer' -> 'My Requests' for acceptance</li>
+                         <li>After accepting your request,farmer need to contact the buyer for mutual agreement</li>
+                         <li>Then product needs to be delivered in accordance with the agreement,if a delay happens,you need to notify the customer,before he or she make a complain to <b>Wazobia Agro Express</b></li>
+                         <li>Also as a farmer,you will be paid on delivery,and if you need part payment,you can't request more than <b>₦3000.00</b></li>
+                         <li>After successful transaction,you need to tell your client to click on the delivered button so as to add to your <b>point</b></li>
+                         <li><b>Farmer's Point</b> makes up the amount of stars a farmer will have,and the stars determines the validity of a farmer,because the buyer will see your rank at a glance,and it shows the farmers validity. </li>
+                         <li><b>20</b> successful transaction makes up a star</li>
+                          <li>Farmer must know how to relate with buyers</li>
+                          <li>Farmer needs to mornitor his or her portal frequently</li>
+                           <li>Farmer can also view other farmers farm products around his local Government</li>
+                   <li> As a Farmer also, you can also perform what ever a Buyer can perform.</li>
+         <li> Buyer Policy is as folow.</li>
+         <ul>
+               <li> Buyer needs to visit his or her portal when ever he or she needs to see available products around his or Local Government.</li>
+                <li> If Buyer needs to see products from other local Government,he or she needs to edit his/her profile and change Sate and Local Government</li>
+        <li> As a Buyer you can search a product by the product name.</li>
+        <li> Also you can search products own by a particular Farmer by inputing the farmer's user-name or email.</li>
+        <li> Also,as a buyer you should be able to know the worth,available quantity,location,availability and see the picture of a particular product at a glance before buying it.</li>
+         <li>Buyer can also see the stars a particular farmer have at a glance</li>
+         <li>And the stars determines the validity of that particular farmer</li>
+        <li> At your first order, you will be redirected to a page where you will pay a token of <b>₦300.00</b>,and after then,no more token.The token will be use throughout your experience with the application.But as an Admin your payment is done by default </li>
+        <li >After the payment have been done once successfully,then you can go back and place your orders,as much as possible</li>
+        <li> Once the order is done successfuly,the order will appear at the appropriate farmer's portal and also it will also be found in 'My Orders' from buyer's end.</li>
+         <li> At 'My Orders' from buyer's end the folowing tables are there: <b>Ordered Products</b> and <b>Orders accepted by Farmers</b></li>
+         <li> <b>Ordered Products</b> table is for ordered products that are yet to be accepted by farmer</li>
+           <li> <b>Orders accepted by Farmers</b> table is for ordered products that are accepted by farmer</li>
+           <li> if an order is still on ordered product,as a buyer you can still delete the order before the farmer accept the order</li>
+           <li> Once an ordre moves to Orderes accepted by Farmers,as a buyer you only have two options: <b>Delivered</b> button and <b>Not delivered</b> button</li>
+           <li> If and order is accepted by a farmer will contact the buyer and discuss business</li>
+            <li> If the delivery date agreement during conversation passes,the customer can call the farmer to know what is keeping them so long or click on the not delivered button for complain to <b>Wazobia Agro Express</b></li>
+             <li> Buyer should note that full payment before delivery is at buyer's risk</li>
+             <li> And if a farmer requested for part of payment,Buyer shouldn't pay more than <b>₦3000.00</b>, no matter the quantity he or she is buying as part of payment</li>
+              <li> For any complain for clarification contact Mr Adebayo on <b>08087054632</b></li>
+         </ul>
+                         
+
+         </ol>
+     }
+     else if(User.FindFirst(ClaimTypes.Role).Value == "Buyer"){
+        <h3>Buyer Policy are listed below</h3>
+        <ol type="I">
+          <li> Buyer needs to visit his or her portal when ever he or she needs to see available products around his or Local Government.</li>
+          <li> If Buyer needs to see products from other local Government,he or she needs to edit his/her profile and change Sate and Local Government</li>
+        <li> As a Buyer you can search a product by the product name.</li>
+        <li> Also you can search products own by a particular Farmer by inputing the farmer's user-name or email.</li>
+        <li> Also,as a buyer you should be able to know the worth,available quantity,location,availability and see the picture of a particular product at a glance before buying it.</li>
+        <li>Buyer can also see the stars a particular farmer have at a glance</li>
+         <li>And the stars determines the validity of that particular farmer</li>
+        <li> At your first order, you will be redirected to a page where you will pay a token of <b>₦300.00</b>,and after then,no more token.The token will be use throughout your experience with the application.But as an Admin your payment is done by default </li>
+        <li >After the payment have been done once successfully,then you can go back and place your orders,as much as possible</li>
+        <li> Once the order is done successfuly,the order will appear at the appropriate farmer's portal and also it will also be found in 'My Orders' from buyer's end.</li>
+         <li> At 'My Orders' from buyer's end the folowing tables are there: <b>Ordered Products</b> and <b>Orders accepted by Farmers</b></li>
+         <li> <b>Ordered Products</b> table is for ordered products that are yet to be accepted by farmer</li>
+           <li> <b>Orders accepted by Farmers</b> table is for ordered products that are accepted by farmer</li>
+           <li> if an order is still on ordered product,as a buyer you can still delete the order before the farmer accept the order</li>
+           <li> Once an ordre moves to Orderes accepted by Farmers,as a buyer you only have two options: <b>Delivered</b> button and <b>Not delivered</b> button</li>
+           <li> If and order is accepted by a farmer will contact the buyer and discuss business</li>
+            <li> If the delivery date agreement during conversation passes,the customer can call the farmer to know what is keeping them so long or click on the not delivered button for complain to <b>Wazobia Agro Express</b></li>
+             <li> Buyer should note that full payment before delivery is at buyer's risk</li>
+             <li> And if a farmer requested for part of payment,Buyer shouldn't pay more than <b>₦3000.00</b>, no matter the quantity he or she is buying as part of payment</li>
+              <li> For any complain for clarification contact Mr Adebayo on <b>08087054632</b></li>
+       </ol>
+
+     }
+     else{
+         <h3>Admin Policy are listed below;</h3>
+       <ol type="I">
+        <li> Admin needs to visit his or her portal every single day to check pending registrations to verify them.</li>
+        <li> Admin needs to manage the application users very well.</li>
+        <li> Admin should be expecting complains from the users every single day.</li>
+        <li> Admin needs to know how to communicate with users.</li>
+        <li> Admin needs to be firm with what ever decison he or she wants to take.</li>
+        <li> Admin have limitations to what ever Farmer can perform.</li>
+        <li> As an Admin also, you can also perform what ever a Buyer can perform.</li>
+         <li> Buyer Policy is as folow.</li>
+         <ul>
+               <li> Buyer needs to visit his or her portal when ever he or she needs to see available products around his or Local Government.</li>
+               <li> If Buyer needs to see products from other local Government,he or she needs to edit his/her profile and change Sate and Local Government</li>
+        <li> As a Buyer you can search a product by the product name.</li>
+        <li> Also you can search products own by a particular Farmer by inputing the farmer's user-name or email.</li>
+        <li> Also,as a buyer you should be able to know the worth,available quantity,location,availability and see the picture of a particular product at a glance before buying it.</li>
+         <li>Buyer can also see the stars a particular farmer have at a glance</li>
+         <li>And the stars determines the validity of that particular farmer</li>
+        <li> At your first order, you will be redirected to a page where you will pay a token of <b>₦300.00</b>,and after then,no more token.The token will be use throughout your experience with the application.But as an Admin your payment is done by default </li>
+        <li >After the payment have been done once successfully,then you can go back and place your orders,as much as possible</li>
+        <li> Once the order is done successfuly,the order will appear at the appropriate farmer's portal and also it will also be found in 'My Orders' from buyer's end.</li>
+         <li> At 'My Orders' from buyer's end the folowing tables are there: <b>Ordered Products</b> and <b>Orders accepted by Farmers</b></li>
+         <li> <b>Ordered Products</b> table is for ordered products that are yet to be accepted by farmer</li>
+           <li> <b>Orders accepted by Farmers</b> table is for ordered products that are accepted by farmer</li>
+           <li> if an order is still on ordered product,as a buyer you can still delete the order before the farmer accept the order</li>
+           <li> Once an ordre moves to Orderes accepted by Farmers,as a buyer you only have two options: <b>Delivered</b> button and <b>Not delivered</b> button</li>
+           <li> If and order is accepted by a farmer will contact the buyer and discuss business</li>
+            <li> If the delivery date agreement during conversation passes,the customer can call the farmer to know what is keeping them so long or click on the not delivered button for complain to <b>Wazobia Agro Express</b></li>
+             <li> Buyer should note that full payment before delivery is at buyer's risk</li>
+             <li> And if a farmer requested for part of payment,Buyer shouldn't pay more than <b>₦3000.00</b>, no matter the quantity he or she is buying as part of payment</li>
+              <li> For any complain for clarification contact Mr Adebayo on <b>08087054632</b></li>
+         </ul>
+       </ol>
+     }
+  }
+
+

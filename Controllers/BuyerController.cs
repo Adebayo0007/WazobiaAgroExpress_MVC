@@ -16,6 +16,13 @@ namespace Agro_Express.Controllers
             _userService = userService;
             
         }
+
+        
+         public IActionResult BuyerPolicy()
+        {
+            return View();
+        }
+
          [Authorize(Roles = "Buyer")]
          public IActionResult BuyerIndex()
         {

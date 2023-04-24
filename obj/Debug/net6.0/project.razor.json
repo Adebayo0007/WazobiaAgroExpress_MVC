@@ -18564,6 +18564,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Home\\Policy.cshtml",
+      "TargetPath": "Views\\Home\\Policy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Buyer\\Buyers.cshtml",
       "TargetPath": "Views\\Buyer\\Buyers.cshtml",
       "FileKind": "mvc"
@@ -18576,6 +18581,11 @@
     {
       "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\User\\LogIn.cshtml",
       "TargetPath": "Views\\User\\LogIn.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Farmer\\FarmerPolicy.cshtml",
+      "TargetPath": "Views\\Farmer\\FarmerPolicy.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -18594,6 +18604,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Buyer\\BuyerPolicy.cshtml",
+      "TargetPath": "Views\\Buyer\\BuyerPolicy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -18601,11 +18616,6 @@
     {
       "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Product\\CreateProduct.cshtml",
       "TargetPath": "Views\\Product\\CreateProduct.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\user\\Desktop\\Agro-Express\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     }
   ],
