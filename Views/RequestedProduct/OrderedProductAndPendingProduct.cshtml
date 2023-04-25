@@ -36,8 +36,8 @@
           @foreach (var item in Model.Data.PendingProduct)
         {
             <div class="app-user">
-        <div style="height:17rem !important" class="user-body">
-            <div  class="user-detail">
+        <div style="height:18rem !important; font-size: small;" id="test" class="user-body">
+            <div style="height:43vh !important; width:45vw;"  id="tt" class="user-detail">
                 <div style="padding: 0 2.5px !important"><span class="user-font">Product: </span> <span class="user-font">@item.ProductName</span></div>
                  <div style="padding: 0 2.5px !important"><span class="user-font">Email: </span> <span class="user-font">@item.BuyerEmail</span></div>
                  <div style="padding: 0 2.5px !important"><span class="user-font">Location: </span> <span class="user-font">@item.BuyerLocalGovernment</span></div>
@@ -46,7 +46,14 @@
 
                      <div class="profile-opt">
                         <div class="profile-update"><a style="text-decoration: none; asp-controller="RequestedProduct" asp-action="DeliveredRequest" asp-route-requestId="@item.Id"><span style="font-size: .6rem;font-style:bold; text-align:center;" class="profile-update">Delivered</span></a></div>
+                        @if(@item.NotDelivered == false)
+                        {
                         <div class="back-to-profile"><a style="text-decoration: none;" asp-controller="RequestedProduct" asp-action="NotDeliveredRequest" asp-route-requestId="@item.Id"><span style="font-size: .6rem; font-style:bold; text-align:center;" class="profile-update">Not Delivered</span></a></div>
+                        }
+                         @if(@item.NotDelivered == true)
+                        {
+                        <div class="back-to-profile"><a style="text-decoration: none;" asp-controller="RequestedProduct" asp-action="NotDeliveredRequest" asp-route-requestId="@item.Id"><span style="font-size: .6rem; font-style:bold; text-align:center;" class="profile-update">Awaiting...</span></a></div>
+                        }
                     </div>
                     </div>
                 </div>

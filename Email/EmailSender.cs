@@ -7,10 +7,15 @@ namespace Agro_Express.Email
 {
     public class EmailSender : IEmailSender
     {
+        public readonly IConfiguration _configuration;
+        public EmailSender(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public async Task<bool> SendEmail(EmailDto.EmailRequestModel email)
         {
-            string x;
-            Configuration.Default.ApiKey.Add("api-key", "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");
+            var x = _configuration.GetValue<string>("SendinblueAPIkey:ApiKey");
+             Configuration.Default.ApiKey.Add("api-key", x);
             if(email.SenderEmail == null) 
             {
                email.SenderEmail = "tijaniadebayoabdllahi@gmail.com";
