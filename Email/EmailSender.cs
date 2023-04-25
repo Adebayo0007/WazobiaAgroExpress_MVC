@@ -98,7 +98,7 @@ namespace Agro_Express.Email
               
         }
 
-        public async Task<bool> ValidateEmail(string email)
+        public async Task<bool> EmailValidaton(string email)
         {
           if(email is not null)
           {

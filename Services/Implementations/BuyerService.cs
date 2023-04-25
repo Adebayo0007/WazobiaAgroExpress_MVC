@@ -25,7 +25,7 @@ namespace Agro_Express.Services.Implementations
         }
         public async Task<BaseResponse<BuyerDto>> CreateAsync(CreateBuyerRequestModel createBuyerModel)
         {
-           var response = await _emailSender.ValidateEmail(createBuyerModel.Email);
+           var response = await _emailSender.EmailValidaton(createBuyerModel.Email);
            if(response == false)
            {
               return new BaseResponse<BuyerDto>{

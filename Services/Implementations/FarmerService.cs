@@ -29,7 +29,7 @@ namespace Agro_Express.Services.Implementations
         public async Task<BaseResponse<FarmerDto>> CreateAsync(CreateFarmerRequestModel createFarmerModel)
         {
 
-               var response = await _emailSender.ValidateEmail(createFarmerModel.Email);
+               var response = await _emailSender.EmailValidaton(createFarmerModel.Email);
            if(response == false)
            {
               return new BaseResponse<FarmerDto>{
