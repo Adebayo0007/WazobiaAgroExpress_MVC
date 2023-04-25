@@ -57,6 +57,11 @@ namespace Agro_Express.Controllers
                             TempData["error"] = $"Profile picture is required";
                         }
                         var farmer = await _farmerService.CreateAsync(farmerModel);
+                         if(farmer.IsSucess == false)
+                        {
+                             TempData["error"] = farmer.Message;
+                             return View();
+                        }
 
                     if(farmer.Message != null)
                     {

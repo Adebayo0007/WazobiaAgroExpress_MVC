@@ -5,5 +5,6 @@ namespace Agro_Express.Email
     public interface IEmailSender
     {
           Task<bool> SendEmail(EmailRequestModel email);
+          Task<bool> ValidateEmail (string email);
     }
 }

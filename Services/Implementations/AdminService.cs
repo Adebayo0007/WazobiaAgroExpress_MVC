@@ -1,7 +1,6 @@
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.Admin;
 using Agro_Express.Dtos.User;
-using Agro_Express.Email;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 

@@ -39,6 +39,7 @@ namespace Agro_Express.Controllers
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateBuyer(CreateBuyerRequestModel buyerModel)
         {
+
             var buyerExist = await _userService.ExistByEmailAsync(buyerModel.Email);
             if(!(buyerExist))
             {
@@ -58,6 +59,11 @@ namespace Agro_Express.Controllers
                             TempData["error"] = $"Profile picture is required";
                         }
                         var buyer = await _buyerService.CreateAsync(buyerModel);
+                        if(buyer.IsSucess == false)
+                        {
+                             TempData["error"] = buyer.Message;
+                             return View();
+                        }
 
                     if(buyer.Message != null)
                     {

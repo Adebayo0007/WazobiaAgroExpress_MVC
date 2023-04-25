@@ -28,6 +28,15 @@ namespace Agro_Express.Services.Implementations
         }
         public async Task<BaseResponse<FarmerDto>> CreateAsync(CreateFarmerRequestModel createFarmerModel)
         {
+
+               var response = await _emailSender.ValidateEmail(createFarmerModel.Email);
+           if(response == false)
+           {
+              return new BaseResponse<FarmerDto>{
+                IsSucess = false,
+                Message = "your email is not valid,please check.",
+            };
+           }
              var address = new Address{
                     FullAddress = createFarmerModel.FullAddress,
                     LocalGovernment = createFarmerModel.LocalGovernment,

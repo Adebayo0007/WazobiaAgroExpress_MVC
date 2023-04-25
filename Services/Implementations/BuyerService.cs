@@ -25,6 +25,15 @@ namespace Agro_Express.Services.Implementations
         }
         public async Task<BaseResponse<BuyerDto>> CreateAsync(CreateBuyerRequestModel createBuyerModel)
         {
+           var response = await _emailSender.ValidateEmail(createBuyerModel.Email);
+           if(response == false)
+           {
+              return new BaseResponse<BuyerDto>{
+                IsSucess = false,
+                Message = "your email is not valid,please check.",
+            };
+           }
+
             var address = new Address{
                     FullAddress = createBuyerModel.FullAddress,
                     LocalGovernment = createBuyerModel.LocalGovernment,
