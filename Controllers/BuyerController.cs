@@ -59,6 +59,7 @@ namespace Agro_Express.Controllers
                             TempData["error"] = $"Profile picture is required";
                         }
                         var buyer = await _buyerService.CreateAsync(buyerModel);
+
                         if(buyer.IsSucess == false)
                         {
                              TempData["error"] = buyer.Message;
@@ -77,8 +78,9 @@ namespace Agro_Express.Controllers
 
             
         }  
+
           
-           [Authorize(Roles = "Buyer")]
+          [Authorize(Roles = "Buyer")]
           public async Task<IActionResult> BuyerProfile(string buyerEmail)
         {
             buyerEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -91,6 +93,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return View(buyer);
         } 
+
         
          [Authorize(Roles = "Buyer")]
         [HttpGet]
@@ -107,9 +110,10 @@ namespace Agro_Express.Controllers
             return View(buyer);
         }
 
-         [Authorize]
+
+          [Authorize]
           [HttpPost]
-         [ValidateAntiForgeryToken]
+          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateBuyer(UpdateBuyerRequestModel requestModel)
         {
              if(requestModel.Email == null)
@@ -135,6 +139,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return RedirectToAction(nameof(BuyerProfile));
         }
+
            
             [Authorize(Roles = "Buyer, Admin")]
             public async Task<IActionResult> DeleteBuyer(string buyerEmail)
@@ -149,6 +154,7 @@ namespace Agro_Express.Controllers
              TempData["success"] = buyer.Message;
             return View(buyer);      
         }
+
          
         [Authorize]
         [HttpPost , ActionName("DeleteBuyer")]
@@ -164,6 +170,7 @@ namespace Agro_Express.Controllers
             }
             return RedirectToAction("LogIn", "User");
         }
+        
          
           [Authorize(Roles = "Admin")]
           public async Task<IActionResult> Buyers()
@@ -179,7 +186,7 @@ namespace Agro_Express.Controllers
         }
 
 
-           [Authorize(Roles = "Admin")]
+          [Authorize(Roles = "Admin")]
           [HttpPost]
          public async Task<IActionResult> SearchBuyer(string searchInput)
         {

@@ -37,28 +37,32 @@
             <div class="second"> <span>Quantity</span><span class="sec">@product.Quantity<span class="sec">@product.Measurement (s)</span> </span> </div>
             <div class="second"> <span>Location</span><span class="sec">@product.ProductState/@product.ProductLocalGovernment</span> </div>
             <div class="third"> <span>Availability</span><span class="date">@dateFrom - @dateTo</span> </div>
-            @if(product.FarmerRank < 20)
+            @if(product.FarmerRank < 3)
             {
                       <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
+            @if(product.FarmerRank >= 3 && product.FarmerRank <= 5)
+            {
+                      <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
+            }
 
-            @if(product.FarmerRank >= 20 && product.FarmerRank < 40)
+            @if(product.FarmerRank >= 6 && product.FarmerRank < 9)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-              @if(product.FarmerRank >= 40 && product.FarmerRank < 60)
+              @if(product.FarmerRank >= 12 && product.FarmerRank < 15)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-              @if(product.FarmerRank >= 60 && product.FarmerRank < 80)
+              @if(product.FarmerRank >= 18 && product.FarmerRank < 21)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-              @if(product.FarmerRank >= 80 && product.FarmerRank < 100)
+              @if(product.FarmerRank >= 24 && product.FarmerRank < 27)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-               @if(product.FarmerRank >= 100)
+               @if(product.FarmerRank >= 30)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> </div>
             }
