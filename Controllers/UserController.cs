@@ -150,10 +150,12 @@ namespace Agro_Express.Controllers
            [HttpPost]
          public async Task<IActionResult> SearchUser(string searchInput)
         {
-              if(searchInput == null || searchInput == "")
+             if(string.IsNullOrWhiteSpace(searchInput))
             {
-                return BadRequest();
+                 return BadRequest();
             }
+
+            
              var users = await _userService.SearchUserByEmailOrUserName(searchInput);
               if(users.IsSucess == false)
             {

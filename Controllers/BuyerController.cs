@@ -190,10 +190,11 @@ namespace Agro_Express.Controllers
           [HttpPost]
          public async Task<IActionResult> SearchBuyer(string searchInput)
         {
-              if(searchInput == null || searchInput == "")
+               if(string.IsNullOrWhiteSpace(searchInput))
             {
-                return BadRequest();
+                 return BadRequest();
             }
+             
              var buyers = await _buyerService.SearchBuyerByEmailOrUserName(searchInput);
               if(buyers.IsSucess == false)
             {

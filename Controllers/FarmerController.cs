@@ -166,10 +166,11 @@ namespace Agro_Express.Controllers
           [HttpPost]
          public async Task<IActionResult> SearchFarmer(string searchInput)
         {
-              if(searchInput == null || searchInput == "")
+               if(string.IsNullOrWhiteSpace(searchInput))
             {
-                return BadRequest();
+                 return BadRequest();
             }
+        
              var farmers = await _farmerService.SearchFarmerByEmailOrUserName(searchInput);
               if(farmers.IsSucess == false)
             {

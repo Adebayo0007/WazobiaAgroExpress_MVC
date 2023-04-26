@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Agro_Express.CustumValidation;
 using Agro_Express.Enum;
 
 namespace Agro_Express.Dtos.Buyer
@@ -38,8 +39,10 @@ namespace Agro_Express.Dtos.Buyer
         [Compare("Email")]
         public string ConfirmEmail {get;set;}
         [Required]
+        [PasswordValidation]
         public string Password{get; set;}
         [DisplayName("Confirm Password")]
+        [PasswordValidation]
         [Compare("Password")]
         public string ConfirmPassword {get;set;}
     }

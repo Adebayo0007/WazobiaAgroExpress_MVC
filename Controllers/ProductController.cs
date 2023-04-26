@@ -134,9 +134,9 @@ namespace Agro_Express.Controllers
          [HttpPost]
          public async Task<IActionResult> SearchProduct(string searchInput)
         {
-            if(searchInput == null || searchInput == "")
+            if(string.IsNullOrWhiteSpace(searchInput))
             {
-                return BadRequest();
+                 return BadRequest();
             }
              var products = await _productSercice.SearchProductsByProductNameOrFarmerUserNameOrFarmerEmail(searchInput);
               if(products.IsSucess == false)
