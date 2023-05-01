@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kM+O5OWIbhNp3/a/rVs78B4+QWqWB9QGPtCVp2GDGt65bf1kFGndx8xyHnmNssUxv1H14TfRSamdmD4EPFJa3Q==",
+  "dgSpecHash": "drmbTWb4Y+5w2HgRTeIYsS4ng/+Smcygym9ERJc/nQot/TwuXEsXONgMaTgLOF/M6EjihItl8dkZz0kn9XeUnQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Desktop\\Agro-Express\\Agro-Express.csproj",
   "expectedPackageFiles": [
@@ -42,7 +42,7 @@
     "C:\\Users\\user\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mysqlconnector\\2.1.2\\mysqlconnector.2.1.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\netstandard.library\\1.6.0\\netstandard.library.1.6.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\node.js\\5.3.0\\node.js.5.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\paystack.net\\1.1.0\\paystack.net.1.1.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\6.0.2\\pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512",

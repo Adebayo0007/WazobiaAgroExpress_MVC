@@ -1,4 +1,3 @@
-@using System.Security.Claims
 @using Agro_Express.Dtos
 @using Agro_Express.Dtos.Product
 @model BaseResponse<IEnumerable<ProductDto>>
@@ -41,31 +40,30 @@
             {
                       <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-            @if(product.FarmerRank >= 3 && product.FarmerRank <= 5)
+            @if(product.FarmerRank >= 3 && product.FarmerRank <= 6)
             {
                       <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
 
-            @if(product.FarmerRank >= 6 && product.FarmerRank < 9)
+            @if(product.FarmerRank >= 7 && product.FarmerRank <= 10)
             {
-             <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
+              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-              @if(product.FarmerRank >= 12 && product.FarmerRank < 15)
-            {
-             <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
-            }
-              @if(product.FarmerRank >= 18 && product.FarmerRank < 21)
+              @if(product.FarmerRank >= 11 && product.FarmerRank <= 14)
             {
              <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-              @if(product.FarmerRank >= 24 && product.FarmerRank < 27)
+              @if(product.FarmerRank >= 15 && product.FarmerRank <= 18)
             {
-             <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
+               <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span> </div>
             }
-               @if(product.FarmerRank >= 30)
+              @if(product.FarmerRank >= 19)
             {
-             <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> </div>
+               <div class="third"> <span>Farmer Rank(<i class="fa-solid fa-star"></i>)</span><span class="date"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> </div>
             }
+             
+
+
              <div>
 
         <div class="product-choice">

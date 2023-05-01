@@ -22,6 +22,11 @@ namespace Agro_Express.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductRequestModel model)
         {
+             if(!ModelState.IsValid)
+           {
+             TempData["error"] = $"Invalid input,Kindly check your input";
+             return View();
+           }
                   try{
 
                         IFormFile file1 = Request.Form.Files.FirstOrDefault();

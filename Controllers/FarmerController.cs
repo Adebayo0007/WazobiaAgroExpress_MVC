@@ -37,6 +37,11 @@ namespace Agro_Express.Controllers
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateFarmer(CreateFarmerRequestModel farmerModel)
         {
+             if(!ModelState.IsValid)
+           {
+             TempData["error"] = $"Invalid input,Kindly check your input";
+             return View();
+           }
             
                  var farmerExist = await _userService.ExistByEmailAsync(farmerModel.Email);
                  if(!(farmerExist))

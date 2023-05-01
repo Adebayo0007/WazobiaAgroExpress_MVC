@@ -34,9 +34,11 @@ namespace Agro_Express.Dtos.Buyer
         public Gender Gender{get; set;}
          [EmailAddress]
         [Required]
+        [EmailValidation]
         public string Email {get;set;}
         [DisplayName("Confirm Email")]
         [Compare("Email")]
+        [EmailValidation]
         public string ConfirmEmail {get;set;}
         [Required]
         [PasswordValidation]

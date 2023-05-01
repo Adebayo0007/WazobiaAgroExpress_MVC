@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Agro_Express.CustumValidation;
 using Agro_Express.Enum;
 
 namespace Agro_Express.Dtos.Farmer
@@ -33,14 +34,18 @@ namespace Agro_Express.Dtos.Farmer
         public Gender Gender{get; set;}
          [EmailAddress]
         [Required]
+        [EmailValidation]
         public string Email {get;set;}
         [DisplayName("Confirm Email")]
         [Compare("Email")]
+        [EmailValidation]
         public string ConfirmEmail {get;set;}
         [Required]
+        [PasswordValidation]
         public string Password{get; set;}
         [DisplayName("Confirm Password")]
         [Compare("Password")]
+        [PasswordValidation]
         public string ConfirmPassword {get;set;}
     }
 }

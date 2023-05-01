@@ -62,10 +62,7 @@ namespace Agro_Express.Repositories.Implementations
             return farmer;
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await _applicationDbContext.SaveChangesAsync();
-        }
+    
 
         public async Task<IEnumerable<Farmer>> SearchFarmerByEmailOrUsername(string searchInput)
         {
@@ -79,6 +76,16 @@ namespace Agro_Express.Repositories.Implementations
             _applicationDbContext.Farmers.Update(farmer);
             _applicationDbContext.SaveChanges();
             return farmer;
+        }
+
+        public async Task SaveChanges()
+        {
+           _applicationDbContext.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

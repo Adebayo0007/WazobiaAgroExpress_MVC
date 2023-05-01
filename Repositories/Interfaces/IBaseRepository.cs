@@ -10,6 +10,8 @@ namespace Agro_Express.Repositories.Interfaces
         T Update(T user);
         Task Delete(T user);
         Task SaveChangesAsync();
+        Task SaveChanges();
+
         
     }
 }

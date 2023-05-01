@@ -78,6 +78,10 @@
               "target": "Package",
               "version": "[4.3.0, )"
             },
+            "newtonsoft.json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "sib_api_v3_sdk": {
               "target": "Package",
               "version": "[4.0.2, )"

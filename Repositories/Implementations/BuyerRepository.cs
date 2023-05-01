@@ -45,10 +45,6 @@ namespace Agro_Express.Repositories.Implementations
             return _applicationDbContext.Buyers.Include(a => a.User).ThenInclude(a => a.Address).SingleOrDefault(a => a.Id == buyerId);
         }
 
-        public async Task SaveChangesAsync()
-        {
-           await _applicationDbContext.SaveChangesAsync();
-        }
 
         public async Task<IEnumerable<Buyer>> SearchBuyerByEmailOrUsername(string searchInput)
         {
@@ -62,6 +58,15 @@ namespace Agro_Express.Repositories.Implementations
              _applicationDbContext.Buyers.Update(buyer);
              _applicationDbContext.SaveChanges();
             return buyer;
+        }
+         public async Task SaveChangesAsync()
+        {
+           await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task SaveChanges()
+        {
+            _applicationDbContext.SaveChanges();
         }
     }
 }

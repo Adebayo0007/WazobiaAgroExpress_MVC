@@ -61,10 +61,7 @@ namespace Agro_Express.Repositories.Implementations
             return await _applicationDbContext.Users.Include(u => u.Address).Where(u => u.IsRegistered == false).ToListAsync();
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await _applicationDbContext.SaveChangesAsync();
-        }
+      
 
         public async Task<IEnumerable<User>> SearchUserByEmailOrUsername(string searchInput)
         {
@@ -78,6 +75,16 @@ namespace Agro_Express.Repositories.Implementations
             _applicationDbContext.Users.Update(user);
              _applicationDbContext.SaveChanges();
             return user;
+        }
+
+          public async Task SaveChanges()
+        {
+            _applicationDbContext.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

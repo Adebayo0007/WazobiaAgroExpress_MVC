@@ -15,7 +15,7 @@ namespace Agro_Express.Email
         }
         public async Task<bool> SendEmail(EmailDto.EmailRequestModel email)
         {
-             Configuration.Default.ApiKey.Clear();
+            Configuration.Default.ApiKey.Clear();
             string x;
             var apiKey = _configuration.GetValue<string>("SendinblueAPIkey:ApiKey");
              Configuration.Default.ApiKey.Add("api-key", apiKey);

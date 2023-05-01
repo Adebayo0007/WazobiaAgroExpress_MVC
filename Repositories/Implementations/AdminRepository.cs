@@ -43,17 +43,22 @@ namespace Agro_Express.Repositories.Implementations
               return _applicationDbContext.Admins.Include(a => a.User).ThenInclude(a => a.Address).SingleOrDefault(a => a.Id == adminId);
         }
 
-        public async Task SaveChangesAsync()
-        {
-           await _applicationDbContext.SaveChangesAsync();
-            
-        }
 
         public Admin Update(Admin admin)
         {
               _applicationDbContext.Admins.Update(admin);
               _applicationDbContext.SaveChanges();
             return admin;
+        }
+        public async Task SaveChangesAsync()
+        {
+           await _applicationDbContext.SaveChangesAsync();
+            
+        }
+
+        public async Task SaveChanges()
+        {
+            _applicationDbContext.SaveChanges();
         }
     }
 }

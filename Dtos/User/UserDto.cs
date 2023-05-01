@@ -6,7 +6,7 @@ namespace Agro_Express.Dtos.User
     public class UserDto
     {
     
-          [DisplayName("Identifier")]
+         [DisplayName("Identifier")]
         public string Id{get; set;}
          [DisplayName("User Name")]
         public string UserName{get; set;}

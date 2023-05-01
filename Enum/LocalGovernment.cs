@@ -2,6 +2,7 @@ namespace Agro_Express.Enum
 {
     public enum LocalGovernment
     {
+       //Nigeria API that is fetching location is not working at this moment 15th of April 2023,that is why i am improvising this.
          __LGA__,
     Abakaliki, 
     Abia, 
