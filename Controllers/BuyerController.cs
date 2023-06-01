@@ -39,11 +39,11 @@ namespace Agro_Express.Controllers
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateBuyer(CreateBuyerRequestModel buyerModel)
         {
-           if(!ModelState.IsValid)
-           {
-             TempData["error"] = $"Invalid input,Kindly check your input";
-             return View();
-           }
+        //    if(!ModelState.IsValid)
+        //    {
+        //      TempData["error"] = $"Invalid input,Kindly check your input";
+        //      return View();
+        //    }
 
             var buyerExist = await _userService.ExistByEmailAsync(buyerModel.Email);
             if(!(buyerExist))
