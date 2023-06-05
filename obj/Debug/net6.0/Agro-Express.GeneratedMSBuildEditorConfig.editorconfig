@@ -9,205 +9,205 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Agro_Express
 build_property.RootNamespace = Agro_Express
-build_property.ProjectDir = C:\Users\user\Desktop\Agro-Express\
+build_property.ProjectDir = C:\Users\user\Desktop\FinalProject\Agro-Express\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\user\Desktop\Agro-Express
+build_property.MSBuildProjectDirectory = C:\Users\user\Desktop\FinalProject\Agro-Express
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Admin/AdminIndex.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Admin/AdminIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Admin/AdminProfile.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Admin/AdminProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Admin/DeleteAdmin.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Admin/DeleteAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlQWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Admin/MyOffers.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Admin/MyOffers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTXlPZmZlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Admin/UpdateAdmin.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Admin/UpdateAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXBkYXRlQWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/BuyerIndex.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/BuyerIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/BuyerPolicy.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/BuyerPolicy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJQb2xpY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/BuyerProfile.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/BuyerProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/Buyers.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/Buyers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQnV5ZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/CreateBuyer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/CreateBuyer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcQ3JlYXRlQnV5ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/DeleteBuyer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/DeleteBuyer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcRGVsZXRlQnV5ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/SearchBuyer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/SearchBuyer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcU2VhcmNoQnV5ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Buyer/UpdateBuyer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Buyer/UpdateBuyer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5ZXJcVXBkYXRlQnV5ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Email/CreateEmail.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Email/CreateEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcQ3JlYXRlRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/CreateFarmer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/CreateFarmer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXENyZWF0ZUZhcm1lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/DeleteFarmer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/DeleteFarmer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXERlbGV0ZUZhcm1lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/FarmerIndex.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/FarmerIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lckluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/FarmerPolicy.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/FarmerPolicy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lclBvbGljeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/FarmerProfile.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/FarmerProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lclByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/Farmers.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/Farmers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXEZhcm1lcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/MyOffers.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/MyOffers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXE15T2ZmZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/PayMonthlyDue.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/PayMonthlyDue.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXFBheU1vbnRobHlEdWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/SearchFarmer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/SearchFarmer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXFNlYXJjaEZhcm1lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Farmer/UpdateFarmer.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Farmer/UpdateFarmer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFybWVyXFVwZGF0ZUZhcm1lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Home/Index.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Home/Policy.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Home/Policy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQb2xpY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/AvailableProducts.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/AvailableProducts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxBdmFpbGFibGVQcm9kdWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/CreateProduct.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/CreateProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxDcmVhdGVQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/DeleteProduct.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/DeleteProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxEZWxldGVQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/MyProducts.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/MyProducts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxNeVByb2R1Y3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/SearchProduct.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/SearchProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxTZWFyY2hQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Product/UpdateProduct.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Product/UpdateProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxVcGRhdGVQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/RequestedProduct/CreateRequest.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/RequestedProduct/CreateRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdGVkUHJvZHVjdFxDcmVhdGVSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/RequestedProduct/MyRequests.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/RequestedProduct/MyRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdGVkUHJvZHVjdFxNeVJlcXVlc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/RequestedProduct/OrderedProductAndPendingProduct.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/RequestedProduct/OrderedProductAndPendingProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdGVkUHJvZHVjdFxPcmRlcmVkUHJvZHVjdEFuZFBlbmRpbmdQcm9kdWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/RequestedProduct/Payment.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/RequestedProduct/Payment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdGVkUHJvZHVjdFxQYXltZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Shared/Error.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Shared/_Notification.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Shared/_Notification.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob3RpZmljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/ApplicationUsers.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/ApplicationUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBcHBsaWNhdGlvblVzZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/DeleteUser.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/DeleteUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGVVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/ForgottenPassword.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/ForgottenPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxGb3Jnb3R0ZW5QYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/LogIn.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/LogIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dJbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/PendingRegistration.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/PendingRegistration.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZW5kaW5nUmVnaXN0cmF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/SearchUser.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/SearchUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxTZWFyY2hVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/User/SignUpPage.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/User/SignUpPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxTaWduVXBQYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/_ViewImports.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/_ViewStart.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/Agro-Express/Views/Shared/_Layout.cshtml]
+[C:/Users/user/Desktop/FinalProject/Agro-Express/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jlg9f2ldlu

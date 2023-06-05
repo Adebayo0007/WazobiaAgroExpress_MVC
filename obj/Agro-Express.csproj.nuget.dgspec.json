@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\Agro-Express\\Agro-Express.csproj": {}
+    "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\Agro-Express.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\Agro-Express\\Agro-Express.csproj": {
+    "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\Agro-Express.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\Agro-Express\\Agro-Express.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\Agro-Express.csproj",
         "projectName": "Agro-Express",
-        "projectPath": "C:\\Users\\user\\Desktop\\Agro-Express\\Agro-Express.csproj",
+        "projectPath": "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\Agro-Express.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\Agro-Express\\obj\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
