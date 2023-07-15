@@ -2,6 +2,8 @@ using System.Security.Claims;
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.User;
 using Agro_Express.Email;
+using Agro_Express.Migrations;
+using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 using static Agro_Express.Email.EmailDto;
@@ -41,23 +43,7 @@ namespace Agro_Express.Services.Implementations
                 
                 };  
             }
-              var user = users.Select(a => new UserDto{
-                  Id = a.Id,
-                  UserName = a.UserName,
-                  ProfilePicture = a.ProfilePicture,
-                  Name = a.Name,
-                  PhoneNumber = a.PhoneNumber,
-                  FullAddress = a.Address.FullAddress ,
-                  LocalGovernment = a.Address.LocalGovernment,
-                  State = a.Address.State,
-                  Gender = a.Gender,
-                  Email = a.Email,
-                  Password = a.Password,
-                  Role = a.Role,
-                  IsActive = a.IsActive,
-                  DateCreated = a.DateCreated,
-                  DateModified = a.DateModified
-            }).ToList();
+              var user = users.Select(u => UserDto(u)).ToList();
             return new BaseResponse<IEnumerable<UserDto>>
             {
                 Message = "List of Users 😎",
@@ -442,6 +428,29 @@ namespace Agro_Express.Services.Implementations
                     return true;
                  }
                  return false;
+        }
+
+        public UserDto UserDto(User user)
+        {
+            return new UserDto()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                ProfilePicture = user.ProfilePicture,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber,
+                FullAddress = user.Address.FullAddress,
+                LocalGovernment = user.Address.LocalGovernment,
+                State = user.Address.State,
+                Gender = user.Gender,
+                Email = user.Email,
+                Password = user.Password,
+                Role = user.Role,
+                IsActive = user.IsActive,
+                DateCreated = user.DateCreated,
+                DateModified = user.DateModified
+            };
+
         }
     }
 }

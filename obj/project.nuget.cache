@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2Qp7Z/AtZKoSWaTtPkpM6D8h8f+62+ZwpMqFT0vBZMVYbEthJdM8H3+bu49PcsxyBZjHZdjmJ5z4X3qamRL1vg==",
+  "dgSpecHash": "HLwCr5klieMPx+1F28qtFwvt6PGdz6VvIY8iwssLAngldZM7Vt28vtYnsIAL561TZN1M3S6IAZMipqw6NAgQnw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\FinalProject\\Agro-Express\\Agro-Express.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Projects\\FinalProject\\Agro-Express\\Agro-Express.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\divergic.logging.xunit\\4.2.0\\divergic.logging.xunit.4.2.0.nupkg.sha512",
@@ -126,7 +126,11 @@
     "C:\\Users\\user\\.nuget\\packages\\system.xml.xmldocument\\4.0.1\\system.xml.xmldocument.4.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.xml.xmlserializer\\4.0.11\\system.xml.xmlserializer.4.0.11.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512"
+    "C:\\Users\\user\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.19\\microsoft.windowsdesktop.app.ref.6.0.19.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.19\\microsoft.netcore.app.ref.6.0.19.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.19\\microsoft.aspnetcore.app.ref.6.0.19.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.19\\microsoft.netcore.app.host.win-x64.6.0.19.nupkg.sha512"
   ],
   "logs": []
 }
