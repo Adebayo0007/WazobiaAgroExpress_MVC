@@ -8,15 +8,9 @@ namespace Agro_Express.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productSercice;
-        public ProductController(IProductService productSercice)
-        {
-            _productSercice = productSercice;   
-        }
+        public ProductController(IProductService productSercice) =>  _productSercice = productSercice;
         [Authorize(Roles = "Farmer")]
-        public IActionResult CreateProduct()
-        {
-            return View();
-        }
+        public IActionResult CreateProduct() => View();
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]

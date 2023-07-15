@@ -8,43 +8,24 @@ namespace Agro_Express.Controllers
 {
     public class BuyerController : Controller
     {
-          private readonly IBuyerService _buyerService;
+           private readonly IBuyerService _buyerService;
            private readonly IUserService _userService;
         public BuyerController(IBuyerService buyerService, IUserService userService)
         {
             _buyerService = buyerService;
-            _userService = userService;
-            
+            _userService = userService;  
         }
+         public IActionResult BuyerPolicy() => View();
 
-        
-         public IActionResult BuyerPolicy()
-        {
-            return View();
-        }
-
-         [Authorize(Roles = "Buyer")]
-         public IActionResult BuyerIndex()
-        {
-            return View();
-        }
-
+        [Authorize(Roles = "Buyer")]
+        public IActionResult BuyerIndex() => View();
      
-        public IActionResult CreateBuyer()
-        {
-            return View();
-        }
+        public IActionResult CreateBuyer() => View();
       
         [HttpPost]
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateBuyer(CreateBuyerRequestModel buyerModel)
         {
-        //    if(!ModelState.IsValid)
-        //    {
-        //      TempData["error"] = $"Invalid input,Kindly check your input";
-        //      return View();
-        //    }
-
             var buyerExist = await _userService.ExistByEmailAsync(buyerModel.Email);
             if(!(buyerExist))
             {
@@ -79,9 +60,7 @@ namespace Agro_Express.Controllers
                         return RedirectToAction("LogIn", "User");
             }
             TempData["error"] = "Email already exist";
-            return View();
-
-            
+            return View();   
         }  
 
           

@@ -7,15 +7,8 @@ namespace Agro_Express.Controllers
     public class EmailController : Controller
     {
         private readonly IEmailSender _emailSender;
-        public EmailController(IEmailSender emailSender)
-        {
-            _emailSender = emailSender;
-            
-        }
-        public IActionResult CreateEmail()
-        {
-            return View();
-        }
+        public EmailController(IEmailSender emailSender) => _emailSender = emailSender;
+        public IActionResult CreateEmail() => View();
         [HttpPost]
          public async Task<IActionResult> CreateEmail(EmailRequestModel emailRequestModel)
         {

@@ -9,16 +9,10 @@ namespace Agro_Express.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
-        public AdminController(IAdminService adminService)
-        {
+        public AdminController(IAdminService adminService) =>
             _adminService = adminService;
-            
-        }
           [Authorize(Roles = "Admin")]
-        public IActionResult AdminIndex()
-        {
-            return View();
-        }
+        public IActionResult AdminIndex() => View();
 
          [Authorize(Roles = "Admin")]
          public async Task<IActionResult> AdminProfile(string adminEmail)
@@ -94,10 +88,6 @@ namespace Agro_Express.Controllers
         }
          
           [Authorize(Roles = "Admin")]
-        public IActionResult MyOffers()
-        {
-            return View();
-        }
-        
+        public IActionResult MyOffers() => View();
     }
 }

@@ -17,31 +17,17 @@ namespace Agro_Express.Controllers
             
         }
 
-          public IActionResult FarmerPolicy()
-        {
-            return View();
-        }
+          public IActionResult FarmerPolicy() => View();
 
         [Authorize(Roles = "Farmer")]
-         public IActionResult FarmerIndex()
-        {
-            return View();
-        }
+         public IActionResult FarmerIndex() => View();
 
-        public IActionResult CreateFarmer()
-        {
-            return View();
-        }
+        public IActionResult CreateFarmer() => View();
        
         [HttpPost]
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> CreateFarmer(CreateFarmerRequestModel farmerModel)
         {
-        //      if(!ModelState.IsValid)
-        //    {
-        //      TempData["error"] = $"Invalid input,Kindly check your input";
-        //      return View();
-        //    }
             
                  var farmerExist = await _userService.ExistByEmailAsync(farmerModel.Email);
                  if(!(farmerExist))
@@ -187,10 +173,7 @@ namespace Agro_Express.Controllers
         }
          
          [HttpGet]
-        public IActionResult PayMonthlyDue()
-        {
-               return View();
-        }
+        public IActionResult PayMonthlyDue() =>  View();
 
          [HttpGet]
         public IActionResult UpdateToHasPaid(string userEmail)
@@ -200,10 +183,7 @@ namespace Agro_Express.Controllers
         }
 
          [Authorize(Roles = "Farmer")]
-         public IActionResult MyOffers()
-        {
-            return View();
-        }
+         public IActionResult MyOffers() => View();
 
     }
 }

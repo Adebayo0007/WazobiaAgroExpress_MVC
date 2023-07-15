@@ -65,14 +65,14 @@ namespace Agro_Express.Services.Implementations
                 UserId = userr.Id,
                 User =  userr
             };
-            await _farmerRepository.CreateAsync(farmer);
+            var farmerModel = await _farmerRepository.CreateAsync(farmer);
 
                string gender = null;
-              if(userr.Gender ==  Enum.Gender.Male)
+              if(UserService.IsMale(userr.Gender))
                {
                  gender="Mr";
                }
-               else if(userr.Gender==  Enum.Gender.Female)
+               else if(UserService.IsFeMale(userr.Gender))
                {
                  gender="Mrs";
                }
@@ -90,21 +90,7 @@ namespace Agro_Express.Services.Implementations
                
              var mail =  await _emailSender.SendEmail(email);
 
-             var farmerDto = new FarmerDto{
-                  UserName = createFarmerModel.UserName,
-                  ProfilePicture = createFarmerModel.ProfilePicture,
-                  Name = $"{createFarmerModel.FirstName} {createFarmerModel.LastName}",
-                  PhoneNumber = createFarmerModel.PhoneNumber,
-                  FullAddress = createFarmerModel.FullAddress,
-                  LocalGovernment = createFarmerModel.LocalGovernment,
-                  State = createFarmerModel.State,
-                  Gender = createFarmerModel.Gender,
-                  Email = createFarmerModel.Email,
-                  Password = createFarmerModel.Password,
-                  Role = user.Role,
-                  IsActive = user.IsActive,
-                  DateCreated = user.DateCreated,
-            };
+             var farmerDto = FarmerDto(farmerModel);
             return new BaseResponse<FarmerDto>{
                 IsSucess = true,
                 Message = "Farmer Created successfully 😎",
@@ -115,15 +101,8 @@ namespace Agro_Express.Services.Implementations
         public async Task DeleteAsync(string farmerId)
         {
            var farmer = _userRepository.GetByIdAsync(farmerId);
-           if(farmer.IsActive == true)
-           {
-             farmer.IsActive = false;
-           }
-           else{
-
-           farmer.IsActive = true;
-           }
-            await _userRepository.Delete(farmer);
+            farmer.IsActive = farmer.IsActive.Equals(true) ? false : true;
+              await _userRepository.Delete(farmer);
         }
 
         public async Task<BaseResponse<IEnumerable<FarmerDto>>> GetAllAsync()
@@ -138,22 +117,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var farmer = farmers.Select(a => new FarmerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var farmer = farmers.Select(a => FarmerDto(a)).ToList();
             return new BaseResponse<IEnumerable<FarmerDto>>
             {
                 Message = "List of Farmers 😎",
@@ -174,25 +138,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var farmer = nonActiveFarmers.Select(a => new FarmerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
-
-
-
+              var farmer = nonActiveFarmers.Select(a => FarmerDto(a)).ToList();
               var ActiveFarmers = await _farmerRepository.GetAllAsync();
 
            if(ActiveFarmers == null)
@@ -203,22 +149,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var farmerr = ActiveFarmers.Select(a => new FarmerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var farmerr = ActiveFarmers.Select(a => FarmerDto(a)).ToList();
 
             var farmers = new ActiveAndNonActiveFarmer{
                 ActiveFarmers = farmer,
@@ -247,25 +178,10 @@ namespace Agro_Express.Services.Implementations
                         IsSucess = false
                     };
              }
-            FarmerDto farmerDto = new FarmerDto();
+            FarmerDto farmerDto = null;
             if(farmer is not null)
             {
-                  farmerDto.Id = farmer.User.Id;
-                  farmerDto.UserName = farmer.User.UserName;
-                  farmerDto. ProfilePicture =  farmer.User.ProfilePicture;
-                  farmerDto.Name =  farmer.User.Name;
-                  farmerDto.PhoneNumber =  farmer.User.PhoneNumber;
-                  farmerDto.FullAddress =  farmer.User.Address.FullAddress ;
-                  farmerDto.LocalGovernment =  farmer.User.Address.LocalGovernment;
-                  farmerDto.State =  farmer.User.Address.State;
-                  farmerDto.Gender = farmer.User.Gender;
-                  farmerDto.Email = farmer.User.Email;
-                //   farmerDto.Password = farmer.User.Password;
-                  farmerDto.Role = farmer.User.Role;
-                  farmerDto.IsActive = farmer.User.IsActive;
-                  farmerDto.DateCreated = farmer.User.DateCreated;
-                  farmerDto.DateModified = farmer.User.DateModified;
-                  farmerDto.Ranking = farmer.Ranking;
+                  farmerDto = FarmerDto(farmer);
             }
             return new BaseResponse<FarmerDto>
             {
@@ -286,24 +202,7 @@ namespace Agro_Express.Services.Implementations
                         IsSucess = false
                     };
              }
-            var farmerDto = new FarmerDto{
-                    Id = farmer.Id,
-                     UserName = farmer.User.UserName,
-                     ProfilePicture =  farmer.User.ProfilePicture,
-                     Name =  farmer.User.Name,
-                     PhoneNumber =  farmer.User.PhoneNumber,
-                     FullAddress =  farmer.User.Address.FullAddress ,
-                     LocalGovernment =  farmer.User.Address.LocalGovernment,
-                     State =  farmer.User.Address.State,
-                     Gender = farmer.User.Gender,
-                     Email = farmer.User.Email,
-                    //  Password = farmer.User.Password,
-                     Role = farmer.User.Role,
-                     IsActive = farmer.User.IsActive,
-                     DateCreated = farmer.User.DateCreated,
-                     DateModified = farmer.User.DateModified
-
-            };
+            var farmerDto = FarmerDto(farmer);
             return new BaseResponse<FarmerDto>
             {
                 Message = "Farmer Found successfully",
@@ -343,20 +242,9 @@ namespace Agro_Express.Services.Implementations
                 IsSucess = false
             };
             }
-              _farmerRepository.Update(farmer);
+              var farmerModel = _farmerRepository.Update(farmer);
 
-              var farmerDto = new FarmerDto{
-                UserName = updateFarmerModel.UserName,
-                ProfilePicture = updateFarmerModel.ProfilePicture ,
-                Name = updateFarmerModel.Name,
-                PhoneNumber  = updateFarmerModel.PhoneNumber,
-                FullAddress = updateFarmerModel.FullAddress,
-                LocalGovernment = updateFarmerModel.LocalGovernment,
-                State  =updateFarmerModel.State,
-                Gender = updateFarmerModel.Gender,
-               Email = updateFarmerModel.Email,
-               Password = updateFarmer.Password
-            };
+              var farmerDto = FarmerDto(farmerModel);
 
             return new BaseResponse<FarmerDto>{
                 Message = "Farmer Updated successfully",
@@ -377,22 +265,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var farmer = farmers.Select(a => new FarmerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var farmer = farmers.Select(a => FarmerDto(a)).ToList();
             return new BaseResponse<IEnumerable<FarmerDto>>
             {
                 Message = "List of Farmers 😎",
@@ -411,13 +284,31 @@ namespace Agro_Express.Services.Implementations
 
         public Task UpdateToHasPaidDue(string userEmail)
         {
-          
-          // userEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
           var user = _userRepository.GetByEmailAsync(userEmail);
           user.Due = true;
           _userRepository.Update(user);
            return null;
         
         }
+
+        private FarmerDto FarmerDto(Farmer farmer) => 
+            new FarmerDto()
+            {
+                UserName = farmer.User.UserName,
+                ProfilePicture = farmer.User.ProfilePicture,
+                Name = farmer.User.Name,
+                PhoneNumber = farmer.User.PhoneNumber,
+                FullAddress = farmer.User.Address.FullAddress,
+                LocalGovernment = farmer.User.Address.LocalGovernment,
+                State = farmer.User.Address.State,
+                Gender = farmer.User.Gender,
+                Email = farmer.User.Email,
+                Password = farmer.User.Password,
+                Role = farmer.User.Role,
+                IsActive = farmer.User.IsActive,
+                DateCreated = farmer.User.DateCreated,
+                DateModified = farmer.User.DateModified,
+                Ranking = farmer.Ranking
+            };
     }
 }

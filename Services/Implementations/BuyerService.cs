@@ -62,14 +62,14 @@ namespace Agro_Express.Services.Implementations
                 UserId = userr.Id,
                 User =  userr
             };
-            await _buyerRepository.CreateAsync(buyer);
+            var buyerModel = await _buyerRepository.CreateAsync(buyer);
 
                  string gender = null;
-               if(userr.Gender ==  Enum.Gender.Male)
+               if(UserService.IsMale(userr.Gender))
                {
                  gender="Mr";
                }
-               else if(userr.Gender==  Enum.Gender.Female)
+               else if(UserService.IsFeMale(userr.Gender))
                {
                  gender="Mrs";
                }
@@ -86,21 +86,7 @@ namespace Agro_Express.Services.Implementations
                
              var mail =  await _emailSender.SendEmail(email);
 
-             var buyerDto = new BuyerDto{
-                  UserName = createBuyerModel.UserName,
-                  ProfilePicture = createBuyerModel.ProfilePicture,
-                  Name = $"{createBuyerModel.FirstName} {createBuyerModel.LastName}",
-                  PhoneNumber = createBuyerModel.PhoneNumber,
-                  FullAddress = createBuyerModel.FullAddress,
-                  LocalGovernment = createBuyerModel.LocalGovernment,
-                  State = createBuyerModel.State,
-                  Gender = createBuyerModel.Gender,
-                  Email = createBuyerModel.Email,
-                  Password = createBuyerModel.Password,
-                  Role = user.Role,
-                  IsActive = user.IsActive,
-                  DateCreated = user.DateCreated,
-            };
+             var buyerDto = BuyerDto(buyerModel);
             return new BaseResponse<BuyerDto>{
                 IsSucess = true,
                 Message = "Buyer Created successfully 😎",
@@ -111,21 +97,13 @@ namespace Agro_Express.Services.Implementations
         public async Task DeleteAsync(string buyerId)
         {
              var buyer = _userRepository.GetByIdAsync(buyerId);
-           if(buyer.IsActive == true)
-           {
-             buyer.IsActive = false;
-           }
-           else{
-
-           buyer.IsActive = true;
-           }
+            buyer.IsActive = buyer.IsActive.Equals(true) ? false : true;
             await _userRepository.Delete(buyer);
         }
 
         public async Task<BaseResponse<ActiveAndNonActiveBuyer>> GetAllActiveAndNonActiveAsync()
         {
-                  var nonActiveBuyers = await _buyerRepository.GetAllNonActiveAsync();
-
+            var nonActiveBuyers = await _buyerRepository.GetAllNonActiveAsync();
            if(nonActiveBuyers == null)
             {
                 return new BaseResponse<ActiveAndNonActiveBuyer>
@@ -134,28 +112,10 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var buyer = nonActiveBuyers.Select(a => new BuyerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var activebuyerDto = nonActiveBuyers.Select(a => BuyerDto(a)).ToList();
+              var activeBuyers = await _buyerRepository.GetAllAsync();
 
-
-
-              var ActiveBuyers = await _buyerRepository.GetAllAsync();
-
-           if(ActiveBuyers == null)
+           if(activeBuyers == null || nonActiveBuyers == null)
             {
                 return new BaseResponse<ActiveAndNonActiveBuyer>
                 {
@@ -163,26 +123,11 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var buyerr = ActiveBuyers.Select(a => new BuyerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var nonactivebuyerDto = activeBuyers.Select(a => BuyerDto(a)).ToList();
 
             var buyers = new ActiveAndNonActiveBuyer{
-                ActiveBuyers = buyer,
-                NonActiveBuyers = buyerr
+                ActiveBuyers = activebuyerDto,
+                NonActiveBuyers = nonactivebuyerDto
             };
 
             return new BaseResponse<ActiveAndNonActiveBuyer>
@@ -205,22 +150,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var buyer = buyers.Select(a => new BuyerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var buyer = buyers.Select(a => BuyerDto(a)).ToList();
             return new BaseResponse<IEnumerable<BuyerDto>>
             {
                 Message = "List of Buyers",
@@ -241,24 +171,10 @@ namespace Agro_Express.Services.Implementations
                 };
 
              }
-             var buyerDto = new BuyerDto();
+             BuyerDto buyerDto = null;
             if(buyer is not null)
             {
-                  buyerDto.Id = buyer.User.Id;
-                  buyerDto.UserName = buyer.User.UserName;
-                  buyerDto. ProfilePicture =  buyer.User.ProfilePicture;
-                  buyerDto.Name =  buyer.User.Name;
-                  buyerDto.PhoneNumber =  buyer.User.PhoneNumber;
-                  buyerDto.FullAddress =  buyer.User.Address.FullAddress ;
-                  buyerDto.LocalGovernment =  buyer.User.Address.LocalGovernment;
-                  buyerDto.State =  buyer.User.Address.State;
-                  buyerDto.Gender = buyer.User.Gender;
-                  buyerDto.Email = buyer.User.Email;
-                //   buyerDto.Password = buyer.User.Password;
-                  buyerDto.Role = buyer.User.Role;
-                  buyerDto.IsActive = buyer.User.IsActive;
-                  buyerDto.DateCreated = buyer.User.DateCreated;
-                  buyerDto.DateModified = buyer.User.DateModified;
+                  buyerDto = BuyerDto(buyer);
             }
             return new BaseResponse<BuyerDto>
             {
@@ -280,24 +196,7 @@ namespace Agro_Express.Services.Implementations
                 };
 
              }
-            var buyerDto = new BuyerDto{
-                     Id = buyer.User.Id,
-                     UserName = buyer.User.UserName,
-                     ProfilePicture =  buyer.User.ProfilePicture,
-                     Name =  buyer.User.Name,
-                     PhoneNumber =  buyer.User.PhoneNumber,
-                     FullAddress =  buyer.User.Address.FullAddress ,
-                     LocalGovernment =  buyer.User.Address.LocalGovernment,
-                     State =  buyer.User.Address.State,
-                     Gender = buyer.User.Gender,
-                     Email = buyer.User.Email,
-                    //  Password = buyer.User.Password,
-                     Role = buyer.User.Role,
-                     IsActive = buyer.User.IsActive,
-                     DateCreated = buyer.User.DateCreated,
-                     DateModified = buyer.User.DateModified
-
-            };
+            var buyerDto = BuyerDto(buyer);
             return new BaseResponse<BuyerDto>
             {
                 Message = "Buyer Found successfully",
@@ -318,22 +217,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var buyer = buyers.Select(a => new BuyerDto{
-                  UserName = a.User.UserName,
-                  ProfilePicture = a.User.ProfilePicture,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var buyer = buyers.Select(a => BuyerDto(a)).ToList();
             return new BaseResponse<IEnumerable<BuyerDto>>
             {
                 Message = "List of Buyers",
@@ -372,20 +256,9 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };
             }
-              _buyerRepository.Update(buyer);
+             var buyerModel =  _buyerRepository.Update(buyer);
 
-              var buyerDto = new BuyerDto{
-                UserName = updateBuyerModel.UserName,
-                ProfilePicture = updateBuyerModel.ProfilePicture ,
-                Name = updateBuyerModel.Name,
-                PhoneNumber  = updateBuyerModel.PhoneNumber,
-                FullAddress = updateBuyerModel.FullAddress,
-                LocalGovernment = updateBuyerModel.LocalGovernment,
-                State  =updateBuyerModel.State,
-                Gender = updateBuyerModel.Gender,
-               Email = updateBuyerModel.Email,
-               Password = updateBuyer.Password
-            };
+              var buyerDto =BuyerDto(buyerModel);
 
             return new BaseResponse<BuyerDto>{
                 Message = "Buyer Updated successfully",
@@ -393,5 +266,25 @@ namespace Agro_Express.Services.Implementations
                 Data = buyerDto
             };
         }
+
+        private BuyerDto BuyerDto(Buyer buyer) => 
+            new BuyerDto()
+            {
+                Id = buyer.User.Id,
+                UserName = buyer.User.UserName,
+                ProfilePicture = buyer.User.ProfilePicture,
+                Name = buyer.User.Name,
+                PhoneNumber = buyer.User.PhoneNumber,
+                FullAddress = buyer.User.Address.FullAddress,
+                LocalGovernment = buyer.User.Address.LocalGovernment,
+                State = buyer.User.Address.State,
+                Gender = buyer.User.Gender,
+                Email = buyer.User.Email,
+                Role = buyer.User.Role,
+                IsActive = buyer.User.IsActive,
+                DateCreated = buyer.User.DateCreated,
+                DateModified = buyer.User.DateModified
+
+            };
     }
 }

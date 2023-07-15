@@ -11,17 +11,10 @@ namespace Agro_Express.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
-        {
+        public UserController(IUserService userService) =>
             _userService = userService;
-            
-        }
 
-         public IActionResult LogIn()
-        {
-            return View();
-
-        }
+         public IActionResult LogIn() => View();
 
         [HttpPost, ActionName("LogIn")]
         public async Task<IActionResult> LogInConfirmed(LogInRequestModel loginModel)
@@ -104,10 +97,7 @@ namespace Agro_Express.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult SignUpPage()
-        {
-            return View();
-        }
+        public IActionResult SignUpPage() => View();
 
          [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ApplicationUsers()
@@ -187,10 +177,7 @@ namespace Agro_Express.Controllers
         }
 
         [HttpGet]
-         public IActionResult ForgottenPassword()
-        {
-            return View();
-        }
+         public IActionResult ForgottenPassword() =>  View();
           
         [HttpPost]
          public async Task<IActionResult> ForgottenPassword(string userEmail)

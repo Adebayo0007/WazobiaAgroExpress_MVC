@@ -127,10 +127,7 @@ namespace Agro_Express.Controllers
         }
 
         [HttpGet]
-        public IActionResult Payment()
-        {
-               return View();
-        }
+        public IActionResult Payment() => View();
 
          [HttpGet]
         public IActionResult UpdateToHasPaid(string userEmail)

@@ -12,13 +12,12 @@ namespace Agro_Express.Services.Implementations
     public class RequestedProductService : IRequestedProductService
     {
       
-        private readonly IHttpContextAccessor _httpContextAccessor;
-         private readonly IRequestedProductRepository _requestedProductRepository;
+            private readonly IHttpContextAccessor _httpContextAccessor;
+            private readonly IRequestedProductRepository _requestedProductRepository;
             private readonly IProductRepository _productRepository;
-         private readonly IUserRepository _userRepository;
-          private readonly IFarmerRepository _farmerRepository;
-          
-          private readonly IEmailSender _emailSender;
+            private readonly IUserRepository _userRepository;
+            private readonly IFarmerRepository _farmerRepository;  
+            private readonly IEmailSender _emailSender;
 
         public  RequestedProductService(IRequestedProductRepository requestedProductRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository,IFarmerRepository farmerRepository, IProductRepository productRepository, IEmailSender emailSender)
         {
@@ -55,11 +54,11 @@ namespace Agro_Express.Services.Implementations
               string gender = null;
               string buyerGender = null;
               string pronoun = null;
-               if(farmer.User.Gender ==  Enum.Gender.Male)
+               if(UserService.IsMale(farmer.User.Gender))
                {
                  gender="Mr";
                }
-               else if(farmer.User.Gender==  Enum.Gender.Female)
+               else if(UserService.IsFeMale(farmer.User.Gender))
                {
                  gender="Mrs";
                }
@@ -68,12 +67,12 @@ namespace Agro_Express.Services.Implementations
                  gender = "Mr/Mrs";
                }
 
-                if(user.Gender == Enum.Gender.Male)
+                if(UserService.IsMale(user.Gender))
                {
                  buyerGender="Mr";
                  pronoun = "him";
                }
-               else if(user.Gender== Enum.Gender.Female)
+               else if(UserService.IsFeMale(user.Gender))
                {
                  buyerGender="Mrs";
                   pronoun = "her";
@@ -116,21 +115,7 @@ namespace Agro_Express.Services.Implementations
         public async Task<BaseResponse<IEnumerable<RequestedProductDto>>> MyRequests(string farmerId)
         {
             var products = await _requestedProductRepository.GetRequestedProductsByFarmerIdAsync(farmerId);
-            var requestDto = products.Select(item  => new RequestedProductDto{
-                Id = item.Id,
-                FarmerId = item.FarmerId,
-                BuyerId = item.FarmerId,
-                BuyerEmail = item.BuyerEmail,
-                BuyerPhoneNumber = item.BuyerPhoneNumber,
-                BuyerLocalGovernment = item.BuyerLocalGovernment,
-                ProductName = item.ProductName,
-                OrderStatus = item.OrderStatus,
-                IsAccepted = item.IsAccepted,
-                IsDelivered = item.IsDelivered,
-                FarmerName = item.FarmerName,
-                FarmerNumber = item.FarmerNumber
-
-            }).ToList();
+            var requestDto = products.Select(item  => RequestedProductDto(item)).ToList();
             if(requestDto.Count() == 0)
             {
                     return new BaseResponse<IEnumerable<RequestedProductDto>>{
@@ -195,39 +180,11 @@ namespace Agro_Express.Services.Implementations
         public async Task<BaseResponse<OrderedAndPending>> OrderedAndPendingProduct(string buyerEmail)
         {
             var orderedProduct = await _requestedProductRepository.GetOrderedProduct(buyerEmail);
-             var ordered = orderedProduct.Select(item => new RequestedProductDto{
-                Id = item.Id,
-                FarmerId = item.FarmerId,
-                BuyerId = item.FarmerId,
-                BuyerEmail = item.BuyerEmail,
-                BuyerPhoneNumber = item.BuyerPhoneNumber,
-                BuyerLocalGovernment = item.BuyerLocalGovernment,
-                ProductName = item.ProductName,
-                OrderStatus = item.OrderStatus,
-                IsAccepted = item.IsAccepted,
-                IsDelivered = item.IsDelivered,
-                FarmerName = item.FarmerName,
-                FarmerNumber = item.FarmerNumber,
-                NotDelivered = item.NotDelivered
-            });
+             var ordered = orderedProduct.Select(item => RequestedProductDto(item)).ToList();
 
             var pendingProduct = await _requestedProductRepository.GetPendingProduct(buyerEmail);
 
-            var pending = pendingProduct.Select(item => new RequestedProductDto{
-                Id = item.Id,
-                FarmerId = item.FarmerId,
-                BuyerId = item.FarmerId,
-                BuyerEmail = item.BuyerEmail,
-                BuyerPhoneNumber = item.BuyerPhoneNumber,
-                BuyerLocalGovernment = item.BuyerLocalGovernment,
-                ProductName = item.ProductName,
-                OrderStatus = item.OrderStatus,
-                IsAccepted = item.IsAccepted,
-                IsDelivered = item.IsDelivered,
-                FarmerName = item.FarmerName,
-                FarmerNumber = item.FarmerNumber,
-                NotDelivered = item.NotDelivered
-            });
+            var pending = pendingProduct.Select(item => RequestedProductDto(item)).ToList();
             var orderedAndPending = new OrderedAndPending{
                 OrderedProduct = ordered,
                 PendingProduct = pending
@@ -253,20 +210,7 @@ namespace Agro_Express.Services.Implementations
                };
                await _emailSender.SendEmail(email);
                
-            var requestDto = new RequestedProductDto{
-                Id = requestedProduct.Id,
-                FarmerId = requestedProduct.FarmerId,
-                BuyerId = requestedProduct.FarmerId,
-                BuyerEmail = requestedProduct.BuyerEmail,
-                BuyerPhoneNumber = requestedProduct.BuyerPhoneNumber,
-                BuyerLocalGovernment = requestedProduct.BuyerLocalGovernment,
-                ProductName = requestedProduct.ProductName,
-                OrderStatus = requestedProduct.OrderStatus,
-                IsAccepted = requestedProduct.IsAccepted,
-                IsDelivered = requestedProduct.IsDelivered,
-                FarmerName = requestedProduct.FarmerName,
-                FarmerNumber = requestedProduct.FarmerNumber
-            };
+            var requestDto = RequestedProductDto(requestedProduct);
             return new BaseResponse<RequestedProductDto>{
                 IsSucess = true,
                 Message = "Request accepted successfully",
@@ -278,7 +222,7 @@ namespace Agro_Express.Services.Implementations
         {
            var requestedProduct =  await _requestedProductRepository.GetProductByProductIdAsync(productId);
            var id =  _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var farmer = _farmerRepository.GetByIdAsync(requestedProduct.FarmerId);
+           var farmer = _farmerRepository.GetByIdAsync(requestedProduct.FarmerId);
             if(farmer.UserId != id)
             {
               farmer.Ranking++;
@@ -296,5 +240,24 @@ namespace Agro_Express.Services.Implementations
             }
             await _requestedProductRepository.DeleteRequestedProduct(requestedProduct);
         }
+
+        private RequestedProductDto RequestedProductDto(RequestedProduct requestedProduct) =>
+            new RequestedProductDto()
+            {
+                Id = requestedProduct.Id,
+                FarmerId = requestedProduct.FarmerId,
+                BuyerId = requestedProduct.FarmerId,
+                BuyerEmail = requestedProduct.BuyerEmail,
+                BuyerPhoneNumber = requestedProduct.BuyerPhoneNumber,
+                BuyerLocalGovernment = requestedProduct.BuyerLocalGovernment,
+                ProductName = requestedProduct.ProductName,
+                OrderStatus = requestedProduct.OrderStatus,
+                IsAccepted = requestedProduct.IsAccepted,
+                IsDelivered = requestedProduct.IsDelivered,
+                FarmerName = requestedProduct.FarmerName,
+                FarmerNumber = requestedProduct.FarmerNumber,
+                NotDelivered = requestedProduct.NotDelivered
+
+            };
     }
 }

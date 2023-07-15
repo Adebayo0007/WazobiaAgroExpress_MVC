@@ -1,6 +1,7 @@
 using Agro_Express.Dtos;
 using Agro_Express.Dtos.Admin;
 using Agro_Express.Dtos.User;
+using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 
@@ -43,21 +44,7 @@ namespace Agro_Express.Services.Implementations
                     IsSucess = false
                 };  
             }
-              var admin = admins.Select(a => new AdminDto{
-                  UserName = a.User.UserName,
-                  Name = a.User.Name,
-                  PhoneNumber = a.User.PhoneNumber,
-                  FullAddress = a.User.Address.FullAddress ,
-                  LocalGovernment = a.User.Address.LocalGovernment,
-                  State = a.User.Address.State,
-                  Gender = a.User.Gender,
-                  Email = a.User.Email,
-                  Password = a.User.Password,
-                  Role = a.User.Role,
-                  IsActive = a.User.IsActive,
-                  DateCreated = a.User.DateCreated,
-                  DateModified = a.User.DateModified
-            }).ToList();
+              var admin = admins.Select(a => AdminDto(a)).ToList();
             return new BaseResponse<IEnumerable<AdminDto>>
             {
                 Message = "List of Admins 📔",
@@ -77,23 +64,10 @@ namespace Agro_Express.Services.Implementations
                         IsSucess = false
                     };
               }
-              var adminDto = new AdminDto();
+              AdminDto adminDto = null;
             if(admin is not null)
             {
-                  adminDto.Id = admin.User.Id;
-                  adminDto.UserName = admin.User.UserName;
-                  adminDto.Name =   admin.User.Name;
-                  adminDto.PhoneNumber =   admin.User.PhoneNumber;
-                  adminDto.FullAddress =   admin.User.Address.FullAddress ;
-                  adminDto.LocalGovernment =   admin.User.Address.LocalGovernment;
-                  adminDto.State =   admin.User.Address.State;
-                  adminDto.Gender =  admin.User.Gender;
-                  adminDto.Email =  admin.User.Email;
-                //   adminDto.Password =  admin.User.Password;
-                  adminDto.Role =  admin.User.Role;
-                  adminDto.IsActive =  admin.User.IsActive;
-                  adminDto.DateCreated =  admin.User.DateCreated;
-                  adminDto.DateModified =  admin.User.DateModified;
+                adminDto = AdminDto(admin);
             }
             return new BaseResponse<AdminDto>
             {
@@ -114,22 +88,7 @@ namespace Agro_Express.Services.Implementations
                         IsSucess = false
                     };
               }
-            var adminDto = new AdminDto{
-                     UserName = admin.User.UserName,
-                     Name =  admin.User.Name,
-                     PhoneNumber =  admin.User.PhoneNumber,
-                     FullAddress =  admin.User.Address.FullAddress ,
-                     LocalGovernment =  admin.User.Address.LocalGovernment,
-                     State =  admin.User.Address.State,
-                     Gender = admin.User.Gender,
-                     Email = admin.User.Email,
-                     Password = admin.User.Password,
-                     Role = admin.User.Role,
-                     IsActive = admin.User.IsActive,
-                     DateCreated = admin.User.DateCreated,
-                     DateModified = admin.User.DateModified
-
-            };
+            var adminDto = AdminDto(admin);
             return new BaseResponse<AdminDto>
             {
                 Message = "Admin Found successfully 😎",
@@ -190,5 +149,24 @@ namespace Agro_Express.Services.Implementations
                 Data = adminDto
             };
         }
+
+        private AdminDto AdminDto(Admin admin) => 
+            new AdminDto()
+            {
+                UserName = admin.User.UserName,
+                Name = admin.User.Name,
+                PhoneNumber = admin.User.PhoneNumber,
+                FullAddress = admin.User.Address.FullAddress,
+                LocalGovernment = admin.User.Address.LocalGovernment,
+                State = admin.User.Address.State,
+                Gender = admin.User.Gender,
+                Email = admin.User.Email,
+                Password = admin.User.Password,
+                Role = admin.User.Role,
+                IsActive = admin.User.IsActive,
+                DateCreated = admin.User.DateCreated,
+                DateModified = admin.User.DateModified
+
+            };
     }
 }
