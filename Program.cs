@@ -4,8 +4,11 @@ using Agro_Express.Repositories.Implementations;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Implementations;
 using Agro_Express.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using SeaBirdProject.EventHandller;
+using System.Reflection;
 
 internal class Program
 {
@@ -43,6 +46,11 @@ internal class Program
 
         builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+        builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+        builder.Services.AddScoped<INotificationHandler<UserRegisteredDomainEvent>, UserRegisteredDomainEventHandller>();
+
+        
+
 
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
        .AddCookie(config =>
@@ -71,15 +79,27 @@ internal class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+     
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
-
-        app.UseAuthentication();
         app.UseAuthorization();
-        app.UseSession();
 
+        //implementing versioning 
+      /*  app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "versionedRoute",
+                pattern: "v{version}/{controller=Home}/{action=Index}/{id?}");
+
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });*/
+
+        app.UseAuthentication(); 
+        app.UseSession();
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");

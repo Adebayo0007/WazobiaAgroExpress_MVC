@@ -12,9 +12,9 @@ namespace Agro_Express.Repositories.Implementations
             _applicationDbContext = applicationDbContext;
         public async Task<Buyer> CreateAsync(Buyer buyer)
         {
-            await _applicationDbContext.Buyers.AddAsync(buyer);
+            var buyerr =await _applicationDbContext.Buyers.AddAsync(buyer);
             await SaveChangesAsync();
-            return buyer;
+            return buyerr.Entity;
         }
 
         public async Task Delete(Buyer buyer) =>

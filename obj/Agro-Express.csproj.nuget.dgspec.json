@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[4.2.0, )"
             },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.11, )"
@@ -78,6 +82,10 @@
             "System.Diagnostics.Debug": {
               "target": "Package",
               "version": "[4.3.0, )"
+            },
+            "mediatr": {
+              "target": "Package",
+              "version": "[11.1.0, )"
             },
             "newtonsoft.json": {
               "target": "Package",

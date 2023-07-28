@@ -6,6 +6,8 @@ using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using MediatR;
+using SeaBirdProject.EventHandller;
 using static Agro_Express.Email.EmailDto;
 
 namespace Agro_Express.Services.Implementations
@@ -16,12 +18,14 @@ namespace Agro_Express.Services.Implementations
           private readonly IUserRepository _userRepository;
           private readonly IUserService _userService;
            private readonly IEmailSender _emailSender;
-        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService, IEmailSender emailSender)
+           private readonly IMediator _mediator;
+        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService, IEmailSender emailSender, IMediator mediator)
         {
             _buyerRepository = buyerRepository;
             _userRepository = userRepository;
             _userService = userService;
             _emailSender = emailSender;
+            _mediator = mediator;
         }
         public async Task<BaseResponse<BuyerDto>> CreateAsync(CreateBuyerRequestModel createBuyerModel)
         {
@@ -85,8 +89,11 @@ namespace Agro_Express.Services.Implementations
                };
                
              var mail =  await _emailSender.SendEmail(email);
+            //Event handller
+              var userRegisteredDomainEvent = new UserRegisteredDomainEvent(buyerModel.User.Name);
+            await _mediator.Publish(userRegisteredDomainEvent);
 
-             var buyerDto = BuyerDto(buyerModel);
+            var buyerDto = BuyerDto(buyerModel);
             return new BaseResponse<BuyerDto>{
                 IsSucess = true,
                 Message = "Buyer Created successfully 😎",
