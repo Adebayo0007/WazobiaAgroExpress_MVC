@@ -100,6 +100,7 @@ namespace Agro_Express.Controllers
         public IActionResult SignUpPage() => View();
 
          [Authorize(Roles = "Admin")]
+         [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)]  //using cache as an attribute for fast performance
         public async Task<IActionResult> ApplicationUsers()
         {
             var users = await _userService.GetAllAsync();

@@ -1,14 +1,23 @@
 using Agro_Express.Dtos.Product;
+using Agro_Express.Dtos;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace Agro_Express.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productSercice;
-        public ProductController(IProductService productSercice) =>  _productSercice = productSercice;
+        private readonly IMemoryCache _memoryCache;
+        public ProductController(IProductService productSercice, IMemoryCache memoryCache) 
+        {
+         _productSercice = productSercice;
+         _memoryCache = memoryCache;
+        }
+            
         [Authorize(Roles = "Farmer")]
         public IActionResult CreateProduct() => View();
         [Authorize]
@@ -58,16 +67,29 @@ namespace Agro_Express.Controllers
             TempData["success"] = products.Message;
            return View(products);
         }
+        
+        [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)]  //using cache as an attribute for fast 
            public async Task<IActionResult> AvailableProducts()
         {
-           var products =  await _productSercice.GetAllFarmProductByLocationAsync();
-            if(products.IsSucess == false)
+             if (!_memoryCache.TryGetValue($"CacheKey", out BaseResponse<IEnumerable<ProductDto>> cachedValue))
             {
-                TempData["error"] = products.Message;
-                return View();
+                 cachedValue =  await _productSercice.GetAllFarmProductByLocationAsync();
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"CacheKey", cachedValue, cacheEntryOptions);
+
             }
-            TempData["success"] = products.Message;
-           return View(products);
+              
+                    if(cachedValue.IsSucess == false)
+                    {
+                        TempData["error"] = cachedValue.Message;
+                        return View();
+                    }
+                    TempData["success"] = cachedValue.Message;
+           
+                return View(cachedValue);
         }
           
           [Authorize(Roles = "Farmer")]

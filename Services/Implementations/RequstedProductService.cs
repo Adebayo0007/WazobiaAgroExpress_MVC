@@ -83,7 +83,7 @@ namespace Agro_Express.Services.Implementations
                  pronoun = "him/her";
                }
 
-                   var email = new EmailRequestModel{
+                 var email = new EmailRequestModel{
                  ReceiverEmail = farmer.User.Email,
                  ReceiverName = farmer.User.Name,
                  Subject = "Product Request",

@@ -7,8 +7,9 @@ using Agro_Express.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using SeaBirdProject.EventHandller;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+
 
 internal class Program
 {
@@ -47,7 +48,18 @@ internal class Program
         builder.Services.AddScoped<IEmailSender, EmailSender>();
 
         builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-        builder.Services.AddScoped<INotificationHandler<UserRegisteredDomainEvent>, UserRegisteredDomainEventHandller>();
+
+        builder.Services.AddMvc(options =>
+        {
+            options.CacheProfiles.Add("Default",
+            new CacheProfile{
+                Duration = 3600
+            });
+        });//using cache for fast performace that will be implemented globally
+
+        builder.Services.AddMemoryCache();  //using memory cache for storing data to avoiding hitting the db always
+
+        
 
         
 
@@ -78,6 +90,13 @@ internal class Program
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
+            app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
+
         }
      
 
@@ -105,5 +124,6 @@ internal class Program
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
+        
     }
 }

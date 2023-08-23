@@ -11,10 +11,11 @@ namespace Agro_Express.Controllers
         private readonly IAdminService _adminService;
         public AdminController(IAdminService adminService) =>
             _adminService = adminService;
-          [Authorize(Roles = "Admin")]
+          //[Authorize(Roles = "Admin")]
         public IActionResult AdminIndex() => View();
+        
 
-         [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
          public async Task<IActionResult> AdminProfile(string adminEmail)
         {
             adminEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -27,7 +28,7 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return View(admin);
         }
-          [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
          [HttpGet]
          public async Task<IActionResult> UpdateAdmin(string adminEmail)
         {
@@ -42,7 +43,7 @@ namespace Agro_Express.Controllers
             return View(admin);
         }
 
-          [Authorize]
+        //  [Authorize]
           [HttpPost]
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> UpdateAdmin(UpdateAdminRequestModel requestModel)
@@ -63,7 +64,7 @@ namespace Agro_Express.Controllers
         }
          
 
-          [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
          public async Task<IActionResult> DeleteAdmin(string adminEmail)
         {       
             if(adminEmail == null)adminEmail = User.FindFirst(ClaimTypes.Email).Value;
@@ -76,7 +77,7 @@ namespace Agro_Express.Controllers
             TempData["success"] = admin.Message;
             return View(admin);      
         }
-          [Authorize]
+         // [Authorize]
         [HttpPost , ActionName("DeleteAdmin")]
         [ValidateAntiForgeryToken]
          public IActionResult DeleteAdminConfirmed(string adminId)
@@ -87,7 +88,7 @@ namespace Agro_Express.Controllers
             return RedirectToAction("LogIn", "User");
         }
          
-          [Authorize(Roles = "Admin")]
+         // [Authorize(Roles = "Admin")]
         public IActionResult MyOffers() => View();
     }
 }

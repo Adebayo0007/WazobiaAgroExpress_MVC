@@ -248,3 +248,7 @@ C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Mediat
 C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\MediatR.Contracts.dll
 C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Users\user\Desktop\Projects\FinalProject\Agro-Express\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll

@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "Hash": "px2oXkCDO5+X+mhuiR1i7DfLGYr8TIU5ea87l5ERvY4=",
+  "Hash": "kSDgDWYk8jYwyNcz2j4ZhGYfI2IJlJdPB+hyB06uM1I=",
   "Source": "Agro-Express",
   "BasePath": "_content/Agro-Express",
   "Mode": "Default",
-  "ManifestType": "Build",
+  "ManifestType": "Publish",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {

@@ -90,8 +90,8 @@ namespace Agro_Express.Services.Implementations
                
              var mail =  await _emailSender.SendEmail(email);
             //Event handller
-              var userRegisteredDomainEvent = new UserRegisteredDomainEvent(buyerModel.User.Name);
-            await _mediator.Publish(userRegisteredDomainEvent);
+              //var userRegisteredDomainEvent = new UserRegisteredDomainEvent(buyerModel.User.Name);
+            //await _mediator.Publish(userRegisteredDomainEvent);
 
             var buyerDto = BuyerDto(buyerModel);
             return new BaseResponse<BuyerDto>{
