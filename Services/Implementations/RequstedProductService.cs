@@ -6,6 +6,7 @@ using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 using static Agro_Express.Email.EmailDto;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -18,8 +19,9 @@ namespace Agro_Express.Services.Implementations
             private readonly IUserRepository _userRepository;
             private readonly IFarmerRepository _farmerRepository;  
             private readonly IEmailSender _emailSender;
+            private readonly IMemoryCache _memoryCache;
 
-        public  RequestedProductService(IRequestedProductRepository requestedProductRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository,IFarmerRepository farmerRepository, IProductRepository productRepository, IEmailSender emailSender)
+        public  RequestedProductService(IRequestedProductRepository requestedProductRepository, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository,IFarmerRepository farmerRepository, IProductRepository productRepository, IEmailSender emailSender, IMemoryCache memoryCache)
         {
           _requestedProductRepository = requestedProductRepository;
           _httpContextAccessor = httpContextAccessor;
@@ -27,6 +29,7 @@ namespace Agro_Express.Services.Implementations
           _farmerRepository = farmerRepository;
           _productRepository = productRepository;
           _emailSender = emailSender;
+           _memoryCache = memoryCache;
         }
         public async Task<BaseResponse<RequestedProductDto>> CreateRequstedProductAsync(string productId)
         {

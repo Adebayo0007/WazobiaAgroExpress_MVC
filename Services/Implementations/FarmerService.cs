@@ -7,6 +7,7 @@ using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
 using static Agro_Express.Email.EmailDto;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -17,13 +18,15 @@ namespace Agro_Express.Services.Implementations
           private readonly IUserService _userService;
              private readonly IEmailSender _emailSender;
                private readonly IHttpContextAccessor _httpContextAccessor;
-        public FarmerService(IFarmerRepository farmerRepository,IUserRepository userRepository, IUserService userService,  IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+               private readonly IMemoryCache _memoryCache;
+        public FarmerService(IFarmerRepository farmerRepository,IUserRepository userRepository, IUserService userService,  IEmailSender emailSender, IHttpContextAccessor httpContextAccessor,IMemoryCache memoryCache )
         {
             _farmerRepository = farmerRepository;
             _userRepository = userRepository;
             _userService = userService;
             _emailSender = emailSender;
             _httpContextAccessor = httpContextAccessor;
+             _memoryCache = memoryCache;
             
         }
         public async Task<BaseResponse<FarmerDto>> CreateAsync(CreateFarmerRequestModel createFarmerModel)
@@ -100,7 +103,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task DeleteAsync(string farmerId)
         {
-           var farmer = _userRepository.GetByIdAsync(farmerId);
+             if (!_memoryCache.TryGetValue($"Farmer_With_Id_{farmerId}", out User farmer))
+            {
+                 farmer = _userRepository.GetByIdAsync(farmerId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Farmer_With_Id_{farmerId}", farmer, cacheEntryOptions);
+
+            }
+         
             farmer.IsActive = farmer.IsActive.Equals(true) ? false : true;
               await _userRepository.Delete(farmer);
         }
@@ -156,9 +169,6 @@ namespace Agro_Express.Services.Implementations
                 NonActiveFarmers = farmerr
             };
 
-
-
-
             return new BaseResponse<ActiveAndNonActiveFarmer>
             {
                 Message = "List of Farmers 😎",
@@ -169,7 +179,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<FarmerDto>> GetByEmailAsync(string farmerEmail)
         {
-             var farmer = _farmerRepository.GetByEmailAsync(farmerEmail);
+              if (!_memoryCache.TryGetValue($"Farmer_With_Email_{farmerEmail}", out Farmer farmer))
+            {
+                 farmer = _farmerRepository.GetByEmailAsync(farmerEmail);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Farmer_With_Email_{farmerEmail}", farmer, cacheEntryOptions);
+
+            }
+          
              if(farmer == null)
              {
                         return new BaseResponse<FarmerDto>
@@ -193,7 +213,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<FarmerDto>> GetByIdAsync(string farmerId)
         {
-             var farmer =  _farmerRepository.GetByIdAsync(farmerId);
+             if (!_memoryCache.TryGetValue($"Farmer_With_Id_{farmerId}", out Farmer farmer))
+            {
+                 farmer = _farmerRepository.GetByIdAsync(farmerId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Farmer_With_Id_{farmerId}", farmer, cacheEntryOptions);
+
+            }
+             
               if(farmer == null)
              {
                         return new BaseResponse<FarmerDto>
@@ -284,7 +314,16 @@ namespace Agro_Express.Services.Implementations
 
         public Task UpdateToHasPaidDue(string userEmail)
         {
-          var user = _userRepository.GetByEmailAsync(userEmail);
+             if (!_memoryCache.TryGetValue($"Farmer_With_Email_{userEmail}", out User user))
+            {
+                 user = _userRepository.GetByEmailAsync(userEmail);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Farmer_With_Email_{userEmail}", user, cacheEntryOptions);
+
+            }
           user.Due = true;
           _userRepository.Update(user);
            return null;

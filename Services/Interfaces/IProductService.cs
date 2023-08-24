@@ -8,8 +8,8 @@ namespace Agro_Express.Services.Interfaces
         Task<BaseResponse<ProductDto>> CreateProductAsync(CreateProductRequestModel product);
         Task<BaseResponse<ProductDto>> GetProductById(string productId);
         Task<BaseResponse<IEnumerable<ProductDto>>> GetAllFarmProductAsync();
-        Task<BaseResponse<IEnumerable<ProductDto>>> GetAllFarmProductByLocationAsync();
-        Task<BaseResponse<IEnumerable<ProductDto>>> GetFarmerFarmProductsByIdAsync();
+        Task<BaseResponse<IEnumerable<ProductDto>>> GetAllFarmProductByLocationAsync( string userEmail);
+        Task<BaseResponse<IEnumerable<ProductDto>>> GetFarmerFarmProductsByEmailAsync(string email);
         Task<BaseResponse<IEnumerable<ProductDto>>> SearchProductsByProductNameOrFarmerUserNameOrFarmerEmail(string searchInput);
         Task<BaseResponse<ProductDto>> UpdateProduct(UpdateProductRequestModel product, string productId);
         Task DeleteProduct(string productId);

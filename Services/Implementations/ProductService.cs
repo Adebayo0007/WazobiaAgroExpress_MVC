@@ -5,6 +5,7 @@ using Agro_Express.Email;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using static Agro_Express.Email.EmailDto;
 
 namespace Agro_Express.Services.Implementations
@@ -15,15 +16,17 @@ namespace Agro_Express.Services.Implementations
         private readonly IFarmerRepository _farmerRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
-          private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
+        private readonly IMemoryCache _memoryCache;
 
-        public ProductService(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IFarmerRepository farmerRepository, IUserRepository userRepository, IEmailSender emailSender)
+        public ProductService(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IFarmerRepository farmerRepository, IUserRepository userRepository, IEmailSender emailSender,IMemoryCache memoryCache)
         {
             _productRepository = productRepository;
             _httpContextAccessor = httpContextAccessor;
             _farmerRepository = farmerRepository;
             _userRepository = userRepository;
             _emailSender = emailSender;
+             _memoryCache = memoryCache;
         }
         public async Task<BaseResponse<ProductDto>> CreateProductAsync(CreateProductRequestModel productModel)
         {
@@ -86,7 +89,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task DeleteProduct(string productId)
         {
-            var product = _productRepository.GetProductById(productId);
+              if (!_memoryCache.TryGetValue($"Products_{productId}", out Product product))
+            {
+                 product =  _productRepository.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Products_{productId}", product, cacheEntryOptions);
+
+            }
+            
              await _productRepository.DeleteProduct(product);
         }
 
@@ -110,10 +123,8 @@ namespace Agro_Express.Services.Implementations
             };
         }
 
-        public async Task<BaseResponse<IEnumerable<ProductDto>>> GetAllFarmProductByLocationAsync()
+        public async Task<BaseResponse<IEnumerable<ProductDto>>> GetAllFarmProductByLocationAsync(string userEmail)
         {
-                var userEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
-                var farmerId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _userRepository.GetByEmailAsync(userEmail);
                 var products = await _productRepository.GetAllFarmProductByLocationAsync(user.Address.LocalGovernment, user);
               if(products == null)
@@ -132,10 +143,10 @@ namespace Agro_Express.Services.Implementations
             };
         }
 
-        public async Task<BaseResponse<IEnumerable<ProductDto>>> GetFarmerFarmProductsByIdAsync()
+        public async Task<BaseResponse<IEnumerable<ProductDto>>> GetFarmerFarmProductsByEmailAsync(string email)
         {
-            var userEmail = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
-            var farmer = _farmerRepository.GetByEmailAsync(userEmail);
+            //email = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
+            var farmer = _farmerRepository.GetByEmailAsync(email);
             var products = await _productRepository.GetFarmerFarmProductsByIdAsync(farmer.Id);
                 if(products == null)
             {
@@ -154,7 +165,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<ProductDto>> GetProductById(string productId)
         {
-            var product =_productRepository.GetProductById(productId);
+             if (!_memoryCache.TryGetValue($"Products_{productId}", out Product product))
+            {
+                 product =  _productRepository.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Products_{productId}", product, cacheEntryOptions);
+
+            }
+            
             if(product == null)
             {
                     return new BaseResponse<ProductDto>{
@@ -193,7 +214,16 @@ namespace Agro_Express.Services.Implementations
 
         public async Task ThumbDown(string productId)
         {
-            var product = _productRepository.GetProductById(productId);
+             if (!_memoryCache.TryGetValue($"Products_{productId}", out Product product))
+            {
+                 product =  _productRepository.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Products_{productId}", product, cacheEntryOptions);
+
+            }
             var email =  _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
            if(product.FarmerEmail  != email)
            {
@@ -204,7 +234,16 @@ namespace Agro_Express.Services.Implementations
 
         public async Task ThumbUp(string productId)
         {
-            var product = _productRepository.GetProductById(productId);
+             if (!_memoryCache.TryGetValue($"Products_{productId}", out Product product))
+            {
+                 product =  _productRepository.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Products_{productId}", product, cacheEntryOptions);
+
+            }
             var email =  _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
            if(product.FarmerEmail != email)
            {
@@ -215,7 +254,16 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<ProductDto>> UpdateProduct(UpdateProductRequestModel productModel, string productId)
         {
-            var product = _productRepository.GetProductById(productId);
+              if (!_memoryCache.TryGetValue($"Products_{productId}", out Product product))
+            {
+                 product =  _productRepository.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Products_{productId}", product, cacheEntryOptions);
+
+            }
             if(product == null)
             {
                  return new BaseResponse<ProductDto>{

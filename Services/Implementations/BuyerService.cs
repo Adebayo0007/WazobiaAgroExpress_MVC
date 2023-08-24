@@ -9,6 +9,8 @@ using Agro_Express.Services.Interfaces;
 using MediatR;
 using SeaBirdProject.EventHandller;
 using static Agro_Express.Email.EmailDto;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace Agro_Express.Services.Implementations
 {
@@ -19,12 +21,14 @@ namespace Agro_Express.Services.Implementations
           private readonly IUserService _userService;
            private readonly IEmailSender _emailSender;
            private readonly IMediator _mediator;
-        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService, IEmailSender emailSender, IMediator mediator)
+           private readonly IMemoryCache _memoryCache;
+        public BuyerService(IBuyerRepository buyerRepository,IUserRepository userRepository, IUserService userService, IEmailSender emailSender,IMemoryCache memoryCache, IMediator mediator)
         {
             _buyerRepository = buyerRepository;
             _userRepository = userRepository;
             _userService = userService;
             _emailSender = emailSender;
+            _memoryCache = memoryCache;
             _mediator = mediator;
         }
         public async Task<BaseResponse<BuyerDto>> CreateAsync(CreateBuyerRequestModel createBuyerModel)
@@ -103,7 +107,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task DeleteAsync(string buyerId)
         {
-             var buyer = _userRepository.GetByIdAsync(buyerId);
+              if (!_memoryCache.TryGetValue($"Buyer_With_Id_{buyerId}", out User buyer))
+            {
+                 buyer = _userRepository.GetByIdAsync(buyerId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Buyer_With_Id_{buyerId}", buyer, cacheEntryOptions);
+
+            }
+           
             buyer.IsActive = buyer.IsActive.Equals(true) ? false : true;
             await _userRepository.Delete(buyer);
         }
@@ -168,7 +182,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<BuyerDto>> GetByEmailAsync(string buyerEmail)
         {
-             var buyer =  _buyerRepository.GetByEmailAsync(buyerEmail);
+             if (!_memoryCache.TryGetValue($"Buyer_With_Email_{buyerEmail}", out Buyer buyer))
+            {
+                 buyer = _buyerRepository.GetByEmailAsync(buyerEmail);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Buyer_With_Email_{buyerEmail}", buyer, cacheEntryOptions);
+
+            }
+          
              if(buyer == null)
              {
                     return new BaseResponse<BuyerDto>
@@ -193,7 +217,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<BuyerDto>> GetByIdAsync(string buyerId)
         {
-             var buyer =  _buyerRepository.GetByIdAsync(buyerId);
+             if (!_memoryCache.TryGetValue($"Buyer_With_Id_{buyerId}", out Buyer buyer))
+            {
+                 buyer = _buyerRepository.GetByIdAsync(buyerId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Buyer_With_Id_{buyerId}", buyer, cacheEntryOptions);
+
+            }
+         
                 if(buyer == null)
              {
                     return new BaseResponse<BuyerDto>
@@ -255,7 +289,18 @@ namespace Agro_Express.Services.Implementations
                 IsSucess = false
             };
             }
-            var buyer = _buyerRepository.GetByEmailAsync(updateBuyerModel.Email);
+             if (!_memoryCache.TryGetValue($"Buyer_With_Email_{updateBuyerModel.Email}", out Buyer buyer))
+            {
+                 buyer = _buyerRepository.GetByEmailAsync(updateBuyerModel.Email);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Buyer_With_Email_{updateBuyerModel.Email}", buyer, cacheEntryOptions);
+
+            }
+            
+   
             if(buyer == null)
             {
                     return new BaseResponse<BuyerDto>{

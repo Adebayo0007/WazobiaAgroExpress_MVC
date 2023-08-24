@@ -1,8 +1,11 @@
 using System.Security.Claims;
+using Agro_Express.Dtos;
+using Agro_Express.Dtos.AllFarmers;
 using Agro_Express.Dtos.Farmer;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Controllers
 {
@@ -10,10 +13,12 @@ namespace Agro_Express.Controllers
     {
         private readonly IFarmerService _farmerService;
         private readonly IUserService _userService;
-        public FarmerController(IFarmerService farmerService, IUserService userService)
+        private readonly IMemoryCache _memoryCache;
+        public FarmerController(IFarmerService farmerService, IUserService userService, IMemoryCache memoryCache)
         {
             _farmerService = farmerService;
             _userService = userService;
+            _memoryCache = memoryCache;
             
         }
 
@@ -143,7 +148,17 @@ namespace Agro_Express.Controllers
          [Authorize(Roles = "Admin")]
          public async Task<IActionResult> Farmers()
         {
-             var farmers = await _farmerService.GetAllActiveAndNonActiveAsync();
+             if (!_memoryCache.TryGetValue($"Farmers", out BaseResponse<ActiveAndNonActiveFarmer> farmers))
+            {
+                 farmers =  await _farmerService.GetAllActiveAndNonActiveAsync();
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Farmers", farmers, cacheEntryOptions);
+
+            }
+            
             if(farmers.IsSucess == false)
             {
                 TempData["error"] = farmers.Message;
@@ -153,7 +168,7 @@ namespace Agro_Express.Controllers
 
         }
         
-          [Authorize(Roles = "Admin")]
+         // [Authorize(Roles = "Admin")]
           [HttpPost]
          public async Task<IActionResult> SearchFarmer(string searchInput)
         {
@@ -161,8 +176,18 @@ namespace Agro_Express.Controllers
             {
                  return BadRequest();
             }
+
+               if (!_memoryCache.TryGetValue($"Searched_Farmers_{searchInput}", out BaseResponse<IEnumerable<FarmerDto>> farmers))
+            {
+                 farmers =  await _farmerService.SearchFarmerByEmailOrUserName(searchInput);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Searched_Farmers_{searchInput}", farmers, cacheEntryOptions);
+
+            }
         
-             var farmers = await _farmerService.SearchFarmerByEmailOrUserName(searchInput);
               if(farmers.IsSucess == false)
             {
                 TempData["error"] = farmers.Message;

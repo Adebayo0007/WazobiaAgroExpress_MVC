@@ -1,18 +1,24 @@
 using System.Security.Claims;
 using Agro_Express.Dtos.User;
+using Agro_Express.Dtos;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService) =>
+        private readonly IMemoryCache _memoryCache;
+        public UserController(IUserService userService, IMemoryCache memoryCache) 
+        {
             _userService = userService;
+            _memoryCache = memoryCache;
+         }
 
          public IActionResult LogIn() => View();
 
@@ -103,7 +109,16 @@ namespace Agro_Express.Controllers
          [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)]  //using cache as an attribute for fast performance
         public async Task<IActionResult> ApplicationUsers()
         {
-            var users = await _userService.GetAllAsync();
+              if (!_memoryCache.TryGetValue($"Application_Users", out BaseResponse<IEnumerable<UserDto>> users))
+            {
+                 users =  await _userService.GetAllAsync();
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Application_Users", users, cacheEntryOptions);
+            }
+          
             if(users.IsSucess == false)
             {
                 TempData["error"] = users.Message;
@@ -146,8 +161,16 @@ namespace Agro_Express.Controllers
                  return BadRequest();
             }
 
-            
-             var users = await _userService.SearchUserByEmailOrUserName(searchInput);
+              if (!_memoryCache.TryGetValue($"Searched_User_{searchInput}", out BaseResponse<IEnumerable<UserDto>> users))
+            {
+                 users =  await _userService.SearchUserByEmailOrUserName(searchInput);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Searched_User_{searchInput}", users, cacheEntryOptions);
+            }
+
               if(users.IsSucess == false)
             {
                 TempData["error"] = users.Message;
@@ -160,7 +183,16 @@ namespace Agro_Express.Controllers
           [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PendingRegistration()
         {
-            var pendingRequests = await _userService.PendingRegistration();
+             if (!_memoryCache.TryGetValue($"Pending_Registration", out BaseResponse<IEnumerable<UserDto>> pendingRequests))
+            {
+                 pendingRequests =  await _userService.PendingRegistration();
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Pending_Registration", pendingRequests, cacheEntryOptions);
+            }
+           
               if(pendingRequests.IsSucess == false)
             {
                 TempData["error"] = pendingRequests.Message;

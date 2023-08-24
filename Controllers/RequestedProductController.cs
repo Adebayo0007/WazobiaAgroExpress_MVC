@@ -2,6 +2,10 @@ using System.Security.Claims;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
+using Agro_Express.Dtos.RequestedProduct;
+using Agro_Express.Dtos;
 
 namespace Agro_Express.Controllers
 {
@@ -10,12 +14,14 @@ namespace Agro_Express.Controllers
          private readonly IRequestedProductService _requstedProductSercice;
            private readonly IProductService _productSercice;
              private readonly IUserService _userSercice;
+             private readonly IMemoryCache _memoryCache;
              
-        public RequestedProductController(IRequestedProductService requstedProductSercice, IProductService productSercice, IUserService userSercice)
+        public RequestedProductController(IRequestedProductService requstedProductSercice, IProductService productSercice, IUserService userSercice, IMemoryCache memoryCache)
         {
             _requstedProductSercice = requstedProductSercice;
             _productSercice = productSercice;
             _userSercice = userSercice;
+             _memoryCache = memoryCache;
         }
 
         public async Task<IActionResult> CreateRequest(string productId)
@@ -49,10 +55,22 @@ namespace Agro_Express.Controllers
             return RedirectToAction(nameof(Payment));
          }
 
+
+           [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)] 
           public async Task<IActionResult> OrderedProductAndPendingProduct(string buyerEmail)
         {
-                    if(buyerEmail == null)buyerEmail = User.FindFirst(ClaimTypes.Email).Value;
-                var results =  await  _requstedProductSercice.OrderedAndPendingProduct(buyerEmail);
+
+               if(buyerEmail == null)buyerEmail = User.FindFirst(ClaimTypes.Email).Value;
+             if (!_memoryCache.TryGetValue($"My_Requests_{buyerEmail}", out BaseResponse<OrderedAndPending> results))
+            {
+                 results =  await  _requstedProductSercice.OrderedAndPendingProduct(buyerEmail);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) // Cache for 5 minutes
+                };
+                 _memoryCache.Set($"My_Requests_{buyerEmail}", results, cacheEntryOptions);
+            }
+            
                 if(results.IsSucess != true)
                 {
                     TempData["error"] = "internal error";
@@ -116,7 +134,16 @@ namespace Agro_Express.Controllers
         public async Task<IActionResult> MyRequests(string farmerId)
         {
             farmerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-           var requests =  await _requstedProductSercice.MyRequests(farmerId); 
+             if (!_memoryCache.TryGetValue($"My_Product_Requests_{farmerId}", out BaseResponse<IEnumerable<RequestedProductDto>> requests))
+            {
+                 requests =  await _requstedProductSercice.MyRequests(farmerId); 
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) // Cache for 5 minutes
+                };
+                 _memoryCache.Set($"My_Product_Requests_{farmerId}", requests, cacheEntryOptions);
+            }
+           
             if(requests.IsSucess == false)
             {
                 TempData["error"] = requests.Message;

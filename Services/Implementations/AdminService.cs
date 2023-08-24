@@ -4,6 +4,7 @@ using Agro_Express.Dtos.User;
 using Agro_Express.Models;
 using Agro_Express.Repositories.Interfaces;
 using Agro_Express.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Services.Implementations
 {
@@ -12,11 +13,13 @@ namespace Agro_Express.Services.Implementations
         private readonly IAdminRepository _adminRepository;
         private readonly IUserService _userService;
          private readonly IUserRepository _userRepository;
-        public AdminService(IAdminRepository adminRepository, IUserService userService, IUserRepository userRepository)
+         private readonly IMemoryCache _memoryCache;
+        public AdminService(IAdminRepository adminRepository, IUserService userService, IUserRepository userRepository, IMemoryCache memoryCache)
         {
             _adminRepository = adminRepository;
             _userService = userService;
             _userRepository = userRepository;
+            _memoryCache = memoryCache;
         }
         public async Task DeleteAsync(string adminId)
         {
@@ -55,7 +58,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<AdminDto>> GetByEmailAsync(string adminEmail)
         {
-              var admin =  _adminRepository.GetByEmailAsync(adminEmail);
+            if (!_memoryCache.TryGetValue($"Admin_With_Email_{adminEmail}", out Admin admin))
+            {
+                 admin =  _adminRepository.GetByEmailAsync(adminEmail);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Admin_With_Email_{adminEmail}", admin, cacheEntryOptions);
+
+            }
+              
               if(admin == null)
               {
                         return new BaseResponse<AdminDto>
@@ -79,7 +92,17 @@ namespace Agro_Express.Services.Implementations
 
         public async Task<BaseResponse<AdminDto>> GetByIdAsync(string adminId)
         {
-             var admin =  _adminRepository.GetByIdAsync(adminId);
+             if (!_memoryCache.TryGetValue($"Admin_With_Id_{adminId}", out Admin admin))
+            {
+                 admin =   _adminRepository.GetByIdAsync(adminId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3) // Cache for 3 minutes
+                };
+                 _memoryCache.Set($"Admin_With_Id_{adminId}", admin, cacheEntryOptions);
+
+            }
+           
                if(admin == null)
               {
                         return new BaseResponse<AdminDto>

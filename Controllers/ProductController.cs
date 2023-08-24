@@ -1,5 +1,6 @@
 using Agro_Express.Dtos.Product;
 using Agro_Express.Dtos;
+using System.Security.Claims;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,8 @@ namespace Agro_Express.Controllers
         [Authorize(Roles = "Farmer")]
         public IActionResult CreateProduct() => View();
         [Authorize]
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProduct(CreateProductRequestModel model)
         {
                   try{
@@ -56,47 +57,71 @@ namespace Agro_Express.Controllers
         }
          
           [Authorize(Roles = "Farmer")]
+           [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)] 
         public async Task<IActionResult> MyProducts()
         {
-           var products =  await _productSercice.GetFarmerFarmProductsByIdAsync();
-            if(products.IsSucess == false)
+             var email = User.FindFirst(ClaimTypes.Email).Value;
+             if (!_memoryCache.TryGetValue($"My_Products_{email}", out BaseResponse<IEnumerable<ProductDto>> myProduct))
             {
-                TempData["error"] = products.Message;
+                 myProduct =  await _productSercice.GetFarmerFarmProductsByEmailAsync(email);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) // Cache for 5 minutes
+                };
+                 _memoryCache.Set($"My_Products_{email}", myProduct, cacheEntryOptions);
+
+            }
+           
+            if(myProduct.IsSucess == false)
+            {
+                TempData["error"] = myProduct.Message;
                 return View();
             }
-            TempData["success"] = products.Message;
-           return View(products);
+            TempData["success"] = myProduct.Message;
+           return View(myProduct);
         }
         
-        [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)]  //using cache as an attribute for fast 
+        [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)]  //using cache as an attribute 
            public async Task<IActionResult> AvailableProducts()
         {
-             if (!_memoryCache.TryGetValue($"CacheKey", out BaseResponse<IEnumerable<ProductDto>> cachedValue))
+            var userEmail = User.FindFirst(ClaimTypes.Email).Value;
+             if (!_memoryCache.TryGetValue($"Available_Products_{userEmail}", out BaseResponse<IEnumerable<ProductDto>> availableProduct))
             {
-                 cachedValue =  await _productSercice.GetAllFarmProductByLocationAsync();
+                 availableProduct =  await _productSercice.GetAllFarmProductByLocationAsync(userEmail);
                   var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
                 };
-                 _memoryCache.Set($"CacheKey", cachedValue, cacheEntryOptions);
+                 _memoryCache.Set($"Available_Products_{userEmail}", availableProduct, cacheEntryOptions);
 
             }
               
-                    if(cachedValue.IsSucess == false)
+                    if(availableProduct.IsSucess == false)
                     {
-                        TempData["error"] = cachedValue.Message;
+                        TempData["error"] = availableProduct.Message;
                         return View();
                     }
-                    TempData["success"] = cachedValue.Message;
+                    TempData["success"] = availableProduct.Message;
            
-                return View(cachedValue);
+                return View(availableProduct);
         }
           
           [Authorize(Roles = "Farmer")]
+           [ResponseCache(Duration = 2000,Location = ResponseCacheLocation.Any)] 
           [HttpGet]
          public async Task<IActionResult> UpdateProduct(string productId)
         {
-            var product = await _productSercice.GetProductById(productId);
+            if (!_memoryCache.TryGetValue($"Product_With_Id_{productId}", out BaseResponse<ProductDto> product))
+            {
+                 product =  await _productSercice.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) // Cache for 5 minutes
+                };
+                 _memoryCache.Set($"Product_With_Id_{productId}", product, cacheEntryOptions);
+
+            }
+           
              if(product.IsSucess == false)
             {
                 TempData["error"] = product.Message;
@@ -122,9 +147,19 @@ namespace Agro_Express.Controllers
         }
             
             [Authorize(Roles = "Farmer")]
+             [ResponseCache(Duration = 2000,Location = ResponseCacheLocation.Any)] 
           public async Task<IActionResult> DeleteProduct(string productId)
         {       
-           var product = await _productSercice.GetProductById(productId);
+          if (!_memoryCache.TryGetValue($"Product_With_Id_{productId}", out BaseResponse<ProductDto> product))
+            {
+                 product =  await _productSercice.GetProductById(productId);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) // Cache for 5 minutes
+                };
+                 _memoryCache.Set($"Product_With_Id_{productId}", product, cacheEntryOptions);
+
+            }
              if(product.IsSucess == false)
             {
                 TempData["error"] = product.Message;
@@ -148,20 +183,32 @@ namespace Agro_Express.Controllers
 
 
          [HttpPost]
+          [ResponseCache(Duration = 3600,Location = ResponseCacheLocation.Any)] 
          public async Task<IActionResult> SearchProduct(string searchInput)
         {
             if(string.IsNullOrWhiteSpace(searchInput))
             {
                  return BadRequest();
             }
-             var products = await _productSercice.SearchProductsByProductNameOrFarmerUserNameOrFarmerEmail(searchInput);
-              if(products.IsSucess == false)
+
+             if (!_memoryCache.TryGetValue($"Sarched_Products_{searchInput}", out BaseResponse<IEnumerable<ProductDto>> searchedProduct))
             {
-                TempData["error"] = products.Message;
+                 searchedProduct =  await _productSercice.SearchProductsByProductNameOrFarmerUserNameOrFarmerEmail(searchInput);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Sarched_Products_{searchInput}", searchedProduct, cacheEntryOptions);
+
+            }
+             
+              if(searchedProduct.IsSucess == false)
+            {
+                TempData["error"] = searchedProduct.Message;
                 return View();
             }
-             TempData["success"] = products.Message;
-            return View(products);
+             TempData["success"] = searchedProduct.Message;
+            return View(searchedProduct);
         }
 
         public IActionResult ThumbUp(string productId)

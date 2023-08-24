@@ -1,8 +1,11 @@
 using System.Security.Claims;
+using Agro_Express.Dtos;
+using Agro_Express.Dtos.AllBuyers;
 using Agro_Express.Dtos.Buyer;
 using Agro_Express.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Agro_Express.Controllers
 {
@@ -10,10 +13,12 @@ namespace Agro_Express.Controllers
     {
            private readonly IBuyerService _buyerService;
            private readonly IUserService _userService;
-        public BuyerController(IBuyerService buyerService, IUserService userService)
+           private readonly IMemoryCache _memoryCache;
+        public BuyerController(IBuyerService buyerService, IUserService userService, IMemoryCache memoryCache)
         {
             _buyerService = buyerService;
-            _userService = userService;  
+            _userService = userService; 
+            _memoryCache = memoryCache; 
         }
          public IActionResult BuyerPolicy() => View();
 
@@ -159,7 +164,17 @@ namespace Agro_Express.Controllers
           [Authorize(Roles = "Admin")]
           public async Task<IActionResult> Buyers()
         {
-             var buyers = await _buyerService.GetAllActiveAndNonActiveAsync();
+              if (!_memoryCache.TryGetValue($"Buyers", out BaseResponse<ActiveAndNonActiveBuyer> buyers))
+            {
+                 buyers =  await _buyerService.GetAllActiveAndNonActiveAsync();
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Buyers", buyers, cacheEntryOptions);
+
+            }
+             
             if(buyers.IsSucess == false)
             {
                 TempData["error"] = buyers.Message;
@@ -178,8 +193,17 @@ namespace Agro_Express.Controllers
             {
                  return BadRequest();
             }
-             
-             var buyers = await _buyerService.SearchBuyerByEmailOrUserName(searchInput);
+              if (!_memoryCache.TryGetValue($"Searched_Buyers_{searchInput}", out BaseResponse<IEnumerable<BuyerDto>> buyers))
+            {
+                 buyers =  await _buyerService.SearchBuyerByEmailOrUserName(searchInput);
+                  var cacheEntryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Cache for 30 minutes
+                };
+                 _memoryCache.Set($"Searched_Buyers_{searchInput}", buyers, cacheEntryOptions);
+
+            }
+           
               if(buyers.IsSucess == false)
             {
                 TempData["error"] = buyers.Message;
